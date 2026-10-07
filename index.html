@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="NextGen Human, Jaipur: doctor-led longevity, diagnostics and recovery centre in Mansarovar. Sample site.">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>NextGen Human</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cream clinic ground, serif headlines, mono data labels; jharokha-arch image frames carry the brand; dark walnut bands break the page. */
+:root{
+  --bg:#FAF7F2; --surface:#FFFDF9; --sunk:#F3ECDF; --ink:#241812; --ink-soft:#63503F;
+  --line:#E8DFD1; --gold:#8F662F; --gold-soft:#C59B5F; --on-gold:#FFFDF9; --indigo:#3D408B;
+  --deep:#1F1510; --deep-2:#2C1F17; --on-deep:#F4EBDC; --on-deep-soft:#CDBBA4; --deep-line:#46352A;
+  --display:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#17100B; --surface:#21170F; --sunk:#1C130D; --ink:#F2E9DB; --ink-soft:#BDAB97;
+  --line:#3A2B20; --gold:#D4AC70; --gold-soft:#8F662F; --on-gold:#1A120D; --indigo:#AEB1EE;
+  --deep:#0F0A07; --deep-2:#1B130D; --on-deep:#F2E9DB; --on-deep-soft:#BDAB97; --deep-line:#34261C;
+  color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#17100B; --surface:#21170F; --sunk:#1C130D; --ink:#F2E9DB; --ink-soft:#BDAB97;
+  --line:#3A2B20; --gold:#D4AC70; --gold-soft:#8F662F; --on-gold:#1A120D; --indigo:#AEB1EE;
+  --deep:#0F0A07; --deep-2:#1B130D; --on-deep:#F2E9DB; --on-deep-soft:#BDAB97; --deep-line:#34261C;
+  color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+.band{padding-block:clamp(52px,8vw,100px)}
+.band.sunk{background:var(--sunk)}
+.band.deep{background:var(--deep);color:var(--on-deep)}
+.band.deep .lead,.band.deep .muted{color:var(--on-deep-soft)}
+.band.deep .label{color:var(--gold-soft)}
+
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+h1,h2,.h3{font-family:var(--display);font-weight:500;line-height:1.05;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(2.7rem,7vw,5.2rem)}
+h2{font-size:clamp(2rem,4.4vw,3.2rem)}
+h1 em,h2 em{font-style:italic;color:var(--gold)}
+.band.deep h2 em{color:var(--gold-soft)}
+.h3{font-size:1.6rem;line-height:1.15}
+.lead{font-size:1.08rem;color:var(--ink-soft);max-width:60ch}
+.muted{color:var(--ink-soft)}
+.small{font-size:.88rem}
+.num{font-variant-numeric:tabular-nums}
+.head{display:grid;gap:14px;margin-bottom:clamp(28px,4vw,48px);max-width:760px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 .92rem/1 var(--body);padding:14px 22px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);text-decoration:none;cursor:pointer;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.band.deep .btn.ghost{color:var(--on-deep);border-color:var(--deep-line)}
+.btn.sm{padding:10px 16px;font-size:.84rem}
+.textlink{text-decoration:underline;text-decoration-color:var(--gold-soft);text-underline-offset:4px;cursor:pointer;background:none;border:0;padding:0;color:inherit;font:inherit;font-weight:600}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
+
+/* notice + header */
+.notice{background:var(--deep);color:var(--on-deep-soft);font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-align:center;padding-block:8px}
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;min-height:68px;flex-wrap:wrap;padding-block:10px}
+.brand{display:grid;text-decoration:none;margin-right:auto}
+.brand b{font-family:var(--display);font-size:1.5rem;font-weight:600;line-height:1;letter-spacing:.01em}
+.brand span{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.menu-btn{display:none;font:500 .74rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--ink);padding:11px 14px;border-radius:999px;cursor:pointer}
+.navlinks{display:flex;align-items:center;gap:clamp(10px,1.3vw,20px);flex-wrap:wrap}
+.navlinks a{font-size:.84rem;white-space:nowrap;font-weight:500;text-decoration:none;color:var(--ink-soft);padding-block:6px;border-bottom:1px solid transparent}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)}
+@media (max-width:1240px){
+  .menu-btn{display:inline-block}
+  .navlinks{display:none;flex-basis:100%;flex-direction:column;align-items:flex-start;gap:4px;padding-bottom:10px}
+  .site.open .navlinks{display:flex}
+  .navlinks a{font-size:1rem;padding-block:8px}
+  .bar .btn.cta{display:none}
+}
+
+/* hero */
+.hero{padding-block:clamp(36px,6vw,80px) clamp(40px,6vw,72px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,72px);align-items:center}
+.hero-copy{display:grid;gap:22px;min-width:0}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.arch{border-radius:999px 999px 14px 14px;overflow:hidden;background:var(--sunk);max-width:100%}
+.arch img{width:100%;height:100%;object-fit:cover}
+.hero .arch img{object-position:30% center}
+.hero .arch{aspect-ratio:4/5;justify-self:end;width:min(100%,470px);box-shadow:0 0 0 1px var(--line),0 0 0 10px var(--bg),0 0 0 11px var(--gold-soft)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 26px;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:18px}
+.facts b{color:var(--ink);font-weight:500}
+@media (max-width:820px){.hero-grid{grid-template-columns:1fr}.hero .arch{justify-self:center;width:min(86%,380px);margin-block:10px}}
+
+/* generic grids */
+.grid{display:grid;gap:clamp(18px,2.4vw,28px)}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:980px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.g3,.g2{grid-template-columns:1fr}}
+@media (max-width:460px){.g4.stack{grid-template-columns:1fr}}
+
+.point{display:grid;gap:8px;align-content:start;border-top:1px solid var(--line);padding-top:18px}
+.band.deep .point{border-color:var(--deep-line)}
+.point h3{font-family:var(--display);font-size:1.45rem;font-weight:500;line-height:1.15}
+
+/* steps */
+.steps{counter-reset:s}
+.step{display:grid;gap:10px;align-content:start;border-top:1px solid var(--deep-line);padding-top:18px}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:var(--mono);font-size:.76rem;letter-spacing:.14em;color:var(--gold-soft)}
+.step h3{font-family:var(--display);font-size:1.9rem;font-weight:500;line-height:1.1}
+.step .unit{font-family:var(--mono);font-size:.74rem;color:var(--on-deep-soft);letter-spacing:.04em}
+
+/* programme cards */
+.prog{display:grid;gap:14px;align-content:start;text-decoration:none}
+.prog .arch{aspect-ratio:4/5}
+.prog h3{font-family:var(--display);font-size:1.6rem;font-weight:500;line-height:1.1}
+.prog .from{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--gold)}
+
+/* gallery */
+.tile{display:grid;gap:10px}
+.tile .frame{aspect-ratio:4/3;border-radius:6px;overflow:hidden;background:var(--sunk)}
+.tile img{width:100%;height:100%;object-fit:cover}
+.tile figcaption{display:flex;justify-content:space-between;gap:12px;font-size:.9rem;font-weight:500}
+.tile figcaption span{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+
+/* price lists */
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,5vw,64px)}
+@media (max-width:820px){.duo{grid-template-columns:1fr}}
+.col{display:grid;gap:18px;align-content:start;min-width:0}
+.col .frame{aspect-ratio:16/10;border-radius:6px;overflow:hidden}
+.col .frame img{width:100%;height:100%;object-fit:cover}
+.plist li{display:flex;justify-content:space-between;gap:16px;padding-block:11px;border-bottom:1px solid var(--line)}
+.plist li span:last-child{font-family:var(--mono);font-size:.8rem;color:var(--ink-soft);white-space:nowrap}
+
+/* tables */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+thead th{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:500;background:var(--sunk)}
+td.price{font-family:var(--mono);font-size:.86rem;white-space:nowrap}
+td .plan{font-family:var(--display);font-size:1.35rem;font-weight:600;line-height:1.1}
+.tag{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);margin-left:6px;vertical-align:middle;white-space:nowrap}
+.tag.solid{background:var(--indigo);border-color:var(--indigo);color:var(--bg)}
+table.compare td{min-width:165px}
+
+/* faq */
+.faq details{border-bottom:1px solid var(--line);padding-block:16px}
+.faq summary{cursor:pointer;font-family:var(--display);font-size:1.35rem;font-weight:500;line-height:1.2;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--gold)}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin-top:10px;color:var(--ink-soft);max-width:68ch}
+
+/* visit */
+.visit{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,72px)}
+@media (max-width:860px){.visit{grid-template-columns:1fr}}
+.info{display:grid;gap:0}
+.info div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;padding-block:14px;border-top:1px solid var(--deep-line)}
+.info dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft);padding-top:4px}
+.info dd{margin:0}
+form.book{background:var(--deep-2);border:1px solid var(--deep-line);border-radius:10px;padding:clamp(18px,3vw,30px);display:grid;gap:16px;align-content:start}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:520px){.fields{grid-template-columns:1fr}}
+.field{display:grid;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-deep-soft)}
+.field input,.field select,.field textarea{font:inherit;color:var(--on-deep);background:var(--deep);border:1px solid var(--deep-line);border-radius:6px;padding:12px;width:100%;min-width:0}
+.field textarea{min-height:76px;resize:vertical}
+.err{color:#F0A08A;font-size:.86rem}
+.ready{background:var(--deep);border:1px solid var(--gold-soft);border-radius:8px;padding:16px;display:grid;gap:12px}
+.ready pre{font:inherit;font-size:.9rem;white-space:pre-wrap;margin:0;color:var(--on-deep-soft);user-select:all}
+.disc{font-size:.8rem;color:var(--on-deep-soft);max-width:80ch;margin-top:clamp(28px,4vw,44px);border-top:1px solid var(--deep-line);padding-top:18px}
+
+/* filter pills */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.pill{font:500 .74rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:11px 15px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink-soft);cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:clamp(18px,2.4vw,26px);display:grid;gap:14px;align-content:start;min-width:0}
+.card.feature{border-color:var(--gold)}
+.card h3{font-family:var(--display);font-size:1.7rem;font-weight:600;line-height:1.1}
+.card .amt{font-family:var(--display);font-size:2.3rem;font-weight:500;line-height:1}
+.card .amt small{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-soft);margin-left:4px}
+.ticks{display:grid;gap:9px;font-size:.92rem}
+.ticks li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:10px}
+.ticks li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:.6em}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase}
+.card .foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px;margin-top:auto}
+.tech{padding:0;overflow:hidden}
+.tech .frame{aspect-ratio:16/10}
+.tech .frame img{width:100%;height:100%;object-fit:cover}
+.tech .body{padding:18px clamp(16px,2vw,22px) 22px;display:grid;gap:10px}
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px;margin-bottom:26px}
+.toggle button{font:500 .76rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:10px 16px;border-radius:999px;border:0;background:transparent;color:var(--ink-soft);cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--gold);color:var(--on-gold)}
+
+/* portal */
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:22px}
+@media (max-width:1040px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px;cursor:pointer;display:grid;gap:6px;color:var(--ink);font:inherit;min-width:0}
+.kpi[aria-pressed="true"]{border-color:var(--gold);box-shadow:inset 0 -3px 0 var(--gold)}
+.kpi .v{font-family:var(--display);font-size:1.9rem;line-height:1}
+.kpi .d{font-family:var(--mono);font-size:.7rem;color:var(--indigo)}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--ink-soft)}
+.chart .val{fill:var(--ink);font-weight:500}
+.chart .gridl{stroke:var(--line);stroke-width:1}
+.chart .line{fill:none;stroke:var(--gold);stroke-width:2.5}
+.chart .area{fill:var(--gold);opacity:.1}
+.chart .dot{fill:var(--bg);stroke:var(--gold);stroke-width:2.5}
+.chart .dot.last{fill:var(--gold)}
+
+/* compare + feelings + progress */
+.tools{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin-bottom:16px}
+.tools .toggle{margin-bottom:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chk{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;font-weight:500;padding:9px 14px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:var(--surface)}
+.chk input,.want input{accent-color:var(--gold);margin:0;width:16px;height:16px;flex:none}
+.fit{border:1px solid var(--gold);border-radius:8px;padding:14px 16px;background:var(--surface);margin-bottom:16px;max-width:none}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:.82rem;color:var(--ink-soft);margin-top:14px}
+.cell{display:grid;grid-template-columns:10px minmax(0,1fr);gap:9px;align-items:baseline}
+.cell i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--gold);display:inline-block}
+.cell.inc i{background:var(--gold)}
+.cell.inc{font-weight:500}
+.cell.none{color:var(--ink-soft)}
+.cell.none i{border-color:var(--ink-soft);border-radius:0;height:0;border-width:1.5px 0 0 0;transform:translateY(-4px)}
+table.compare th[scope=row]{font-weight:500;min-width:240px}
+table.compare tr.grp th{background:var(--sunk);font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);padding-block:10px}
+table.compare thead th{vertical-align:bottom}
+table.compare thead th b{display:block;font-family:var(--display);font-size:1.35rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);line-height:1.1;margin-bottom:6px}
+table.compare .pickcol{box-shadow:inset 0 3px 0 var(--gold)}
+.want{display:grid;grid-template-columns:16px minmax(0,1fr);gap:10px;align-items:start;cursor:pointer}
+.want input{margin-top:3px}
+.want.plain{grid-template-columns:minmax(0,1fr);cursor:default;padding-left:26px}
+.feel{display:grid;gap:24px}
+.feel .intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start}
+@media (max-width:820px){.feel .intro{grid-template-columns:1fr}}
+@media (max-width:700px){
+  table.cards thead{display:none}
+  table.cards,table.cards tbody{display:block}
+  table.cards tr{display:grid;gap:6px;padding:16px;border-bottom:1px solid var(--line)}
+  table.cards tr:last-child{border-bottom:0}
+  table.cards td{display:block;padding:0;border:0;white-space:normal}
+  table.cards td[data-l]::before{content:attr(data-l) " · ";font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+}
+.qty{display:inline-flex;align-items:center;gap:10px}
+.qty button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 1.05rem/1 var(--body);cursor:pointer}
+.qty output{min-width:1.6em;text-align:center;font-family:var(--mono);font-size:.92rem}
+#calcTable td:first-child{min-width:190px}
+#feel,#compare,#credits,#progress,#visit,#faq{scroll-margin-top:96px}
+.note{font-size:.86rem;color:var(--ink-soft);border-left:2px solid var(--gold);padding-left:14px;max-width:78ch;margin-top:22px}
+.chg{font-family:var(--mono);font-size:.84rem;white-space:nowrap}
+.chg .tag{margin-left:8px}
+#progressTable td.price{text-align:left}
+#progressTable th[scope=row]{min-width:190px;font-weight:600}
+#progressTable th[scope=row] small{display:block;font-weight:400;color:var(--ink-soft);font-size:.8rem;margin-top:3px}
+#progressTable td:last-child{min-width:200px;color:var(--ink-soft)}
+
+footer.site{background:var(--deep);color:var(--on-deep-soft);padding-block:44px;font-size:.88rem}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+@media (max-width:720px){.foot-grid{grid-template-columns:1fr}}
+footer.site b{color:var(--on-deep);font-family:var(--display);font-size:1.5rem;font-weight:600}
+footer.site ul{display:grid;gap:8px}
+footer.site a{text-decoration:none}
+footer.site a:hover{color:var(--on-deep)}
+</style>
+</head>
+<body>
+<div class="notice"><div class="wrap">Sample site for review · prices, timetable and member data are illustrative</div></div>
+
+<header class="site" id="siteHeader">
+  <div class="wrap bar">
+    <a class="brand" href="#home" data-go="home"><b>NextGen Human</b><span>Jaipur Performance Center</span></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <nav class="navlinks" id="navLinks" aria-label="Main">
+      <a href="#home" data-go="home">Sanctuary</a>
+      <a href="#memberships" data-go="memberships">Memberships</a>
+      <a href="#classes" data-go="classes">Classes &amp; Cohorts</a>
+      <a href="#programmes" data-go="programmes">Programmes</a>
+      <a href="#diagnostics" data-go="diagnostics">Diagnostics &amp; Tech</a>
+      <a href="#journal" data-go="journal">Journal</a>
+      <a href="#portal" data-go="portal">Member Portal</a>
+    </nav>
+    <a class="btn sm gold cta" href="#visit" data-go="visit">Book a visit</a>
+  </div>
+</header>
+
+<main>
+<!-- ================= HOME ================= -->
+<section data-view="home">
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="label">Longevity · Diagnostics · Recovery · Jaipur</p>
+        <h1>Designing who you're <em>becoming</em></h1>
+        <p class="lead">A doctor-led centre in Mansarovar where your body is measured properly, treated with a plan, and measured again. Diagnostics, recovery and skin care sit on one floor, with one care team.</p>
+        <div class="cta-row">
+          <a class="btn gold" href="#visit" data-go="visit">Book a Discovery Visit (₹2,499)</a>
+          <a class="btn ghost" href="#memberships" data-go="memberships">Explore memberships</a>
+        </div>
+        <p class="facts"><span><b>7 am – 9 pm</b> every day</span><span><b>Doctor-led</b> care team</span><span><b>One floor</b> step-free</span></p>
+      </div>
+      <div class="arch"><img src="img/reception.jpg" width="1600" height="900" alt="Reception desk with a green wall and soft pendant lights"></div>
+    </div>
+  </div>
+
+  <div class="band sunk"><div class="wrap">
+    <div class="head">
+      <p class="label">The centre</p>
+      <h2>Clinical precision, in a space built for <em>calm</em></h2>
+      <p class="lead">Hospital-grade testing usually comes with hospital waiting rooms. Here the same equipment sits behind a quiet lounge, and every result is explained to you by the doctor who ordered it.</p>
+    </div>
+    <div class="grid g3">
+      <div class="point"><h3>Measured, not guessed</h3><p class="muted">DEXA for muscle, fat and bone. A metabolic analyser for VO2 max and resting metabolic rate. ECG, HRV and blood biomarkers to complete the picture.</p></div>
+      <div class="point"><h3>Doctors decide, technology assists</h3><p class="muted">A physician screens you before any IV, hyperbaric or exercise test. A full-time dermatologist performs every medical skin procedure.</p></div>
+      <div class="point"><h3>Unhurried by design</h3><p class="muted">Sessions are booked by appointment, so there are no queues. Peak-hour slots are capped to keep the lounge quiet.</p></div>
+    </div>
+  </div></div>
+
+  <div class="band deep"><div class="wrap">
+    <div class="head">
+      <p class="label">How it works</p>
+      <h2>Measure, treat, <em>re-test</em></h2>
+      <p class="lead">Every programme follows the same three steps. The re-test is what tells you whether the plan is working.</p>
+    </div>
+    <ol class="grid g3 steps">
+      <li class="step"><h3>Measure</h3><p class="muted">A baseline visit records where you are today. You leave with numbers, each one explained in plain language.</p><p class="unit">DEXA g/cm² · VO2 max ml/kg/min · RMR kcal/day · HRV ms</p></li>
+      <li class="step"><h3>Treat</h3><p class="muted">Your doctor builds a plan around those numbers: training zones, nutrition, recovery sessions, and medical therapies where they are indicated.</p><p class="unit">Sauna 60–85 °C · plunge 8–12 °C · HBOT 1.3 ATA · EMS 20 min</p></li>
+      <li class="step"><h3>Re-test</h3><p class="muted">The same tests are repeated on the same machines, usually at 6 and 12 weeks. The plan changes if the numbers do not.</p><p class="unit">Week 0 → week 6 → week 12</p></li>
+    </ol>
+    <p style="margin-top:30px"><a class="textlink" href="#progress" data-go="progress">See a sample progress table, first visit to week 24 →</a></p>
+  </div></div>
+
+  <div class="band"><div class="wrap">
+    <div class="head">
+      <p class="label">Programmes</p>
+      <h2>Four programmes, one <em>care team</em></h2>
+      <p class="lead">Choose the goal closest to yours. The same doctors, physiotherapist and dietitian work across all four, so nothing is lost if your goal changes.</p>
+    </div>
+    <div class="grid g4">
+      <a class="prog" href="#programmes" data-go="programmes" data-cat="ym"><div class="arch"><img loading="lazy" src="img/redlight.jpg" width="1200" height="675" alt="Guest standing in a red light therapy room"></div><p class="label">Young &amp; Marriage</p><h3>Look and feel ready for the day</h3><p class="muted small">Skin, posture and energy plans for brides, grooms and couples.</p><p class="from">From ₹24,999</p></a>
+      <a class="prog" href="#programmes" data-go="programmes" data-cat="fl"><div class="arch"><img loading="lazy" src="img/ems.jpg" width="1200" height="675" alt="Coach guiding a member through an EMS training session"></div><p class="label">Fat Loss</p><h3>Lose fat, keep muscle</h3><p class="muted small">DEXA-tracked plans with a dietitian, EMS training and glucose monitoring.</p><p class="from">From ₹27,999</p></a>
+      <a class="prog" href="#programmes" data-go="programmes" data-cat="ath"><div class="arch"><img loading="lazy" src="img/vo2.jpg" width="1200" height="675" alt="Athlete on a bike wearing a breath analysis mask during a VO2 max test"></div><p class="label">Athlete</p><h3>Train from your own data</h3><p class="muted small">VO2 max, force plates and gait analysis, with recovery built in.</p><p class="from">From ₹12,999</p></a>
+      <a class="prog" href="#programmes" data-go="programmes" data-cat="cs"><div class="arch"><img loading="lazy" src="img/consult.jpg" width="1200" height="675" alt="Doctor reviewing results with a guest in a consultation room"></div><p class="label">C-Suite</p><h3>A full check in one morning</h3><p class="muted small">Executive assessments and quarterly reviews with the medical director.</p><p class="from">From ₹24,999</p></a>
+    </div>
+    <p style="margin-top:28px"><a class="textlink" href="#team" data-go="team">Meet the care team and see our registrations →</a></p>
+  </div></div>
+
+  <div class="band sunk"><div class="wrap">
+    <div class="head">
+      <p class="label">The space</p>
+      <h2>Inside the <em>centre</em></h2>
+      <p class="lead">Around 5,000 sq ft on a single floor. You move from consultation to testing to recovery without changing level.</p>
+    </div>
+    <div class="grid g3">
+      <figure class="tile"><div class="frame"><img loading="lazy" src="img/arrival.jpg" width="1200" height="675" alt="Guest walking towards the entrance past olive trees"></div><figcaption>Arrival<span>Entrance</span></figcaption></figure>
+      <figure class="tile"><div class="frame"><img loading="lazy" src="img/dexa.jpg" width="1200" height="675" alt="Technologist running a DEXA scan"></div><figcaption>Diagnostics suite<span>DEXA · ECG</span></figcaption></figure>
+      <figure class="tile"><div class="frame"><img loading="lazy" src="img/iv.jpg" width="1200" height="675" alt="Recliners in the IV lounge with a nurse attending"></div><figcaption>IV lounge<span>Nurse attended</span></figcaption></figure>
+      <figure class="tile"><div class="frame"><img loading="lazy" src="img/hbot.jpg" width="1200" height="675" alt="Guest reading inside a hyperbaric chamber"></div><figcaption>Hyperbaric room<span>1.3 ATA</span></figcaption></figure>
+      <figure class="tile"><div class="frame"><img loading="lazy" src="img/contrast.jpg" width="1200" height="675" alt="Infrared sauna beside a cold plunge pool"></div><figcaption>Hot &amp; cold suite<span>Sauna · plunge</span></figcaption></figure>
+      <figure class="tile"><div class="frame"><img loading="lazy" src="img/massage.jpg" width="1200" height="675" alt="Therapist giving a back massage"></div><figcaption>Restore room<span>Massage</span></figcaption></figure>
+    </div>
+  </div></div>
+
+  <div class="band"><div class="wrap">
+    <div class="head">
+      <p class="label">Everyday care</p>
+      <h2>Recovery and <em>skin</em></h2>
+      <p class="lead">Most members come two or three times a week for these. Each can be booked as a single session or paid for with membership credits.</p>
+    </div>
+    <div class="duo">
+      <div class="col">
+        <div class="frame"><img loading="lazy" src="img/recovery.jpg" width="1200" height="675" alt="Members resting in recliners with compression boots"></div>
+        <h3 class="h3">Recovery</h3>
+        <ul class="plist">
+          <li><span>Contrast circuit: infrared sauna and cold plunge</span><span>45 min · ₹1,999</span></li>
+          <li><span>Red light therapy, full body</span><span>15 min · ₹999</span></li>
+          <li><span>Compression boots</span><span>30 min · ₹799</span></li>
+          <li><span>Localised cryotherapy for joints</span><span>10 min · ₹1,200</span></li>
+          <li><span>PEMF mat</span><span>20 min · ₹799</span></li>
+          <li><span>Signature massage</span><span>60 min · ₹3,499</span></li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="frame"><img loading="lazy" src="img/skin.jpg" width="1200" height="675" alt="Dermatologist showing a skin analysis on a tablet"></div>
+        <h3 class="h3">Skin, led by a dermatologist</h3>
+        <ul class="plist">
+          <li><span>Skin analysis and consultation</span><span>30 min</span></li>
+          <li><span>Medical hydradermabrasion facial</span><span>50 min · ₹4,999</span></li>
+          <li><span>Chemical peels</span><span>By consultation</span></li>
+          <li><span>Microdermabrasion and dermaplaning</span><span>By consultation</span></li>
+          <li><span>IPL photo-rejuvenation</span><span>By consultation</span></li>
+          <li><span>Injectables, performed by the dermatologist only</span><span>By consultation</span></li>
+        </ul>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="band sunk"><div class="wrap">
+    <div class="head">
+      <p class="label">Memberships</p>
+      <h2>Memberships</h2>
+      <p class="lead">Four plans, priced for Jaipur. Each one is a monthly wallet of credits that you spend on any session. Your Discovery visit fee is credited in full if you join an annual plan.</p>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Plan</th><th>Per month</th><th>Credits a month</th><th>Best for</th><th>A typical month</th><th><span class="small">&nbsp;</span></th></tr></thead>
+        <tbody>
+          <tr><td><span class="plan">Recover</span></td><td class="price">₹4,999</td><td class="price">10</td><td>Regular recovery after work or training</td><td>3 contrast circuits and 4 single sessions</td><td><a class="textlink" href="#memberships" data-go="memberships">Join&nbsp;Plan&nbsp;→</a></td></tr>
+          <tr><td><span class="plan">Signature</span><span class="tag solid">Popular</span></td><td class="price">₹12,999</td><td class="price">32</td><td>Programme graduates who come every other day</td><td>8 contrast circuits, 2 EMS, 1 massage, 6 single sessions</td><td><a class="textlink" href="#memberships" data-go="memberships">Join&nbsp;Plan&nbsp;→</a></td></tr>
+          <tr><td><span class="plan">Prestige</span></td><td class="price">₹24,999</td><td class="price">70</td><td>Busy professionals who want it all in one place</td><td>4 hyperbaric, 1 IV drip, 1 facial, 1 massage, 2 EMS and 22 recovery sessions</td><td><a class="textlink" href="#memberships" data-go="memberships">Join&nbsp;Plan&nbsp;→</a></td></tr>
+          <tr><td><span class="plan">Founders' Circle</span><span class="tag">40 Members</span></td><td class="price">₹3,99,999 / yr</td><td class="price">100</td><td>Leaders and families who want a doctor-led annual plan</td><td>6 hyperbaric, 2 IV drips, 4 EMS and 30 recovery sessions, plus a full annual assessment</td><td><a class="textlink" href="#memberships" data-go="memberships">Join&nbsp;Plan&nbsp;→</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:24px;display:flex;flex-wrap:wrap;gap:10px 28px"><a class="textlink" href="#compare" data-go="compare">Compare all four plans service by service →</a><a class="textlink" href="#credits" data-go="credits">See what a credit buys →</a><a class="textlink" href="#feel" data-go="feel">Find sessions for how you feel →</a></p>
+  </div></div>
+
+  <div class="band" id="faq"><div class="wrap">
+    <div class="head"><p class="label">Questions</p><h2>Before you <em>visit</em></h2></div>
+    <div class="faq">
+      <details open><summary>What happens at a Discovery visit?</summary><p>It takes about 90 minutes. You have a short consultation, an InBody scan, a guided sauna and cold plunge circuit, and a red light session. You leave with your readings and a suggested plan. The ₹2,499 fee is credited in full if you join an annual membership.</p></details>
+      <details><summary>How do membership credits work?</summary><p>Each plan gives you a number of credits every month. A single recovery session uses 1 credit, a contrast circuit 2, an EMS session 3 and a hyperbaric session 4. Up to a quarter of unused credits roll into the next month, and you can buy more at ₹650 each.</p></details>
+      <details><summary>Do I need a doctor's referral?</summary><p>No. Our own doctor screens you before any test or therapy that needs medical clearance, such as VO2 max testing, IV therapy or hyperbaric oxygen.</p></details>
+      <details><summary>Is the DEXA scan safe?</summary><p>DEXA uses a very low dose of X-ray, far lower than a standard chest X-ray. The room is licensed by the Atomic Energy Regulatory Board and the scan is run by a registered technologist. It is not offered during pregnancy.</p></details>
+      <details><summary>Who can have IV therapy or hyperbaric oxygen?</summary><p>Only guests cleared by our doctor on the day. IV drips are prescribed by a physician and given by a registered nurse. Competitive athletes should know that anti-doping rules limit IV infusions to 100 mL per 12 hours, so we do not include larger drips in athlete plans.</p></details>
+      <details><summary>Can I pause my membership when I travel?</summary><p>Annual members can pause for up to 30 days a year with 7 days' notice. Monthly plans can be paused after the first 3 months.</p></details>
+      <details><summary>Will these treatments reverse ageing or cure a condition?</summary><p>No, and we will not promise that. What we offer is accurate measurement, supervised therapies and a plan you can follow. Results differ from person to person.</p></details>
+    </div>
+  </div></div>
+
+  <div class="band deep" id="visit"><div class="wrap">
+    <div class="visit">
+      <div class="col">
+        <p class="label">First step</p>
+        <h2>Start with a <em>Discovery visit</em></h2>
+        <p class="lead">90 minutes, ₹2,499. Consultation, InBody scan, contrast circuit and red light.</p>
+        <dl class="info">
+          <div><dt>Where</dt><dd>Mansarovar, Jaipur, Rajasthan</dd></div>
+          <div><dt>Hours</dt><dd>7 am – 9 pm, every day</dd></div>
+          <div><dt>Call / WhatsApp</dt><dd><span class="num" id="phoneText" style="user-select:all">+91 98290 88210</span> &nbsp;<button class="textlink small" type="button" id="copyPhone">Copy</button></dd></div>
+        </dl>
+      </div>
+      <form class="book" id="bookForm" novalidate>
+        <div class="fields">
+          <div class="field"><label for="bkName">Your name</label><input id="bkName" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="bkPhone">Mobile number</label><input id="bkPhone" name="phone" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile" required></div>
+          <div class="field"><label for="bkInterest">I'm interested in</label>
+            <select id="bkInterest" name="interest">
+              <option>Discovery visit (₹2,499)</option><option>Young &amp; Marriage programme</option><option>Fat Loss programme</option><option>Athlete programme</option><option>C-Suite programme</option><option>Membership</option><option>A class or cohort</option><option>A single session</option>
+            </select></div>
+          <div class="field"><label for="bkSlot">Preferred time</label>
+            <select id="bkSlot" name="slot"><option>Morning, 7 – 10 am</option><option>Late morning, 10 am – 1 pm</option><option>Afternoon, 1 – 5 pm</option><option>Evening, 5 – 9 pm</option></select></div>
+          <div class="field full"><label for="bkDate">Preferred date</label><input id="bkDate" name="date" type="date"></div>
+          <div class="field full"><label for="bkNote">Anything we should know (optional)</label><textarea id="bkNote" name="note"></textarea></div>
+        </div>
+        <p class="err" id="bkErr" hidden></p>
+        <button class="btn gold" type="submit">Prepare my request</button>
+        <div class="ready" id="bkReady" hidden>
+          <p><strong>Your request is ready.</strong> This sample site does not send it for you. Send it on WhatsApp, or copy it.</p>
+          <pre id="bkMsg"></pre>
+          <div class="cta-row"><a class="btn sm gold" id="bkWa" target="_blank" rel="noopener" href="https://wa.me/919829088210">Open WhatsApp</a><button class="btn sm ghost" type="button" id="bkCopy">Copy message</button></div>
+        </div>
+      </form>
+    </div>
+    <p class="disc">NextGen Human provides wellness, diagnostic and medically supervised services. Information on this site is not medical advice. All therapies follow clinical screening and are offered only where suitable. We do not claim to cure disease or reverse ageing, and individual results vary.</p>
+  </div></div>
+</section>
+
+<!-- ================= MEMBERSHIPS ================= -->
+<section data-view="memberships" hidden>
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Memberships</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Invest in your biology at calibrated <em>Jaipur rates</em>.</h1><p class="lead">Each plan is a monthly wallet of credits. Spend them on any session and top up when you need more. Pay monthly, or pay for ten months and get twelve on an annual plan.</p></div>
+    <div class="toggle" role="group" aria-label="Billing period"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="y" aria-pressed="false">Annual</button></div>
+    <div class="grid g4 stack" id="tierCards"></div>
+    <p style="margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 28px"><a class="textlink" href="#credits" data-go="credits">See what a credit buys →</a><a class="textlink" href="#compare" data-go="compare">Compare all four plans →</a><a class="textlink" href="#feel" data-go="feel">Find sessions for how you feel →</a><a class="textlink" href="#progress" data-go="progress">See how progress is tracked →</a></p>
+  </div></div>
+
+  <div class="band sunk" id="credits"><div class="wrap">
+    <div class="head"><p class="label">How credits work</p><h2>One wallet, <em>any session</em></h2><p class="lead">Every session has a credit price. Set how often you would come each month and the calculator shows the plan that fits, and what the same month costs without a membership.</p></div>
+    <div class="pills" id="calcPresets" role="group" aria-label="Load a typical month">
+      <button class="pill" type="button" data-pre="0">Typical Recover month</button><button class="pill" type="button" data-pre="1">Typical Signature month</button><button class="pill" type="button" data-pre="2">Typical Prestige month</button><button class="pill" type="button" data-pre="3">Typical Founders' month</button><button class="pill" type="button" data-pre="x">Clear</button>
+    </div>
+    <p class="fit" id="calcOut" aria-live="polite"></p>
+    <div class="scroll"><table class="cards" id="calcTable"></table></div>
+    <div class="grid g3" style="margin-top:36px">
+      <div class="point"><h3>Credits arrive monthly</h3><p class="muted">You receive your credits on the first of each month. Up to a quarter of unused credits roll into the next month.</p></div>
+      <div class="point"><h3>Top up any time</h3><p class="muted">Extra credits cost ₹650 each, or 10 for ₹6,000. Top-up credits last 60 days.</p></div>
+      <div class="point"><h3>Fair booking</h3><p class="muted">Peak-hour sauna and hyperbaric bookings have a monthly limit by plan. Cancelling within 4 hours uses the credits.</p></div>
+    </div>
+    <p class="note">Outside the wallet: NAD+ drips, dermatology procedures, blood panels, partner-lab tests and psychologist sessions are paid separately at your member discount. Reviews, scans and tests included in a plan do not use credits.</p>
+  </div></div>
+
+  <div class="band" id="feel"><div class="wrap">
+    <div class="head"><p class="label">Sessions by how you feel</p><h2>Start from the <em>feeling</em>, not the machine</h2><p class="lead">Pick what you are dealing with today. We show the sessions members most often choose for it, what each costs on its own, and how many credits it uses.</p></div>
+    <div class="pills" id="feelPills" role="group" aria-label="How you feel"></div>
+    <div class="feel" id="feelPanel"></div>
+    <p class="note">These sessions support relaxation, recovery and general wellbeing. They are not a treatment for anxiety, depression or any other medical condition. If a feeling lasts more than two weeks or gets in the way of daily life, please speak to our doctor or visiting psychologist, or to your own doctor.</p>
+  </div></div>
+
+  <div class="band sunk" id="compare"><div class="wrap">
+    <div class="head"><p class="label">Side by side</p><h2>Compare NextGen Human <em>Memberships</em></h2><p class="lead">Every plan is listed against the same rows, so each one reads straight across. Choose which plans to show, or hide the rows where they are identical.</p></div>
+    <div id="compareBox">
+      <div class="tools">
+        <div class="chips" id="planChips" role="group" aria-label="Plans to compare"></div>
+        <label class="chk"><input type="checkbox" id="diffOnly"> Show differences only</label>
+        <div class="toggle" role="group" aria-label="Billing period"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="y" aria-pressed="false">Annual</button></div>
+      </div>
+      <div class="scroll"><table class="compare" id="compareTable"></table></div>
+      <p class="legend"><span class="cell inc"><i></i><span>Included in the plan</span></span><span class="cell"><i></i><span>Paid with credits, or at the member discount</span></span><span class="cell none"><i></i><span>Paid add-on, or not part of a typical month</span></span></p>
+    </div>
+    <div class="grid g3" style="margin-top:40px">
+      <div class="point"><h3>Couple plan</h3><p class="muted">Two Recover annual memberships for ₹89,999 a year, with slots booked together.</p></div>
+      <div class="point"><h3>Family add-on</h3><p class="muted">Add a spouse, parent or adult child to Signature or Prestige at 40% off the same tier.</p></div>
+      <div class="point"><h3>Student and athlete pass</h3><p class="muted">The Recover wallet of 10 credits for ₹3,999 a month, for bookings between 11 am and 4 pm.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ================= CLASSES ================= -->
+<section data-view="classes" hidden>
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Classes &amp; Cohorts</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Curated masterclasses &amp; group <em>recovery circuits</em>.</h1><p class="lead">Small groups, led by the same team that runs your programme. Members book a seat with 1 credit; guests pay ₹499 a class.</p></div>
+    <div class="pills" id="classPills" role="group" aria-label="Class type"></div>
+    <div class="grid g3" id="classCards"></div>
+  </div></div>
+</section>
+
+<!-- ================= PROGRAMMES ================= -->
+<section data-view="programmes" hidden>
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Programmes</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Clinical Longevity <em>Programmes</em>.</h1><p class="lead">Fixed-length plans with a start test, a set of sessions and a re-test. Each one is led by a named clinician role.</p></div>
+    <div class="pills" id="progPills" role="group" aria-label="Programme category"></div>
+    <div class="grid g2" id="progCards"></div>
+  </div></div>
+</section>
+
+<!-- ================= DIAGNOSTICS ================= -->
+<section data-view="diagnostics" hidden>
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Diagnostics &amp; Tech</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Clinical-grade diagnostics &amp; <em>restorative technology</em>.</h1><p class="lead">Every session can be booked on its own or paid for with membership credits. The session menu shows both prices.</p></div>
+    <div class="pills" id="techPills" role="group" aria-label="Suite"></div>
+    <div class="grid g3" id="techCards"></div>
+  </div></div>
+  <div class="band sunk"><div class="wrap">
+    <div class="head"><p class="label">Session menu</p><h2>Everything you can <em>book</em></h2></div>
+    <div class="scroll"><table id="menuTable"></table></div>
+  </div></div>
+</section>
+
+<!-- ================= JOURNAL ================= -->
+<section data-view="journal" hidden>
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Journal</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Evidence-based longevity &amp; human performance <em>insights</em>.</h1><p class="lead">Short reads from the care team on what the tests mean and what the research does and does not show. Sample articles.</p></div>
+    <div class="grid g3" id="journalCards"></div>
+  </div></div>
+</section>
+
+<!-- ================= PORTAL ================= -->
+<section data-view="portal" hidden>
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Member Portal · sample view</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Your numbers, <em>visit by visit</em>.</h1><p class="lead">This is what a member sees after four visits. Every parameter is shown against the first visit. The figures are an illustrative example, not a real member or a promised result.</p></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="card" id="chartCard"><div class="meta"><span id="chartTitle"></span><span>Sample member · age 42 · Signature plan</span></div><div id="chart" class="chart"></div></div>
+  </div></div>
+  <div class="band sunk" id="progress"><div class="wrap">
+    <div class="head"><p class="label">Progress table</p><h2>First visit and every visit <em>after</em></h2><p class="lead">Each row is one parameter, measured the same way each time. The last column shows which sessions work on it. Select a parameter to see it on the chart.</p></div>
+    <div class="scroll"><table id="progressTable"></table></div>
+    <p class="note">Biological age is a laboratory estimate based on DNA methylation. We track it as one marker among many; it is not a diagnosis, and it is re-tested every six months because it changes slowly. Results differ from person to person.</p>
+  </div></div>
+  <div class="band"><div class="wrap">
+    <div class="grid g2">
+      <div class="card"><h3>Upcoming</h3><ul class="plist"><li><span>Contrast circuit, 2 credits</span><span>Thu · 7:30 am</span></li><li><span>EMS session with coach, 3 credits</span><span>Sat · 8:00 am</span></li><li><span>Quarterly review with doctor and dietitian</span><span>21 Oct · 6:00 pm</span></li></ul></div>
+      <div class="card"><h3>This month</h3><ul class="plist"><li><span>Credits used</span><span>18 of 32</span></li><li><span>Credits that can roll into next month</span><span>Up to 8</span></li><li><span>Hyperbaric bookings</span><span>0 of 4</span></li></ul></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section data-view="team" hidden>
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Care team</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Medical leadership with <em>registered credentials</em>.</h1><p class="lead">Each clinical role is held by a registered professional. Names and registration numbers are published here as each clinician is appointed.</p></div>
+    <div class="grid g3" id="teamCards"></div>
+  </div></div>
+  <div class="band sunk"><div class="wrap">
+    <div class="head"><p class="label">Registrations</p><h2>Licences displayed at the <em>centre</em></h2></div>
+    <div class="grid g4">
+      <div class="point"><h3>Clinical establishment</h3><p class="muted">Registered with the Rajasthan health department.</p></div>
+      <div class="point"><h3>AERB licence</h3><p class="muted">For the DEXA room, with a declared radiation safety officer.</p></div>
+      <div class="point"><h3>Biomedical waste</h3><p class="muted">State pollution control board authorisation and a licensed collector.</p></div>
+      <div class="point"><h3>Fire safety</h3><p class="muted">Fire NOC covering the oxygen and hyperbaric areas.</p></div>
+    </div>
+  </div></div>
+</section>
+</main>
+
+<footer class="site"><div class="wrap foot-grid">
+  <div><b>NextGen Human</b><p style="margin-top:8px;max-width:40ch">Longevity, diagnostics and recovery under medical supervision. Mansarovar, Jaipur. Open 7 am – 9 pm, every day.</p></div>
+  <ul><li><a href="#programmes" data-go="programmes">Programmes</a></li><li><a href="#memberships" data-go="memberships">Memberships</a></li><li><a href="#diagnostics" data-go="diagnostics">Diagnostics &amp; Tech</a></li><li><a href="#classes" data-go="classes">Classes &amp; Cohorts</a></li></ul>
+  <ul><li><a href="#team" data-go="team">Care team</a></li><li><a href="#journal" data-go="journal">Journal</a></li><li><a href="#faq" data-go="faq">Questions</a></li><li><a href="#visit" data-go="visit">Book a Discovery visit</a></li></ul>
+</div></footer>
+
+<script>
+(function(){
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const inr=n=>'₹'+n.toLocaleString('en-IN');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- routing ---------- */
+const VIEWS=['home','memberships','classes','programmes','diagnostics','journal','portal','team'];
+const ANCHORS={visit:'home',faq:'home',compare:'memberships',feel:'memberships',credits:'memberships',progress:'portal'};
+function go(token,opts={}){
+  let view=ANCHORS[token]||token; if(!VIEWS.includes(view)){view='home';token='home'}
+  $$('[data-view]').forEach(s=>s.hidden=s.dataset.view!==view);
+  $$('.navlinks a').forEach(a=>{a.dataset.go===view?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
+  $('#siteHeader').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded','false');
+  if(!opts.silent){ try{history.replaceState(null,'','#'+token)}catch(e){} }
+  const target=ANCHORS[token]?document.getElementById(token):null;
+  if(opts.initial&&!target) return;
+  requestAnimationFrame(()=>{ if(target){target.scrollIntoView({block:'start'})} else {window.scrollTo(0,0)} });
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-go]'); if(!a) return;
+  e.preventDefault();
+  if(a.dataset.cat) setProg(a.dataset.cat);
+  if(a.dataset.interest){ $('#bkInterest').value=a.dataset.interest; if(a.dataset.note) $('#bkNote').value=a.dataset.note; }
+  go(a.dataset.go);
+});
+window.addEventListener('hashchange',()=>go(location.hash.slice(1),{silent:true}));
+$('#menuBtn').addEventListener('click',()=>{const o=$('#siteHeader').classList.toggle('open');$('#menuBtn').setAttribute('aria-expanded',o)});
+
+/* ---------- memberships ---------- */
+const TIERS=[
+ {n:'Recover',m:4999,y:49999,cr:10,tag:'',best:'Young professionals, families and active people who want regular recovery.',
+  f:['10 credits a month, for any session','Enough for 5 contrast circuits, or 10 single recovery sessions','InBody scan every month','RMR metabolic test once a year on the annual plan','10% off paid extras']},
+ {n:'Signature',m:12999,y:129999,cr:32,tag:'Popular',best:'Fat Loss and Athlete programme graduates, and anyone who comes every other day.',
+  f:['32 credits a month, for any session','A typical month: 8 contrast circuits, 2 EMS sessions, 1 massage and 6 single sessions','InBody monthly and an RMR test twice a year','Doctor and dietitian review each quarter','15% off paid extras']},
+ {n:'Prestige',m:24999,y:249999,cr:70,tag:'',best:'Founders and busy professionals who want medical, recovery and skin care together.',
+  f:['70 credits a month, for any session','A typical month: 4 hyperbaric, 1 Myers drip, 1 facial, 1 massage, 2 EMS, 10 contrast circuits and 12 single sessions','Everything Signature includes outside the wallet','DEXA scan and blood panel once a year','20% off paid extras']},
+ {n:"Founders' Circle",m:0,y:399999,cr:100,tag:'40 Members',best:'Leaders and families who want a doctor-led plan for the whole year.',
+  f:['100 credits a month, for any session','A typical month: 6 hyperbaric, 2 Myers drips, 1 facial, 1 massage, 4 EMS, 12 contrast circuits and 18 single sessions','Full annual assessment: DEXA, VO2 max, RMR, ECG, HRV, bloods, sleep study, genetics and biological-age test','4 reviews with the medical director and 4 psychologist sessions','Personal concierge and 6 guest passes']}
+];
+let bill='m';
+function renderTiers(){
+  $('#tierCards').innerHTML=TIERS.map(t=>{
+    const annualOnly=!t.m, price=bill==='m'&&!annualOnly?t.m:t.y, per=bill==='m'&&!annualOnly?'/ month':'/ year';
+    const sub=annualOnly?'Annual only':(bill==='y'?'Works out to '+inr(Math.round(t.y/12))+' a month':'or '+inr(t.y)+' a year');
+    return `<article class="card ${t.tag==='Popular'?'feature':''}">
+      <div><h3>${esc(t.n)}${t.tag?`<span class="tag ${t.tag==='Popular'?'solid':''}">${t.tag}</span>`:''}</h3></div>
+      <p class="amt num">${inr(price)}<small>${per}</small></p>
+      <p class="meta"><span>${sub}</span></p>
+      <p class="meta"><span><strong>${t.cr} credits</strong> a month</span><span>${inr(Math.round((annualOnly||bill==='y'?t.y/12:t.m)/t.cr))} a credit</span></p>
+      <p class="muted small">${esc(t.best)}</p>
+      <ul class="ticks">${t.f.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      <div class="foot"><a class="btn sm ${t.tag==='Popular'?'gold':''}" href="#visit" data-go="visit" data-interest="Membership" data-note="${esc(t.n)} membership, ${bill==='m'&&!annualOnly?'monthly':'annual'}">Join Plan →</a></div>
+    </article>`}).join('');
+}
+$$('[data-bill]').forEach(b=>b.addEventListener('click',()=>{bill=b.dataset.bill;$$('[data-bill]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.bill===bill));renderTiers();renderCompare();renderCalcOut()}));
+/* compare: every plan against the same rows. cell = [level, text]; 2 included, 1 credits or discount, 0 add-on */
+const I=t=>[2,t],D=t=>[1,t],N=t=>[0,t];
+const MATRIX=[
+ {g:'The wallet',rows:[
+  {n:'Credits a month',c:[I('10'),I('32'),I('70'),I('100')]},
+  {n:'Price per credit',c:[I('₹500'),I('₹406'),I('₹357'),I('₹333')]},
+  {n:'Unused credits that roll into the next month',c:[I('Up to 2'),I('Up to 8'),I('Up to 17'),I('Up to 25')]},
+  {n:'Top-up credits',c:[I('₹650 each'),I('₹650 each'),I('₹650 each'),I('₹650 each')]}]},
+ {g:'A typical month on credits',rows:[
+  {n:'Contrast circuits, 2 credits each',c:[I('3'),I('8'),I('10'),I('12')]},
+  {n:'Single recovery sessions or classes, 1 credit each',c:[I('4'),I('6'),I('12'),I('18')]},
+  {n:'Coached EMS sessions, 3 credits each',c:[N('Not in a typical month'),I('2'),I('2'),I('4')]},
+  {n:'Massage, 60 minutes, 4 credits',c:[N('Not in a typical month'),I('1'),I('1'),I('1')]},
+  {n:'Hyperbaric oxygen, 4 credits each',c:[N('Not in a typical month'),N('Not in a typical month'),I('4'),I('6')]},
+  {n:'IV Myers drip, 6 credits each',c:[N('Not in a typical month'),N('Not in a typical month'),I('1'),I('2')]},
+  {n:'Medical facial, 6 credits',c:[N('Not in a typical month'),N('Not in a typical month'),I('1'),I('1')]}]},
+ {g:'Booking limits',rows:[
+  {n:'Hyperbaric bookings a month, at most',c:[I('2'),I('4'),I('6'),I('8')]},
+  {n:'Peak-hour sauna bookings a month, at most',c:[I('4'),I('8'),I('12'),I('16')]}]},
+ {g:'Included outside the wallet',rows:[
+  {n:'InBody scan',c:[I('Monthly'),I('Monthly'),I('Monthly'),I('Monthly')]},
+  {n:'RMR metabolic test',c:[I('1 a year, annual plan'),I('2 a year'),I('2 a year'),I('2 a year')]},
+  {n:'Doctor and dietitian review',c:[I('At joining'),I('Each quarter'),I('Each quarter'),I('Each quarter, with the medical director')]},
+  {n:'DEXA body composition scan',c:[D('5 credits'),D('5 credits'),I('1 a year'),I('1 a year')]},
+  {n:'Comprehensive blood panel',c:[D('10% off'),D('15% off'),I('1 a year'),I('1 a year')]},
+  {n:'VO2 max test',c:[D('6 credits'),D('6 credits'),D('6 credits'),I('1 a year')]},
+  {n:'ECG and HRV stress assessment',c:[D('10% off'),D('15% off'),D('20% off'),I('1 a year')]},
+  {n:'Sleep study, genetics and biological-age test (partner labs)',c:[N('Paid add-on'),N('Paid add-on'),N('Paid add-on'),I('1 a year')]},
+  {n:'Psychologist sessions',c:[N('Paid add-on'),N('Paid add-on'),N('Paid add-on'),I('4 a year')]}]},
+ {g:'Membership',rows:[
+  {n:'Discount on paid extras',c:[I('10%'),I('15%'),I('20%'),I('20%')]},
+  {n:'Support',c:[I('Front desk and app'),I('WhatsApp concierge'),I('Personal concierge'),I('Dedicated concierge')]},
+  {n:'Guest passes',c:[N('None'),N('None'),N('None'),I('6 a year')]},
+  {n:'Pause when travelling',c:[I('30 days a year, annual plan'),I('30 days a year, annual plan'),I('30 days a year, annual plan'),I('30 days a year')]}]}
+];
+const selPlans=new Set([0,1,2,3]); let diffOnly=false;
+const planPrice=i=>{const t=TIERS[i];return (bill==='m'&&t.m)?inr(t.m)+' a month':inr(t.y)+' a year'};
+function renderCompare(){
+  const act=document.activeElement, key=act&&act.dataset&&act.dataset.plan!==undefined?'[data-plan="'+act.dataset.plan+'"]':null;
+  const cols=[...selPlans].sort();
+  $('#planChips').innerHTML=TIERS.map((t,i)=>`<label class="chk"><input type="checkbox" data-plan="${i}" ${selPlans.has(i)?'checked':''}> ${esc(t.n)}</label>`).join('');
+  const cell=c=>`<td><span class="cell ${c[0]===2?'inc':c[0]===0?'none':''}"><i aria-hidden="true"></i><span>${esc(c[1])}</span></span></td>`;
+  let body=`<tr><th scope="row">Price</th>${cols.map(i=>`<td class="price">${planPrice(i)}${bill==='y'&&TIERS[i].m?'<br><span class="muted">'+inr(Math.round(TIERS[i].y/12))+' a month equivalent</span>':''}</td>`).join('')}</tr>`;
+  let hidden=0;
+  MATRIX.forEach(g=>{
+    const rows=g.rows.filter(r=>{const same=new Set(cols.map(i=>r.c[i][1])).size===1; if(diffOnly&&same){hidden++;return false} return true});
+    if(!rows.length) return;
+    body+=`<tr class="grp"><th colspan="${cols.length+1}">${g.g}</th></tr>`;
+    body+=rows.map(r=>`<tr><th scope="row">${esc(r.n)}</th>${cols.map(i=>cell(r.c[i])).join('')}</tr>`).join('');
+  });
+  if(hidden) body+=`<tr><td colspan="${cols.length+1}" class="muted small">${hidden} row${hidden>1?'s':''} hidden because the selected plans are the same there.</td></tr>`;
+  $('#compareTable').innerHTML=`<thead><tr><th>Compare</th>${cols.map(i=>`<th><b>${esc(TIERS[i].n)}</b>${TIERS[i].tag||'&nbsp;'}</th>`).join('')}</tr></thead><tbody>${body}</tbody>`;
+  if(key){const el=$('#compareBox '+key); if(el) el.focus()}
+}
+$('#compareBox').addEventListener('change',e=>{
+  const t=e.target;
+  if(t.dataset.plan!==undefined){const i=+t.dataset.plan; if(t.checked) selPlans.add(i); else if(selPlans.size>2) selPlans.delete(i);}
+  else if(t.id==='diffOnly'){diffOnly=t.checked}
+  renderCompare();
+});
+
+/* ---------- credit menu + calculator ---------- */
+const CM=[
+ {k:'boots',n:'Compression boots',t:'30 min',c:1,p:799},{k:'red',n:'Red light',t:'15 min',c:1,p:999},{k:'pemf',n:'PEMF mat',t:'20 min',c:1,p:799},
+ {k:'plunge',n:'Cold plunge on its own',t:'15 min',c:1,p:799},{k:'cls',n:'Group class',t:'30 to 45 min',c:1,p:499},{k:'cryo',n:'Localised cryotherapy',t:'10 min',c:1,p:1200},
+ {k:'contrast',n:'Sauna or contrast circuit',t:'45 min',c:2,p:1999},{k:'physio',n:'Physiotherapy session',t:'45 min',c:2,p:1499},
+ {k:'ems',n:'EMS with coach',t:'20 min',c:3,p:1999},{k:'rmr',n:'RMR test',t:'20 min',c:3,p:2499},
+ {k:'hbot',n:'Hyperbaric oxygen',t:'60 min',c:4,p:2999},{k:'mass60',n:'Massage, 60 minutes',t:'60 min',c:4,p:3499},
+ {k:'dexa',n:'DEXA scan',t:'30 min',c:5,p:3999},{k:'ivh',n:'IV hydration drip',t:'45 min',c:5,p:3999},
+ {k:'ivm',n:'IV Myers drip',t:'45 min',c:6,p:5999},{k:'facial',n:'Medical facial',t:'50 min',c:6,p:4999},
+ {k:'vo2',n:'VO2 max test',t:'45 min',c:6,p:4999},{k:'mass90',n:'Massage, 90 minutes',t:'90 min',c:6,p:4999}
+];
+const HB_CAP=[2,4,6,8], TOPUP=650;
+const PRESETS=[{contrast:3,boots:2,red:2},{contrast:8,ems:2,mass60:1,boots:3,red:3},
+ {hbot:4,ivm:1,facial:1,mass60:1,ems:2,contrast:10,boots:4,red:4,cls:4},{hbot:6,ivm:2,facial:1,mass60:1,ems:4,contrast:12,boots:6,red:6,cls:6}];
+let qty={...PRESETS[1]};
+function renderCalcTable(){
+  $('#calcTable').innerHTML=`<thead><tr><th>Session</th><th>Time</th><th>Credits</th><th>On its own</th><th>How many a month</th></tr></thead><tbody>${
+   CM.map(x=>`<tr><td><strong>${esc(x.n)}</strong></td><td class="price" data-l="Time">${x.t}</td><td class="price" data-l="Credits">${x.c}</td><td class="price" data-l="On its own">${inr(x.p)}</td><td data-l="A month"><span class="qty"><button type="button" data-q="${x.k}" data-d="-1" aria-label="One less: ${esc(x.n)}">−</button><output id="q-${x.k}">0</output><button type="button" data-q="${x.k}" data-d="1" aria-label="One more: ${esc(x.n)}">+</button></span></td></tr>`).join('')}</tbody>`;
+}
+function renderCalcOut(){
+  let total=0,single=0; CM.forEach(x=>{const q=qty[x.k]||0; $('#q-'+x.k).textContent=q; total+=q*x.c; single+=q*x.p});
+  const hb=qty.hbot||0, out=$('#calcOut');
+  if(!total){out.innerHTML='Add sessions with the + buttons, or load a typical month above.';return}
+  let best=null;
+  TIERS.forEach((t,i)=>{ if(hb>HB_CAP[i]) return; const base=t.m||Math.round(t.y/12), extra=Math.max(0,total-t.cr), cost=base+extra*TOPUP; if(!best||cost<best.cost) best={i,cost,extra}; });
+  let h=`<strong>${total} credit${total>1?'s':''}</strong> a month. The same sessions cost ${inr(single)} at single prices. `;
+  if(!best){out.innerHTML=h+'More than 8 hyperbaric bookings a month is above the limit on every plan.';return}
+  const t=TIERS[best.i];
+  if(single<=best.cost){out.innerHTML=h+'For a month this light, paying per session costs less than any plan.';return}
+  h+=`Best fit: <strong>${esc(t.n)}</strong>${best.extra?` plus ${best.extra} top-up credit${best.extra>1?'s':''}`:''}, ${inr(best.cost)} a month${t.m?'':' (billed yearly)'}. That is ${inr(single-best.cost)} less than paying per session.`;
+  if(!best.extra&&t.cr>total) h+=` ${t.cr-total} credit${t.cr-total>1?'s':''} would be left; up to ${Math.floor(t.cr/4)} roll into the next month.`;
+  out.innerHTML=h;
+}
+$('#calcTable').addEventListener('click',e=>{const b=e.target.closest('[data-q]'); if(!b) return; const k=b.dataset.q; qty[k]=Math.max(0,Math.min(31,(qty[k]||0)+(+b.dataset.d))); renderCalcOut()});
+$('#calcPresets').addEventListener('click',e=>{const b=e.target.closest('[data-pre]'); if(!b) return; qty=b.dataset.pre==='x'?{}:{...PRESETS[+b.dataset.pre]}; renderCalcOut()});
+
+/* ---------- sessions by feeling ---------- */
+const SESS={
+ contrast:['Guided contrast circuit','45 min','₹1,999','2 credits',45,2],
+ boots:['Compression boots','30 min','₹799','1 credit',30,1],
+ pemf:['PEMF mat','20 min','₹799','1 credit',20,1],
+ wind:['Red light and compression wind-down class','30 min','₹499','1 credit',30,1],
+ massage:['Signature massage','60 or 90 min','₹3,499 or ₹4,999','4 or 6 credits',60,4],
+ ems:['Coached EMS session','20 min','₹1,999','3 credits',20,3],
+ cryo:['Localised cryotherapy','10 min','₹1,200','1 credit',10,1],
+ breath:['Mobility and breathwork class','45 min','₹499','1 credit',45,1],
+ zone2:['Zone 2 ride','40 min','₹499','1 credit',40,1],
+ sound:['Sound and Stillness class','45 min','₹499','1 credit',45,1],
+ doctor:['Doctor review with HRV and blood tests','30 min','By appointment','No credits. Included each quarter from Signature',30,0],
+ psych:['Session with visiting psychologist','50 min','By appointment',"No credits. Paid extra; 4 a year in Founders' Circle",50,0],
+ physio:['Physiotherapy session','45 min','₹1,499','2 credits',45,2],
+ sleepstudy:['Home sleep study','1 night','Partner lab',"No credits. Paid extra; yearly in Founders' Circle",0,0]
+};
+const FEEL=[
+ {n:'Angry or irritable',h:'angry or irritable',line:'Anger shows up in the body as heat, a fast pulse and tight muscles. These sessions give that energy somewhere to go, then slow you down.',
+  s:[['ems','Twenty minutes of hard, coached effort uses up the tension.'],['contrast','Heat, then cold. Most people come out noticeably calmer.'],['breath','Slow breathing with long exhales brings the heart rate down.']],first:['ems','contrast']},
+ {n:'Anxious or restless',h:'anxious or restless',line:'When the mind is racing, slow breathing, warmth and steady touch help the body settle. A review with the doctor shows how your system is coping.',
+  s:[['breath','Slow nasal breathing is the quickest way to calm a racing pulse.'],['massage','Steady pressure helps the body switch out of alert mode.'],['pemf','Twenty quiet minutes lying down, with nothing to do.'],['doctor','HRV and basic checks show how your body is handling stress.'],['psych','A private conversation about what is driving it.']],first:['breath','pemf']},
+ {n:'Tense or stiff',h:'tense or stiff',line:'Tension from long desk hours or hard training sits in the neck, back and legs. These sessions work on the muscles directly.',
+  s:[['massage','Works directly on a tight neck, shoulders and back.'],['boots','Rhythmic pressure eases heavy, tired legs.'],['pemf','A low-effort session people use to unwind sore muscles.'],['cryo','Cold air on one sore joint or muscle.'],['physio','Finds the posture or movement habit behind the tension.']],first:['boots','massage']},
+ {n:'Feeling low',h:'low',line:'Regular movement has the strongest evidence for lifting mood, and it is easier with a coach and a fixed slot. Low mood can also have a physical cause, so we check for that too.',
+  s:[['zone2','Steady cardio in company. Exercise has the best evidence for mood.'],['ems','A short session with a coach, for days when motivation is low.'],['contrast','The cold plunge gives a short, clear lift in alertness.'],['doctor','Checks vitamin D, B12, thyroid and sleep, which can all affect mood.'],['psych','Professional support if the feeling does not pass.']],first:['zone2','contrast']},
+ {n:'Sleeping badly',h:'you are sleeping badly',line:'An evening wind-down helps most people fall asleep faster. If you snore or wake up tired, a sleep study can find out why.',
+  s:[['contrast','An evening sauna warms you, and cooling down afterwards helps you feel sleepy.'],['sound','A quiet session to switch off before bed.'],['wind','Compression and red light in the lounge after work.'],['sleepstudy','Checks your breathing and sleep stages at home.'],['doctor','Reviews caffeine, alcohol, training load and your HRV trend.']],first:['contrast','sound']}
+];
+let fi=0;
+function renderFeel(){
+  $('#feelPills').innerHTML=FEEL.map((f,i)=>`<button class="pill" type="button" data-fi="${i}" aria-pressed="${i===fi}">${f.n}</button>`).join('');
+  const f=FEEL[fi], mins=f.first.reduce((a,k)=>a+SESS[k][4],0), crs=f.first.reduce((a,k)=>a+SESS[k][5],0), names=f.first.map(k=>SESS[k][0]);
+  $('#feelPanel').innerHTML=`<div class="intro"><div class="col"><h3 class="h3">When ${f.h==='you are sleeping badly'?f.h:'you feel '+f.h}</h3><p class="muted">${esc(f.line)}</p></div>
+    <div class="point"><p class="label">A good first visit</p><p>${esc(names[0])}, then ${esc(names[1].charAt(0).toLowerCase()+names[1].slice(1))}. About ${mins} minutes and ${crs} credits.</p>
+    <p><a class="btn sm gold" href="#visit" data-go="visit" data-interest="A single session" data-note="${esc(f.n)}: ${esc(names.join(' + '))}">Book this visit</a></p></div></div>
+    <div class="scroll"><table class="cards"><thead><tr><th>Session</th><th>Why people choose it</th><th>Time</th><th>On its own</th><th>Credits</th></tr></thead><tbody>${
+      f.s.map(([k,why])=>{const x=SESS[k];return `<tr><td><strong>${esc(x[0])}</strong></td><td>${esc(why)}</td><td class="price" data-l="Time">${x[1]}</td><td class="price" data-l="On its own">${x[2]}</td><td data-l="Credits">${esc(x[3])}</td></tr>`}).join('')}</tbody></table></div>`;
+}
+$('#feelPills').addEventListener('click',e=>{const b=e.target.closest('[data-fi]');if(b){fi=+b.dataset.fi;renderFeel()}});
+
+/* ---------- programmes ---------- */
+const CATS={ym:'Young & Marriage',fl:'Fat Loss',ath:'Athlete',cs:'C-Suite'};
+const PROGS=[
+ {c:'ym',t:'Bridal Radiance',d:'8 weeks',p:64999,who:'Brides who want clear, rested skin and steady energy before the wedding.',lead:'Consultant dermatologist',i:['Skin analysis with the dermatologist','4 hydradermabrasion facials and 2 peels','8 red light sessions','12 EMS sessions','RMR test and a nutrition plan']},
+ {c:'ym',t:'Groom Sharp',d:'6 weeks',p:49999,who:'Grooms working on posture, tone and energy.',lead:'Sports physiotherapist',i:['Baseline DEXA scan','12 coached EMS sessions','6 contrast circuits','Posture and force plate assessment','RMR-based nutrition plan']},
+ {c:'ym',t:'Couple Pre-Wedding Intensive',d:'4 weeks · for two',p:89999,who:'Couples who want to prepare together and manage wedding stress.',lead:'Medical director',i:['Shared contrast suite sessions','8 joint EMS sessions','2 couples\' massages','InBody scans and a nutrition plan','Pre-conception screening available through our partner lab']},
+ {c:'ym',t:'72-Hour Event Prep',d:'3 days',p:24999,who:'A short reset before a wedding or a big occasion.',lead:'Doctor on site',i:['1 hydrating medical facial','Compression boots and red light','1 contrast circuit','A hydration drip if the doctor finds it suitable']},
+ {c:'fl',t:'Reset 90',d:'12 weeks',p:64999,who:'People who want to lose fat while keeping muscle, with proof on a scan.',lead:'Medical director and dietitian',i:['DEXA at the start and at week 12','2 RMR tests','VO2 test to set training zones','24 coached EMS sessions','6 dietitian reviews and a 14-day glucose monitor']},
+ {c:'fl',t:'Metabolic Reboot',d:'6 weeks',p:34999,who:'A structured start for people with a desk job and little time.',lead:'Dietitian',i:['Baseline DEXA scan','1 RMR test','12 EMS sessions','14-day glucose monitor','3 dietitian consultations']},
+ {c:'fl',t:'24-Week Medical Weight Programme',d:'24 weeks',p:119999,who:'People with a long-standing plateau or raised metabolic risk markers.',lead:'Medical director',i:['3 DEXA scans, at months 1, 3 and 6','48 EMS sessions','A doctor and dietitian review every two weeks','Metabolic, liver and lipid blood panels','Medication is considered only where the doctor finds it indicated']},
+ {c:'fl',t:'30-Day Kickstart',d:'4 weeks',p:27999,who:'A first month with no downtime.',lead:'Sports physiotherapist',i:['InBody scan on day 1 and day 30','8 EMS sessions','8 contrast circuits','1 RMR test','1 nutrition consultation']},
+ {c:'ath',t:'Performance Audit',d:'1 day',p:12999,who:'Runners, cricketers, cyclists and anyone who trains seriously.',lead:'Sports physiotherapist',i:['VO2 max with breath-by-breath analysis','RMR and fuel-use profile','Force plates and grip strength','DEXA for lean-mass symmetry and bone density','ECG, HRV and 2D gait analysis']},
+ {c:'ath',t:'In-Season Recovery Pass',d:'8 weeks',p:34999,who:'Competitors in a tournament or race season.',lead:'Sports physiotherapist',i:['16 contrast circuits','8 hyperbaric oxygen sessions','4 physiotherapy sessions','8 red light sessions','Compression boots after practice']},
+ {c:'ath',t:'Endurance Peak',d:'10 weeks',p:54999,who:'Marathoners, cyclists and triathletes building to a race.',lead:'Sports medicine physician',i:['VO2 max at the start and at week 8','Fuel-use curve for race nutrition','10 hyperbaric sessions','10 lower-limb EMS sessions','Gait re-test at race pace']},
+ {c:'ath',t:'Power and Sprint',d:'6 weeks',p:39999,who:'Sprint and court-sport athletes who need explosive power.',lead:'Conditioning coach',i:['12 EMS sessions','Weekly force plate tracking','DEXA symmetry check','6 contrast circuits','Red light after training']},
+ {c:'cs',t:'Executive Longevity Programme',d:'12 months',p:349999,who:'Founders and directors with heavy workloads and frequent travel.',lead:'Medical director',i:['Annual assessment: DEXA, VO2 max, ECG, sleep study, genetics','12 monthly visits with priority booking','4 quarterly reviews with the medical director','4 sessions with a visiting psychologist','Biological-age test through a partner lab']},
+ {c:'cs',t:'Founder Reset',d:'1 month',p:49999,who:'Leaders dealing with poor sleep, fatigue or jet lag.',lead:'Medical director',i:['4 hyperbaric oxygen sessions','2 doctor-prescribed IV drips','HRV stress assessment','Home sleep study','4 private contrast circuits']},
+ {c:'cs',t:'Boardroom Audit',d:'1 morning',p:24999,who:'A full health benchmark in a single visit.',lead:'Medical director',i:['DEXA, VO2 max and RMR','12-lead ECG','Comprehensive blood panel','60-minute review with the doctor','Written report within 24 hours']},
+ {c:'cs',t:'Quarterly Vitality',d:'90 days',p:89999,who:'Executives who want a tune-up every quarter.',lead:'Medical director',i:['Re-test of InBody, RMR and bloods','6 hyperbaric sessions','3 doctor-prescribed IV drips','12 contrast circuits','1 doctor review']}
+];
+let progCat='ym';
+function setProg(c){progCat=c;renderProgs()}
+function renderProgs(){
+  $('#progPills').innerHTML=Object.entries(CATS).map(([k,v])=>`<button class="pill" type="button" data-pc="${k}" aria-pressed="${k===progCat}">${esc(v)}</button>`).join('');
+  $('#progCards').innerHTML=PROGS.filter(p=>p.c===progCat).map(p=>`<article class="card">
+    <p class="meta"><span>${esc(CATS[p.c])}</span><span>${esc(p.d)}</span></p>
+    <h3>${esc(p.t)}</h3><p class="muted">${esc(p.who)}</p>
+    <ul class="ticks">${p.i.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="foot"><div><p class="amt num" style="font-size:1.8rem">${inr(p.p)}</p><p class="meta" style="margin-top:6px"><span>Led by ${esc(p.lead)}</span></p></div>
+    <a class="btn sm" href="#visit" data-go="visit" data-interest="${esc(CATS[p.c])} programme" data-note="${esc(p.t)}">Enquire</a></div></article>`).join('');
+}
+$('#progPills').addEventListener('click',e=>{const b=e.target.closest('[data-pc]');if(b)setProg(b.dataset.pc)});
+
+/* ---------- diagnostics & tech ---------- */
+const SUITES={all:'All Suites',diag:'Diagnostics',rec:'Recovery',med:'Medical & IV',bio:'Biomechanics'};
+const TECH=[
+ {s:'diag',t:'DEXA body composition',img:'dexa',p:'₹3,999',c:'5 credits',d:'30 min',x:'Muscle, fat and bone density, region by region. A low-dose scan run by a registered technologist.'},
+ {s:'diag',t:'VO2 max test',img:'vo2',p:'₹4,999',c:'6 credits',d:'45 min',x:'Breath-by-breath analysis on a bike or treadmill. You get your result in ml/kg/min and your training zones.'},
+ {s:'rec',t:'Contrast circuit',img:'contrast',p:'₹1,999',c:'2 credits',d:'45 min',x:'Infrared sauna followed by a cold plunge, guided by an attendant from start to finish.'},
+ {s:'med',t:'Hyperbaric oxygen',img:'hbot',p:'₹2,999',c:'4 credits',d:'60 min',x:'Mild hyperbaric sessions at 1.3 ATA. The doctor screens you before your first session.'},
+ {s:'med',t:'IV nutrient therapy',img:'iv',p:'From ₹3,999',c:'5 or 6 credits',d:'45 min',x:'Hydration and micronutrient drips, prescribed by a physician and given by a registered nurse.'},
+ {s:'bio',t:'Whole-body EMS training',img:'ems',p:'₹1,999',c:'3 credits',d:'20 min',x:'A coached strength session using electrical muscle stimulation. Screening is required first. Your first trial is ₹999.'}
+];
+const MENU=[
+ ['diag','Discovery visit','90 min','₹2,499','','Care team'],['diag','DEXA body composition','30 min','₹3,999','5','Radiology technologist'],['diag','VO2 max test','45 min','₹4,999','6','Sports physiotherapist, doctor screened'],['diag','RMR metabolic test','20 min','₹2,499','3','Technician and dietitian'],['diag','InBody scan','10 min','With membership','','Technician'],['diag','ECG, HRV and blood biomarkers','30 min','In assessments','','Nurse and doctor'],
+ ['rec','Sauna or contrast circuit','45 min','₹1,999','2','Attendant'],['rec','Red light therapy','15 min','₹999','1','Technician'],['rec','Compression boots','30 min','₹799','1','Technician'],['rec','Cold plunge on its own','15 min','₹799','1','Attendant'],['rec','PEMF mat','20 min','₹799','1','Technician'],['rec','Localised cryotherapy','10 min','₹1,200','1','Physiotherapist'],['rec','Massage','60 min','₹3,499','4','Therapist'],['rec','Massage','90 min','₹4,999','6','Therapist'],['rec','Group class','30 to 45 min','₹499','1','Coach'],
+ ['med','Hyperbaric oxygen, 1.3 ATA','60 min','₹2,999','4','Nurse, doctor on site'],['med','IV hydration drip','45 min','₹3,999','5','Doctor prescribes, nurse gives'],['med','IV Myers drip','45 min','₹5,999','6','Doctor prescribes, nurse gives'],['med','Medical hydradermabrasion facial','50 min','₹4,999','6','Aesthetician, dermatologist protocol'],['med','Peels, IPL and injectables','Varies','By consultation','','Dermatologist'],
+ ['bio','Whole-body EMS training','20 min','₹1,999','3','Certified coach'],['bio','Physiotherapy session','45 min','₹1,499','2','Sports physiotherapist'],['bio','Force plate and grip assessment','30 min','In Athlete plans','','Sports physiotherapist'],['bio','2D gait analysis','30 min','In Athlete plans','','Sports physiotherapist']
+];
+let suite='all';
+function renderTech(){
+  $('#techPills').innerHTML=Object.entries(SUITES).map(([k,v])=>`<button class="pill" type="button" data-su="${k}" aria-pressed="${k===suite}">${esc(v)}</button>`).join('');
+  const list=TECH.filter(t=>suite==='all'||t.s===suite);
+  $('#techCards').innerHTML=list.map(t=>`<article class="card tech"><div class="frame"><img loading="lazy" src="img/${t.img}.jpg" width="1200" height="675" alt="${esc(t.t)}"></div>
+    <div class="body"><p class="meta"><span>${esc(SUITES[t.s])}</span><span>${t.d}</span><span>${t.c}</span></p><h3>${esc(t.t)}</h3><p class="muted small">${esc(t.x)}</p>
+    <div class="foot"><span class="amt num" style="font-size:1.6rem">${t.p}</span><a class="btn sm" href="#visit" data-go="visit" data-interest="A single session" data-note="${esc(t.t)}">Book</a></div></div></article>`).join('');
+  $('#menuTable').innerHTML=`<thead><tr><th>Session</th><th>Suite</th><th>Time</th><th>Price</th><th>Credits</th><th>Performed by</th></tr></thead><tbody>${
+    MENU.filter(m=>suite==='all'||m[0]===suite).map(m=>`<tr><td><strong>${esc(m[1])}</strong></td><td>${esc(SUITES[m[0]])}</td><td class="price">${m[2]}</td><td class="price">${m[3]}</td><td class="price">${m[4]||'<span class="muted">Not on credits</span>'}</td><td>${esc(m[5])}</td></tr>`).join('')}</tbody>`;
+}
+$('#techPills').addEventListener('click',e=>{const b=e.target.closest('[data-su]');if(b){suite=b.dataset.su;renderTech()}});
+
+/* ---------- classes ---------- */
+const CTYPES={all:'All',breath:'Breathwork',ems:'EMS',contrast:'Contrast',cardio:'Cardio',recovery:'Recovery',sound:'Sound',master:'Masterclass'};
+const CLASSES=[
+ {k:'breath',t:'Morning Mobility and Breathwork',w:'Mon · Wed · Fri',h:'7:00 am',d:'45 min',n:10,by:'Breath coach',x:'Gentle joint mobility followed by slow nasal breathing to start the day calm.'},
+ {k:'ems',t:'EMS Strength Circuit',w:'Tue · Thu · Sat',h:'7:30 am',d:'20 min',n:4,by:'EMS coach',x:'A full-body strength session in a group of four. Screening is needed before your first class.'},
+ {k:'contrast',t:'Guided Contrast Circuit',w:'Every day',h:'8:00 am and 6:30 pm',d:'45 min',n:6,by:'Attendant',x:'Three rounds of sauna and cold plunge, timed and supervised.'},
+ {k:'cardio',t:'Zone 2 Ride',w:'Tue · Thu',h:'6:00 pm',d:'40 min',n:6,by:'Sports physiotherapist',x:'A steady ride held in your own heart-rate zone, taken from your VO2 test.'},
+ {k:'recovery',t:'Red Light and Compression Wind-down',w:'Every day',h:'5:00 pm',d:'30 min',n:6,by:'Recovery technician',x:'Compression boots and red light in the lounge after work or training.'},
+ {k:'sound',t:'Sound and Stillness',w:'Fri · Sun',h:'7:30 pm',d:'45 min',n:12,by:'Visiting facilitator',x:'A quiet evening session to help you switch off before sleep.'},
+ {k:'master',t:'Masterclass: Reading your DEXA and VO2 report',w:'First Saturday of the month',h:'11:00 am',d:'60 min',n:20,by:'Medical director',x:'What each number means, what is normal for your age, and what can change it.'}
+];
+let ctype='all';
+function renderClasses(){
+  $('#classPills').innerHTML=Object.entries(CTYPES).map(([k,v])=>`<button class="pill" type="button" data-ct="${k}" aria-pressed="${k===ctype}">${v}</button>`).join('');
+  $('#classCards').innerHTML=CLASSES.filter(c=>ctype==='all'||c.k===ctype).map(c=>`<article class="card">
+    <p class="meta"><span>${CTYPES[c.k]}</span><span>${c.d}</span><span>${c.n} seats</span><span>1 credit</span></p>
+    <h3>${esc(c.t)}</h3><p class="muted small">${esc(c.x)}</p>
+    <ul class="plist small"><li><span>${esc(c.w)}</span><span>${esc(c.h)}</span></li><li><span>Led by</span><span>${esc(c.by)}</span></li></ul>
+    <div class="foot"><span class="meta"><span>Sample timetable</span></span><a class="btn sm" href="#visit" data-go="visit" data-interest="A class or cohort" data-note="${esc(c.t)}, ${esc(c.w)} at ${esc(c.h)}">Request a seat</a></div></article>`).join('');
+}
+$('#classPills').addEventListener('click',e=>{const b=e.target.closest('[data-ct]');if(b){ctype=b.dataset.ct;renderClasses()}});
+
+/* ---------- journal ---------- */
+const POSTS=[
+ ['Recovery','6 min','Heat, then cold: what contrast therapy can and cannot do','Sauna and cold plunge leave most people feeling better and sleeping well. The research on soreness is encouraging; the research on fat loss is thin. Here is how we use it.'],
+ ['Fitness','7 min','Zone 2 or intervals? How to train for a higher VO2 max','VO2 max is one of the better predictors of healthy ageing. Most people improve fastest with a lot of easy work and a little hard work.'],
+ ['Nutrition','5 min','Should you wear a glucose monitor if you do not have diabetes?','Two weeks of data can show which meals suit you. It can also cause needless worry. We explain when it helps and how to read it.'],
+ ['Recovery','6 min','Mild hyperbaric oxygen at 1.3 ATA: where the evidence stands','What mild chambers do, how they differ from hospital chambers, and why we screen every guest first.'],
+ ['Mind','4 min','Sleep, HRV and stress: three numbers worth tracking','Heart-rate variability moves with sleep, alcohol, illness and training load. Watching the trend matters more than any single reading.'],
+ ['Diagnostics','5 min','DEXA and the bathroom scale tell different stories','Two people at the same weight can have very different amounts of muscle, fat and bone. A scan shows which one changed.']
+];
+$('#journalCards').innerHTML=POSTS.map(p=>`<article class="card"><p class="meta"><span>${p[0]}</span><span>${p[1]} read</span></p><h3>${esc(p[2])}</h3><p class="muted small">${esc(p[3])}</p></article>`).join('');
+
+/* ---------- team ---------- */
+const TEAM=[
+ ['Medical Director','MBBS, MD (Internal Medicine)','Rajasthan Medical Council','Clinical screening, IV prescriptions, hyperbaric clearance and exercise testing.'],
+ ['Consultant Dermatologist','MBBS, MD (Dermatology)','Rajasthan Medical Council','Full time. Performs every peel, IPL session and injectable personally.'],
+ ['Sports Physiotherapist','BPT, MPT (Sports)','State physiotherapy council','VO2 max testing, force plates, gait analysis and EMS oversight.'],
+ ['Clinical Dietitian','MSc Clinical Dietetics','Indian Dietetic Association','Nutrition plans built on RMR results and glucose monitor reviews.'],
+ ['DEXA Technologist','BSc Medical Radiologic Technology','AERB, through eLORA','Runs the DEXA room and serves as radiation safety officer.'],
+ ['Registered Nurses','GNM or BSc Nursing','Rajasthan Nursing Council','Give IV drips, attend hyperbaric sessions and record vitals.']
+];
+$('#teamCards').innerHTML=TEAM.map(t=>`<article class="card"><p class="meta"><span>${esc(t[2])}</span></p><h3>${esc(t[0])}</h3><p class="small"><strong>${esc(t[1])}</strong></p><p class="muted small">${esc(t[3])}</p><p class="meta" style="border-top:1px solid var(--line);padding-top:12px"><span>Name and registration no. on appointment</span></p></article>`).join('');
+
+/* ---------- portal: chart + progress table share one dataset ---------- */
+const WK=[0,6,12,24], VIS=['1st visit','Visit 2 · week 6','Visit 3 · week 12','Visit 4 · week 24'], XLAB=['1st visit','Week 6','Week 12','Week 24'];
+const PARAMS=[
+ {k:'Biological age',u:'years',how:'Epigenetic blood test, partner lab',v:[44.5,null,null,43.2],dp:1,good:'down',by:'Training, sleep and nutrition together'},
+ {k:'Body fat',u:'%',how:'DEXA scan',v:[24.8,23.9,22.6,21.4],dp:1,good:'down',by:'EMS training, Zone 2 rides, dietitian plan'},
+ {k:'Visceral fat',u:'cm²',how:'DEXA scan',v:[118,112,104,96],dp:0,good:'down',by:'Dietitian plan, glucose monitor, cardio'},
+ {k:'Lean mass',u:'kg',how:'DEXA scan',v:[58.4,58.9,59.6,60.3],dp:1,good:'up',by:'EMS strength sessions, protein targets'},
+ {k:'VO2 max',u:'ml/kg/min',how:'Metabolic analyser, bike test',v:[36.2,37.8,39.4,41.0],dp:1,good:'up',by:'Zone 2 rides and intervals'},
+ {k:'Resting metabolic rate',u:'kcal/day',how:'Breath analysis at rest',v:[1620,1640,1675,1700],dp:0,good:'up',by:'Strength training, nutrition plan'},
+ {k:'Resting heart rate',u:'bpm',how:'ECG at rest',v:[72,70,67,64],dp:0,good:'down',by:'Cardio, sleep, breathwork'},
+ {k:'HRV',u:'ms',how:'Morning reading, 5 minutes',v:[42,45,49,53],dp:0,good:'up',by:'Sleep, contrast circuit, breathwork'},
+ {k:'Blood pressure',u:'mmHg',cu:'mmHg systolic',how:'Seated, average of 3',v:[132,128,126,122],show:['132/86','128/84','126/82','122/80'],dp:0,good:'down',by:'Cardio, weight loss, doctor review'},
+ {k:'HbA1c',u:'%',how:'Blood test',v:[5.8,null,5.6,5.5],dp:1,good:'down',by:'Dietitian plan, glucose monitor'},
+ {k:'Grip strength',u:'kg',how:'Dynamometer, best of 3',v:[38,39,41,42],dp:0,good:'up',by:'EMS and strength work'},
+ {k:'Stress score',u:'of 40',cu:'points',how:'PSS-10 questionnaire',v:[22,19,16,14],dp:0,good:'down',by:'Breathwork, massage, psychologist'},
+ {k:'Sleep',u:'hours',how:'7-night average, wearable',v:[5.9,6.3,6.7,7.0],dp:1,good:'up',by:'Evening sauna, sound session, sleep review'}
+];
+const KPI=[0,1,4,7,6,11];
+let mi=1;
+function change(m){
+  const idx=m.v.map((x,i)=>x==null?-1:i).filter(i=>i>=0), a=m.v[idx[0]], b=m.v[idx[idx.length-1]], d=b-a;
+  return {d,txt:(d<0?'↓ ':'↑ ')+Math.abs(d).toFixed(m.dp)+' '+(m.cu||m.u),ok:d!==0&&((d<0)===(m.good==='down'))};
+}
+function niceStep(range,n){const raw=range/n,p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p;return (f<=1?1:f<=2?2:f<=5?5:10)*p}
+function drawChart(){
+  const m=PARAMS[mi],W=720,H=280,L=56,R=34,T=30,B=40;
+  const vals=m.v.filter(x=>x!=null), lo=Math.min(...vals),hi=Math.max(...vals),step=niceStep((hi-lo)||1,4);
+  const ymin=Math.floor((lo-step*0.5)/step)*step, y1=Math.ceil((hi+step*0.5)/step)*step;
+  const X=w=>L+30+(w/24)*(W-L-R-44), Y=v=>T+(1-(v-ymin)/(y1-ymin))*(H-T-B);
+  let g='';
+  for(let v=ymin;v<=y1+1e-9;v+=step){const yy=Y(v).toFixed(1);g+=`<line class="gridl" x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}"/><text x="${L-10}" y="${+yy+4}" text-anchor="end">${v.toFixed(step<1?1:0)}</text>`}
+  const pts=[]; m.v.forEach((v,i)=>{if(v!=null)pts.push([X(WK[i]),Y(v),v,i])});
+  const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const area=line+` L${pts[pts.length-1][0].toFixed(1)} ${Y(ymin).toFixed(1)} L${pts[0][0].toFixed(1)} ${Y(ymin).toFixed(1)} Z`;
+  const dots=pts.map((p,i)=>`<circle class="dot ${i===pts.length-1?'last':''}" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="5"/><text class="val" x="${p[0].toFixed(1)}" y="${(p[1]-12).toFixed(1)}" text-anchor="middle">${m.show?m.show[p[3]]:p[2].toFixed(m.dp)}</text>`).join('');
+  const xl=WK.map((w,i)=>`<text x="${X(w).toFixed(1)}" y="${H-14}" text-anchor="middle">${XLAB[i]}</text>`).join('');
+  $('#chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${m.k} from the first visit to week 24">${g}<path class="area" d="${area}"/><path class="line" d="${line}"/>${dots}${xl}</svg>`;
+  $('#chartTitle').textContent=m.k+' ('+(m.k==='Blood pressure'?'systolic, mmHg':m.u)+')';
+  $('#kpis').innerHTML=KPI.map(i=>{const x=PARAMS[i],c=change(x),last=x.v.filter(v=>v!=null).pop();return `<button class="kpi" type="button" data-mi="${i}" aria-pressed="${i===mi}"><span class="label">${x.k}</span><span class="v num">${last.toFixed(x.dp)}</span><span class="d">${c.txt} since 1st visit</span></button>`}).join('');
+  $$('#progressTable [data-mi]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.mi===mi));
+}
+function renderProgress(){
+  $('#progressTable').innerHTML=`<thead><tr><th>Parameter</th>${VIS.map(v=>`<th>${v}</th>`).join('')}<th>Change since 1st visit</th><th>Sessions that work on it</th></tr></thead><tbody>${
+   PARAMS.map((m,i)=>{const c=change(m);return `<tr><th scope="row"><button class="textlink" type="button" data-mi="${i}" data-scroll="1">${esc(m.k)}</button> <span class="muted small">${esc(m.u)}</span><small>${esc(m.how)}</small></th>${
+     m.v.map((v,j)=>`<td class="price">${v==null?'<span class="muted">Not due</span>':(m.show?m.show[j]:v.toFixed(m.dp))}</td>`).join('')}<td><span class="chg">${c.txt}</span>${c.ok?'<span class="tag">Improved</span>':''}</td><td>${esc(m.by)}</td></tr>`}).join('')}</tbody>`;
+}
+function pickMetric(e){const b=e.target.closest('[data-mi]');if(!b)return;mi=+b.dataset.mi;drawChart();if(b.dataset.scroll)$('#chartCard').scrollIntoView({block:'center'})}
+$('#kpis').addEventListener('click',pickMetric);
+$('#progressTable').addEventListener('click',pickMetric);
+
+/* ---------- booking ---------- */
+function copy(text,btn,fallbackEl){
+  const done=()=>{const o=btn.textContent;btn.textContent='Copied';setTimeout(()=>btn.textContent=o,1600)};
+  const fb=()=>{const r=document.createRange();r.selectNodeContents(fallbackEl);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+  try{navigator.clipboard.writeText(text).then(done,fb)}catch(e){fb()}
+}
+$('#copyPhone').addEventListener('click',e=>copy('+919829088210',e.currentTarget,$('#phoneText')));
+$('#bkCopy').addEventListener('click',e=>copy($('#bkMsg').textContent,e.currentTarget,$('#bkMsg')));
+$('#bookForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=$('#bkName').value.trim(),phone=$('#bkPhone').value.replace(/[^\d+]/g,''),err=$('#bkErr');
+  if(name.length<2){err.textContent='Please enter your name.';err.hidden=false;$('#bkName').focus();return}
+  if(phone.replace(/\D/g,'').length<10){err.textContent='Please enter a mobile number with at least 10 digits.';err.hidden=false;$('#bkPhone').focus();return}
+  err.hidden=true;
+  const date=$('#bkDate').value, note=$('#bkNote').value.trim();
+  const msg=['Hello NextGen Human, I would like to book.','Name: '+name,'Mobile: '+phone,'Interested in: '+$('#bkInterest').value,'Preferred time: '+$('#bkSlot').value+(date?' on '+date:''),note?'Note: '+note:''].filter(Boolean).join('\n');
+  $('#bkMsg').textContent=msg; $('#bkWa').href='https://wa.me/919829088210?text='+encodeURIComponent(msg); $('#bkReady').hidden=false;
+});
+
+/* ---------- boot ---------- */
+renderTiers();renderCompare();renderCalcTable();renderCalcOut();renderFeel();renderProgs();renderTech();renderClasses();renderProgress();drawChart();
+go((location.hash||'#home').slice(1),{silent:true,initial:true});
+})();
+</script>
+</body>
+</html>
