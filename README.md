@@ -4,20 +4,20 @@ Sample website for the NextGen Human longevity, diagnostics and recovery centre 
 
 This is a static site: one `index.html` and an `img/` folder. There is no build step.
 
-## Pages
+## Structure
 
-All pages live in `index.html` and switch by the link hash.
+The landing page is short: a hero and a tree of six branches. Everything else sits on sub-pages, each with a breadcrumb and tabs. Pages switch by the link hash.
 
-| Link | Page |
+| Branch | Pages (link hash) |
 | --- | --- |
-| `#home` | Sanctuary (home), with FAQ and Discovery visit form |
-| `#memberships` | Credit plans, credit calculator (`#credits`), sessions by how you feel (`#feel`), plan comparison (`#compare`) |
-| `#programmes` | 16 programmes across Young & Marriage, Fat Loss, Athlete and C-Suite |
-| `#diagnostics` | Diagnostics and technology cards, full session menu with prices and credits |
-| `#classes` | Classes and cohorts timetable |
-| `#journal` | Journal |
-| `#portal` | Member portal sample, with the progress table (`#progress`) |
-| `#team` | Care team roles and registrations |
+| The centre | Our approach (`#centre`), Inside the centre (`#inside`), Recovery and skin (`#recovery`), Care team (`#team`) |
+| Programmes | By goal (`#programmes`), All programmes (`#plist`) |
+| Memberships | Plans and prices (`#memberships`), Plan finder (`#credits`), By how you feel (`#feel`), Compare plans (`#compare`) |
+| Diagnostics & Tech | Featured sessions (`#diagnostics`), Full session menu (`#menu`) |
+| Classes, journal and portal | `#classes`, `#journal`, Dashboard (`#portal`), Progress table (`#progress`) |
+| Visit | Book a visit (`#visit`), Questions (`#faq`) |
+
+To add a page, add a `data-sub` block inside the right `data-view` section and a matching entry in `ROUTES` in the script.
 
 ## Run it
 
@@ -32,8 +32,8 @@ Import this repository in Vercel. Choose the "Other" framework preset, leave the
 ## Before going live
 
 - Prices, the class timetable, journal articles and member portal figures are illustrative samples.
-- Membership plans follow Membership Plan v3 (credit wallets). Update the `TIERS`, `CM` and `MATRIX` data in `index.html` if the plan changes.
+- Plan data lives in `TIERS`, `CM` and `MATRIX` in `index.html`.
 - Care team cards show roles only. Add real names and registration numbers once clinicians are appointed.
-- The booking form prepares a WhatsApp message to +91 98290 88210. It does not send or store anything.
+- The booking form prepares a WhatsApp message to +1 832 292 7282. It does not send or store anything.
 - Images are stills from the promotional video.
 - Remove the "Sample site for review" bar at the top of `index.html`.

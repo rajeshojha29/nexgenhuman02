@@ -266,6 +266,35 @@ table.compare .pickcol{box-shadow:inset 0 3px 0 var(--gold)}
 #progressTable th[scope=row] small{display:block;font-weight:400;color:var(--ink-soft);font-size:.8rem;margin-top:3px}
 #progressTable td:last-child{min-width:200px;color:var(--ink-soft)}
 
+/* hierarchy: landing tree, page heads, breadcrumbs and sub-tabs */
+.tree{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,5vw,72px);align-items:start}
+@media (max-width:760px){.tree{grid-template-columns:1fr}}
+.branch{border-top:1px solid var(--line)}
+.branch summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding-block:18px;align-items:baseline}
+.branch summary::-webkit-details-marker{display:none}
+.branch summary b{font-family:var(--display);font-size:1.7rem;font-weight:500;line-height:1.1}
+.branch summary span{grid-column:1;color:var(--ink-soft);font-size:.92rem}
+.branch summary::after{content:"+";grid-column:2;grid-row:1;font-family:var(--mono);color:var(--gold);font-size:1.2rem}
+.branch[open] summary::after{content:"–"}
+.twigs{margin:0 0 18px 8px;border-left:1px solid var(--gold-soft);display:grid}
+.twigs a{position:relative;display:grid;gap:2px;padding:9px 0 9px 28px;text-decoration:none}
+.twigs a::before{content:"";position:absolute;left:0;top:1.3em;width:18px;border-top:1px solid var(--gold-soft)}
+.twigs a b{font-weight:600}
+.twigs a span{font-size:.86rem;color:var(--ink-soft)}
+.twigs a:hover b{text-decoration:underline;text-decoration-color:var(--gold-soft);text-underline-offset:4px}
+.pagehead{padding-block:clamp(24px,3.5vw,44px) 0}
+.pagehead .head{margin-bottom:26px}
+.crumbs{display:flex;flex-wrap:wrap;gap:8px;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:20px}
+.crumbs a{text-decoration:none;color:var(--gold)}
+.crumbs b{font-weight:500;color:var(--ink)}
+.subnav{display:flex;flex-wrap:wrap;gap:0 26px;border-bottom:1px solid var(--line)}
+.subnav:empty{display:none}
+.subnav a{padding:12px 0;font-weight:600;font-size:.92rem;text-decoration:none;color:var(--ink-soft);border-bottom:2px solid transparent;margin-bottom:-1px}
+.subnav a:hover{color:var(--ink)}
+.subnav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)}
+[data-sub]>.band:first-child{padding-top:clamp(28px,4vw,48px)}
+[data-sub]>.band.deep:first-child,[data-sub]>.band.sunk:first-child{margin-top:clamp(24px,3vw,36px);padding-top:clamp(40px,6vw,72px)}
+
 footer.site{background:var(--deep);color:var(--on-deep-soft);padding-block:44px;font-size:.88rem}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
 @media (max-width:720px){.foot-grid{grid-template-columns:1fr}}
@@ -283,11 +312,11 @@ footer.site a:hover{color:var(--on-deep)}
     <a class="brand" href="#home" data-go="home"><b>NextGen Human</b><span>Jaipur Performance Center</span></a>
     <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks">Menu</button>
     <nav class="navlinks" id="navLinks" aria-label="Main">
-      <a href="#home" data-go="home">Sanctuary</a>
-      <a href="#memberships" data-go="memberships">Memberships</a>
-      <a href="#classes" data-go="classes">Classes &amp; Cohorts</a>
+      <a href="#centre" data-go="centre">The Centre</a>
       <a href="#programmes" data-go="programmes">Programmes</a>
+      <a href="#memberships" data-go="memberships">Memberships</a>
       <a href="#diagnostics" data-go="diagnostics">Diagnostics &amp; Tech</a>
+      <a href="#classes" data-go="classes">Classes &amp; Cohorts</a>
       <a href="#journal" data-go="journal">Journal</a>
       <a href="#portal" data-go="portal">Member Portal</a>
     </nav>
@@ -303,10 +332,10 @@ footer.site a:hover{color:var(--on-deep)}
       <div class="hero-copy">
         <p class="label">Longevity · Diagnostics · Recovery · Jaipur</p>
         <h1>Designing who you're <em>becoming</em></h1>
-        <p class="lead">A doctor-led centre in Mansarovar where your body is measured properly, treated with a plan, and measured again. Diagnostics, recovery and skin care sit on one floor, with one care team.</p>
+        <p class="lead">A doctor-led centre in Mansarovar for longevity, diagnostics and recovery.</p>
         <div class="cta-row">
           <a class="btn gold" href="#visit" data-go="visit">Book a Discovery Visit (₹2,499)</a>
-          <a class="btn ghost" href="#memberships" data-go="memberships">Explore memberships</a>
+          <a class="btn ghost" href="#centre" data-go="centre">Explore the centre</a>
         </div>
         <p class="facts"><span><b>7 am – 9 pm</b> every day</span><span><b>Doctor-led</b> care team</span><span><b>One floor</b> step-free</span></p>
       </div>
@@ -315,18 +344,53 @@ footer.site a:hover{color:var(--on-deep)}
   </div>
 
   <div class="band sunk"><div class="wrap">
-    <div class="head">
-      <p class="label">The centre</p>
-      <h2>Clinical precision, in a space built for <em>calm</em></h2>
-      <p class="lead">Hospital-grade testing usually comes with hospital waiting rooms. Here the same equipment sits behind a quiet lounge, and every result is explained to you by the doctor who ordered it.</p>
+    <div class="head"><p class="label">Explore</p><h2>Where would you like to <em>start</em>?</h2></div>
+    <div class="tree">
+      <details class="branch"><summary><b>The centre</b><span>How we work, the space and the people</span></summary><div class="twigs">
+        <a href="#centre" data-go="centre"><b>Our approach</b><span>Measure, treat, re-test</span></a>
+        <a href="#inside" data-go="inside"><b>Inside the centre</b><span>Six rooms on one floor</span></a>
+        <a href="#recovery" data-go="recovery"><b>Recovery and skin</b><span>Everyday sessions and prices</span></a>
+        <a href="#team" data-go="team"><b>Care team</b><span>Roles, credentials and licences</span></a></div></details>
+      <details class="branch"><summary><b>Programmes</b><span>Fixed-length plans built around one goal</span></summary><div class="twigs">
+        <a href="#plist" data-go="plist" data-cat="ym"><b>Young &amp; Marriage</b><span>From ₹24,999</span></a>
+        <a href="#plist" data-go="plist" data-cat="fl"><b>Fat Loss</b><span>From ₹27,999</span></a>
+        <a href="#plist" data-go="plist" data-cat="ath"><b>Athlete</b><span>From ₹12,999</span></a>
+        <a href="#plist" data-go="plist" data-cat="cs"><b>C-Suite</b><span>From ₹24,999</span></a></div></details>
+      <details class="branch"><summary><b>Memberships</b><span>Monthly recovery credits and included sessions</span></summary><div class="twigs">
+        <a href="#memberships" data-go="memberships"><b>Plans and prices</b><span>Four plans from ₹5,999 a month</span></a>
+        <a href="#credits" data-go="credits"><b>Plan finder</b><span>Enter your month, see the plan that fits</span></a>
+        <a href="#feel" data-go="feel"><b>Sessions by how you feel</b><span>Tense, anxious, low or sleeping badly</span></a>
+        <a href="#compare" data-go="compare"><b>Compare plans</b><span>Every plan against the same services</span></a></div></details>
+      <details class="branch"><summary><b>Diagnostics &amp; technology</b><span>Tests and machines, with prices</span></summary><div class="twigs">
+        <a href="#diagnostics" data-go="diagnostics"><b>Featured sessions</b><span>DEXA, VO2 max, hyperbaric and more</span></a>
+        <a href="#menu" data-go="menu"><b>Full session menu</b><span>Every session, price and who performs it</span></a></div></details>
+      <details class="branch"><summary><b>Classes, journal and portal</b><span>Group sessions, reading and your results</span></summary><div class="twigs">
+        <a href="#classes" data-go="classes"><b>Classes &amp; cohorts</b><span>Weekly timetable</span></a>
+        <a href="#journal" data-go="journal"><b>Journal</b><span>Short reads from the care team</span></a>
+        <a href="#portal" data-go="portal"><b>Member portal</b><span>A sample dashboard</span></a>
+        <a href="#progress" data-go="progress"><b>Progress table</b><span>Biological age and 12 other measures, visit by visit</span></a></div></details>
+      <details class="branch"><summary><b>Visit</b><span>Book, call or ask a question</span></summary><div class="twigs">
+        <a href="#visit" data-go="visit"><b>Book a Discovery visit</b><span>90 minutes, ₹2,499</span></a>
+        <a href="#faq" data-go="faq"><b>Questions</b><span>Safety, credits and what to expect</span></a></div></details>
     </div>
+  </div></div>
+</section>
+
+<!-- ================= THE CENTRE ================= -->
+<section data-view="centre" hidden>
+  <div class="pagehead"><div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="head"><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Clinical precision, in a space built for <em>calm</em>.</h1><p class="lead">Hospital-grade testing usually comes with hospital waiting rooms. Here the same equipment sits behind a quiet lounge, and every result is explained to you by the doctor who ordered it.</p></div>
+    <div class="subnav"></div>
+  </div></div>
+  <div data-sub="approach" data-token="centre" data-label="Our approach">
+  <div class="band"><div class="wrap">
     <div class="grid g3">
-      <div class="point"><h3>Measured, not guessed</h3><p class="muted">DEXA for muscle, fat and bone. A metabolic analyser for VO2 max and resting metabolic rate. ECG, HRV and blood biomarkers to complete the picture.</p></div>
+      <div class="point"><h3>Measured, not guessed</h3><p class="muted">A DNA-based test for your biological age. DEXA for muscle, fat and bone. A metabolic analyser for VO2 max and resting metabolic rate. ECG, HRV and blood biomarkers to complete the picture.</p></div>
       <div class="point"><h3>Doctors decide, technology assists</h3><p class="muted">A physician screens you before any IV, hyperbaric or exercise test. A full-time dermatologist performs every medical skin procedure.</p></div>
       <div class="point"><h3>Unhurried by design</h3><p class="muted">Sessions are booked by appointment, so there are no queues. Peak-hour slots are capped to keep the lounge quiet.</p></div>
     </div>
   </div></div>
-
   <div class="band deep"><div class="wrap">
     <div class="head">
       <p class="label">How it works</p>
@@ -334,28 +398,14 @@ footer.site a:hover{color:var(--on-deep)}
       <p class="lead">Every programme follows the same three steps. The re-test is what tells you whether the plan is working.</p>
     </div>
     <ol class="grid g3 steps">
-      <li class="step"><h3>Measure</h3><p class="muted">A baseline visit records where you are today. You leave with numbers, each one explained in plain language.</p><p class="unit">DEXA g/cm² · VO2 max ml/kg/min · RMR kcal/day · HRV ms</p></li>
+      <li class="step"><h3>Measure</h3><p class="muted">A baseline visit records where you are today. You leave with numbers, each one explained in plain language.</p><p class="unit">Biological age yrs · DEXA g/cm² · VO2 max ml/kg/min · RMR kcal/day · HRV ms</p></li>
       <li class="step"><h3>Treat</h3><p class="muted">Your doctor builds a plan around those numbers: training zones, nutrition, recovery sessions, and medical therapies where they are indicated.</p><p class="unit">Sauna 60–85 °C · plunge 8–12 °C · HBOT 1.3 ATA · EMS 20 min</p></li>
       <li class="step"><h3>Re-test</h3><p class="muted">The same tests are repeated on the same machines, usually at 6 and 12 weeks. The plan changes if the numbers do not.</p><p class="unit">Week 0 → week 6 → week 12</p></li>
     </ol>
     <p style="margin-top:30px"><a class="textlink" href="#progress" data-go="progress">See a sample progress table, first visit to week 24 →</a></p>
   </div></div>
-
-  <div class="band"><div class="wrap">
-    <div class="head">
-      <p class="label">Programmes</p>
-      <h2>Four programmes, one <em>care team</em></h2>
-      <p class="lead">Choose the goal closest to yours. The same doctors, physiotherapist and dietitian work across all four, so nothing is lost if your goal changes.</p>
-    </div>
-    <div class="grid g4">
-      <a class="prog" href="#programmes" data-go="programmes" data-cat="ym"><div class="arch"><img loading="lazy" src="img/redlight.jpg" width="1200" height="675" alt="Guest standing in a red light therapy room"></div><p class="label">Young &amp; Marriage</p><h3>Look and feel ready for the day</h3><p class="muted small">Skin, posture and energy plans for brides, grooms and couples.</p><p class="from">From ₹24,999</p></a>
-      <a class="prog" href="#programmes" data-go="programmes" data-cat="fl"><div class="arch"><img loading="lazy" src="img/ems.jpg" width="1200" height="675" alt="Coach guiding a member through an EMS training session"></div><p class="label">Fat Loss</p><h3>Lose fat, keep muscle</h3><p class="muted small">DEXA-tracked plans with a dietitian, EMS training and glucose monitoring.</p><p class="from">From ₹27,999</p></a>
-      <a class="prog" href="#programmes" data-go="programmes" data-cat="ath"><div class="arch"><img loading="lazy" src="img/vo2.jpg" width="1200" height="675" alt="Athlete on a bike wearing a breath analysis mask during a VO2 max test"></div><p class="label">Athlete</p><h3>Train from your own data</h3><p class="muted small">VO2 max, force plates and gait analysis, with recovery built in.</p><p class="from">From ₹12,999</p></a>
-      <a class="prog" href="#programmes" data-go="programmes" data-cat="cs"><div class="arch"><img loading="lazy" src="img/consult.jpg" width="1200" height="675" alt="Doctor reviewing results with a guest in a consultation room"></div><p class="label">C-Suite</p><h3>A full check in one morning</h3><p class="muted small">Executive assessments and quarterly reviews with the medical director.</p><p class="from">From ₹24,999</p></a>
-    </div>
-    <p style="margin-top:28px"><a class="textlink" href="#team" data-go="team">Meet the care team and see our registrations →</a></p>
-  </div></div>
-
+  </div>
+  <div data-sub="inside" data-token="inside" data-label="Inside the centre">
   <div class="band sunk"><div class="wrap">
     <div class="head">
       <p class="label">The space</p>
@@ -371,12 +421,13 @@ footer.site a:hover{color:var(--on-deep)}
       <figure class="tile"><div class="frame"><img loading="lazy" src="img/massage.jpg" width="1200" height="675" alt="Therapist giving a back massage"></div><figcaption>Restore room<span>Massage</span></figcaption></figure>
     </div>
   </div></div>
-
+  </div>
+  <div data-sub="recovery" data-token="recovery" data-label="Recovery and skin">
   <div class="band"><div class="wrap">
     <div class="head">
       <p class="label">Everyday care</p>
       <h2>Recovery and <em>skin</em></h2>
-      <p class="lead">Most members come two or three times a week for these. Each can be booked as a single session or paid for with membership credits.</p>
+      <p class="lead">Most members come two or three times a week for these. Each can be booked as a single session. For members, every recovery session uses one recovery credit.</p>
     </div>
     <div class="duo">
       <div class="col">
@@ -405,40 +456,199 @@ footer.site a:hover{color:var(--on-deep)}
       </div>
     </div>
   </div></div>
-
+  </div>
+  <div data-sub="team" data-token="team" data-label="Care team">
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Care team</p><h2>Medical leadership with <em>registered credentials</em></h2><p class="lead">Each clinical role is held by a registered professional. Names and registration numbers are published here as each clinician is appointed.</p></div>
+    <div class="grid g3" id="teamCards"></div>
+  </div></div>
   <div class="band sunk"><div class="wrap">
+    <div class="head"><p class="label">Registrations</p><h2>Licences displayed at the <em>centre</em></h2></div>
+    <div class="grid g4">
+      <div class="point"><h3>Clinical establishment</h3><p class="muted">Registered with the Rajasthan health department.</p></div>
+      <div class="point"><h3>AERB licence</h3><p class="muted">For the DEXA room, with a declared radiation safety officer.</p></div>
+      <div class="point"><h3>Biomedical waste</h3><p class="muted">State pollution control board authorisation and a licensed collector.</p></div>
+      <div class="point"><h3>Fire safety</h3><p class="muted">Fire NOC covering the oxygen and hyperbaric areas.</p></div>
+    </div>
+  </div></div>
+  </div>
+</section>
+
+<!-- ================= PROGRAMMES ================= -->
+<section data-view="programmes" hidden>
+  <div class="pagehead"><div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="head"><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Clinical Longevity <em>Programmes</em>.</h1><p class="lead">Fixed-length plans with a start test, a set of sessions and a re-test. Most include a DNA-based biological-age test at the start, and it can be added to the rest. Each one is led by a named clinician role.</p></div>
+    <div class="subnav"></div>
+  </div></div>
+  <div data-sub="goals" data-token="programmes" data-label="By goal">
+  <div class="band"><div class="wrap">
     <div class="head">
-      <p class="label">Memberships</p>
-      <h2>Memberships</h2>
-      <p class="lead">Four plans, priced for Jaipur. Each one is a monthly wallet of credits that you spend on any session. Your Discovery visit fee is credited in full if you join an annual plan.</p>
+      <p class="label">Programmes</p>
+      <h2>Four programmes, one <em>care team</em></h2>
+      <p class="lead">Choose the goal closest to yours. The same doctors, physiotherapist and dietitian work across all four, so nothing is lost if your goal changes.</p>
     </div>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>Plan</th><th>Per month</th><th>Credits a month</th><th>Best for</th><th>A typical month</th><th><span class="small">&nbsp;</span></th></tr></thead>
-        <tbody>
-          <tr><td><span class="plan">Recover</span></td><td class="price">₹4,999</td><td class="price">10</td><td>Regular recovery after work or training</td><td>3 contrast circuits and 4 single sessions</td><td><a class="textlink" href="#memberships" data-go="memberships">Join&nbsp;Plan&nbsp;→</a></td></tr>
-          <tr><td><span class="plan">Signature</span><span class="tag solid">Popular</span></td><td class="price">₹12,999</td><td class="price">32</td><td>Programme graduates who come every other day</td><td>8 contrast circuits, 2 EMS, 1 massage, 6 single sessions</td><td><a class="textlink" href="#memberships" data-go="memberships">Join&nbsp;Plan&nbsp;→</a></td></tr>
-          <tr><td><span class="plan">Prestige</span></td><td class="price">₹24,999</td><td class="price">70</td><td>Busy professionals who want it all in one place</td><td>4 hyperbaric, 1 IV drip, 1 facial, 1 massage, 2 EMS and 22 recovery sessions</td><td><a class="textlink" href="#memberships" data-go="memberships">Join&nbsp;Plan&nbsp;→</a></td></tr>
-          <tr><td><span class="plan">Founders' Circle</span><span class="tag">40 Members</span></td><td class="price">₹3,99,999 / yr</td><td class="price">100</td><td>Leaders and families who want a doctor-led annual plan</td><td>6 hyperbaric, 2 IV drips, 4 EMS and 30 recovery sessions, plus a full annual assessment</td><td><a class="textlink" href="#memberships" data-go="memberships">Join&nbsp;Plan&nbsp;→</a></td></tr>
-        </tbody>
-      </table>
+    <div class="grid g4">
+      <a class="prog" href="#programmes" data-go="plist" data-cat="ym"><div class="arch"><img loading="lazy" src="img/redlight.jpg" width="1200" height="675" alt="Guest standing in a red light therapy room"></div><p class="label">Young &amp; Marriage</p><h3>Look and feel ready for the day</h3><p class="muted small">Skin, posture and energy plans for brides, grooms and couples.</p><p class="from">From ₹24,999</p></a>
+      <a class="prog" href="#programmes" data-go="plist" data-cat="fl"><div class="arch"><img loading="lazy" src="img/ems.jpg" width="1200" height="675" alt="Coach guiding a member through an EMS training session"></div><p class="label">Fat Loss</p><h3>Lose fat, keep muscle</h3><p class="muted small">DEXA-tracked plans with a dietitian, EMS training and glucose monitoring.</p><p class="from">From ₹27,999</p></a>
+      <a class="prog" href="#programmes" data-go="plist" data-cat="ath"><div class="arch"><img loading="lazy" src="img/vo2.jpg" width="1200" height="675" alt="Athlete on a bike wearing a breath analysis mask during a VO2 max test"></div><p class="label">Athlete</p><h3>Train from your own data</h3><p class="muted small">VO2 max, force plates and gait analysis, with recovery built in.</p><p class="from">From ₹12,999</p></a>
+      <a class="prog" href="#programmes" data-go="plist" data-cat="cs"><div class="arch"><img loading="lazy" src="img/consult.jpg" width="1200" height="675" alt="Doctor reviewing results with a guest in a consultation room"></div><p class="label">C-Suite</p><h3>A full check in one morning</h3><p class="muted small">Executive assessments and quarterly reviews with the medical director.</p><p class="from">From ₹24,999</p></a>
     </div>
-    <p style="margin-top:24px;display:flex;flex-wrap:wrap;gap:10px 28px"><a class="textlink" href="#compare" data-go="compare">Compare all four plans service by service →</a><a class="textlink" href="#credits" data-go="credits">See what a credit buys →</a><a class="textlink" href="#feel" data-go="feel">Find sessions for how you feel →</a></p>
+    <p style="margin-top:28px"><a class="textlink" href="#team" data-go="team">Meet the care team and see our registrations →</a></p>
   </div></div>
+  </div>
+  <div data-sub="list" data-token="plist" data-label="All programmes">
+  <div class="band"><div class="wrap">
+    <div class="pills" id="progPills" role="group" aria-label="Programme category"></div>
+    <div class="grid g2" id="progCards"></div>
+  </div></div>
+  </div>
+</section>
 
-  <div class="band" id="faq"><div class="wrap">
-    <div class="head"><p class="label">Questions</p><h2>Before you <em>visit</em></h2></div>
-    <div class="faq">
-      <details open><summary>What happens at a Discovery visit?</summary><p>It takes about 90 minutes. You have a short consultation, an InBody scan, a guided sauna and cold plunge circuit, and a red light session. You leave with your readings and a suggested plan. The ₹2,499 fee is credited in full if you join an annual membership.</p></details>
-      <details><summary>How do membership credits work?</summary><p>Each plan gives you a number of credits every month. A single recovery session uses 1 credit, a contrast circuit 2, an EMS session 3 and a hyperbaric session 4. Up to a quarter of unused credits roll into the next month, and you can buy more at ₹650 each.</p></details>
-      <details><summary>Do I need a doctor's referral?</summary><p>No. Our own doctor screens you before any test or therapy that needs medical clearance, such as VO2 max testing, IV therapy or hyperbaric oxygen.</p></details>
-      <details><summary>Is the DEXA scan safe?</summary><p>DEXA uses a very low dose of X-ray, far lower than a standard chest X-ray. The room is licensed by the Atomic Energy Regulatory Board and the scan is run by a registered technologist. It is not offered during pregnancy.</p></details>
-      <details><summary>Who can have IV therapy or hyperbaric oxygen?</summary><p>Only guests cleared by our doctor on the day. IV drips are prescribed by a physician and given by a registered nurse. Competitive athletes should know that anti-doping rules limit IV infusions to 100 mL per 12 hours, so we do not include larger drips in athlete plans.</p></details>
-      <details><summary>Can I pause my membership when I travel?</summary><p>Annual members can pause for up to 30 days a year with 7 days' notice. Monthly plans can be paused after the first 3 months.</p></details>
-      <details><summary>Will these treatments reverse ageing or cure a condition?</summary><p>No, and we will not promise that. What we offer is accurate measurement, supervised therapies and a plan you can follow. Results differ from person to person.</p></details>
+<!-- ================= MEMBERSHIPS ================= -->
+<section data-view="memberships" hidden>
+  <div class="pagehead"><div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="head"><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Invest in your biology at calibrated <em>Jaipur rates</em>.</h1><p class="lead">Every plan includes recovery credits, and one credit is one recovery session of any kind. The higher plans add a set number of EMS, massage, hyperbaric, IV and facial sessions. Every plan also includes a DNA-based biological-age test. Pay monthly, or pay for ten months and get twelve on an annual plan.</p></div>
+    <div class="subnav"></div>
+  </div></div>
+  <div data-sub="plans" data-token="memberships" data-label="Plans and prices">
+  <div class="band"><div class="wrap">
+    <div class="toggle" role="group" aria-label="Billing period"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="y" aria-pressed="false">Annual</button></div>
+    <div class="grid g4 stack" id="tierCards"></div>
+    <div class="grid g3" style="margin-top:44px">
+      <div class="point"><h3>Couple plan</h3><p class="muted">Two Recover annual memberships for ₹99,999 a year, with slots booked together.</p></div>
+      <div class="point"><h3>Family add-on</h3><p class="muted">Add a spouse, parent or adult child to Signature or Prestige at 40% off the same tier.</p></div>
+      <div class="point"><h3>Student and athlete pass</h3><p class="muted">The Recover plan for ₹3,999 a month, for bookings between 11 am and 4 pm.</p></div>
     </div>
   </div></div>
+  </div>
+  <div data-sub="finder" data-token="credits" data-label="Plan finder">
+  <div class="band" id="credits"><div class="wrap">
+    <div class="head"><p class="label">How recovery credits work</p><h2>One credit, any <em>recovery session</em></h2><p class="lead">A contrast circuit, sauna, cold plunge, red light, compression boots, PEMF, cryotherapy or a class each use one credit. Set how often you would come each month and the plan finder shows which plan covers it.</p></div>
+    <div class="pills" id="calcPresets" role="group" aria-label="Load a typical month">
+      <button class="pill" type="button" data-pre="0">Typical Recover month</button><button class="pill" type="button" data-pre="1">Typical Signature month</button><button class="pill" type="button" data-pre="2">Typical Prestige month</button><button class="pill" type="button" data-pre="3">Typical Founders' month</button><button class="pill" type="button" data-pre="x">Clear</button>
+    </div>
+    <p class="fit" id="calcOut" aria-live="polite"></p>
+    <div class="scroll"><table class="cards" id="calcTable"></table></div>
+    <div class="grid g3" style="margin-top:36px">
+      <div class="point"><h3>Credits arrive monthly</h3><p class="muted">You receive your recovery credits on the first of each month. A few unused credits roll into the next month: 2 on Recover, 3 on Signature, 4 on Prestige and 6 on Founders' Circle.</p></div>
+      <div class="point"><h3>Need more?</h3><p class="muted">Extra recovery credits cost ₹650 each, or 10 for ₹6,000, and last 60 days.</p></div>
+      <div class="point"><h3>Fair booking</h3><p class="muted">Sauna and contrast bookings have a monthly limit on each plan, so the cabin stays available. Cancelling within 4 hours uses the credit.</p></div>
+    </div>
+    <p class="note">EMS, massage, hyperbaric, IV drips and facials are not paid for with recovery credits. Signature and above include a set number each month. Beyond that number, and on Recover, they are charged at the single price less your member discount.</p>
+  </div></div>
+  </div>
+  <div data-sub="feel" data-token="feel" data-label="By how you feel">
+  <div class="band" id="feel"><div class="wrap">
+    <div class="head"><p class="label">Sessions by how you feel</p><h2>Start from the <em>feeling</em>, not the machine</h2><p class="lead">Pick what you are dealing with today. We show the sessions members most often choose for it, what each costs on its own, and how a membership covers it.</p></div>
+    <div class="pills" id="feelPills" role="group" aria-label="How you feel"></div>
+    <div class="feel" id="feelPanel"></div>
+    <p class="note">These sessions support relaxation, recovery and general wellbeing. They are not a treatment for anxiety, depression or any other medical condition. If a feeling lasts more than two weeks or gets in the way of daily life, please speak to our doctor or visiting psychologist, or to your own doctor.</p>
+  </div></div>
+  </div>
+  <div data-sub="compare" data-token="compare" data-label="Compare plans">
+  <div class="band" id="compare"><div class="wrap">
+    <div class="head"><p class="label">Side by side</p><h2>Compare NextGen Human <em>Memberships</em></h2><p class="lead">Every plan is listed against the same services, so each row reads straight across. Choose which plans to show, or hide the rows where they are identical.</p></div>
+    <div id="compareBox">
+      <div class="tools">
+        <div class="chips" id="planChips" role="group" aria-label="Plans to compare"></div>
+        <label class="chk"><input type="checkbox" id="diffOnly"> Show differences only</label>
+        <div class="toggle" role="group" aria-label="Billing period"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="y" aria-pressed="false">Annual</button></div>
+      </div>
+      <div class="scroll"><table class="compare" id="compareTable"></table></div>
+      <p class="legend"><span class="cell inc"><i></i><span>Included in the plan</span></span><span class="cell"><i></i><span>Not included, member discount applies</span></span><span class="cell none"><i></i><span>Not included, paid add-on</span></span></p>
+    </div>
+  </div></div>
+  </div>
+</section>
 
+<!-- ================= DIAGNOSTICS ================= -->
+<section data-view="diagnostics" hidden>
+  <div class="pagehead"><div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="head"><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Clinical-grade diagnostics &amp; <em>restorative technology</em>.</h1><p class="lead">Every session can be booked on its own. The session menu also shows what a membership covers.</p></div>
+    <div class="subnav"></div>
+  </div></div>
+  <div data-sub="featured" data-token="diagnostics" data-label="Featured sessions">
+  <div class="band"><div class="wrap">
+    <div class="pills" id="techPills" role="group" aria-label="Suite"></div>
+    <div class="grid g3" id="techCards"></div>
+  </div></div>
+  </div>
+  <div data-sub="menu" data-token="menu" data-label="Full session menu">
+  <div class="band"><div class="wrap">
+    <div class="head"><p class="label">Session menu</p><h2>Everything you can <em>book</em></h2></div>
+    <div class="scroll"><table id="menuTable"></table></div>
+  </div></div>
+  </div>
+</section>
+
+<!-- ================= CLASSES ================= -->
+<section data-view="classes" hidden>
+  <div class="pagehead"><div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="head"><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Curated masterclasses &amp; group <em>recovery circuits</em>.</h1><p class="lead">Small groups, led by the same team that runs your programme. Members book a seat with 1 recovery credit; guests pay ₹499 a class.</p></div>
+    <div class="subnav"></div>
+  </div></div>
+  <div data-sub="main" data-token="classes">
+  <div class="band"><div class="wrap">
+    <div class="pills" id="classPills" role="group" aria-label="Class type"></div>
+    <div class="grid g3" id="classCards"></div>
+  </div></div>
+  </div>
+</section>
+
+<!-- ================= JOURNAL ================= -->
+<section data-view="journal" hidden>
+  <div class="pagehead"><div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="head"><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Evidence-based longevity &amp; human performance <em>insights</em>.</h1><p class="lead">Short reads from the care team on what the tests mean and what the research does and does not show. Sample articles.</p></div>
+    <div class="subnav"></div>
+  </div></div>
+  <div data-sub="main" data-token="journal">
+  <div class="band"><div class="wrap">
+    <div class="grid g3" id="journalCards"></div>
+  </div></div>
+  </div>
+</section>
+
+<!-- ================= PORTAL ================= -->
+<section data-view="portal" hidden>
+  <div class="pagehead"><div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="head"><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Your numbers, <em>visit by visit</em>.</h1><p class="lead">This is what a member sees after four visits. Every parameter is shown against the first visit. The figures are an illustrative example, not a real member or a promised result.</p></div>
+    <div class="subnav"></div>
+  </div></div>
+  <div data-sub="chart" data-token="portal" data-label="Dashboard">
+  <div class="band"><div class="wrap">
+    <div class="kpis" id="kpis"></div>
+    <div class="card" id="chartCard"><div class="meta"><span id="chartTitle"></span><span>Sample member · age 42 · Signature plan</span></div><div id="chart" class="chart"></div></div>
+  </div></div>
+  <div class="band"><div class="wrap">
+    <div class="grid g2">
+      <div class="card"><h3>Upcoming</h3><ul class="plist"><li><span>Contrast circuit, 1 recovery credit</span><span>Thu · 7:30 am</span></li><li><span>EMS session with coach, included</span><span>Sat · 8:00 am</span></li><li><span>Half-yearly review with doctor and dietitian</span><span>21 Oct · 6:00 pm</span></li></ul></div>
+      <div class="card"><h3>This month</h3><ul class="plist"><li><span>Recovery credits used</span><span>7 of 12</span></li><li><span>EMS session</span><span>1 of 1</span></li><li><span>Massage</span><span>0 of 1</span></li></ul></div>
+    </div>
+  </div></div>
+  </div>
+  <div data-sub="progress" data-token="progress" data-label="Progress table">
+  <div class="band" id="progress"><div class="wrap">
+    <div class="head"><p class="label">Progress table</p><h2>First visit and every visit <em>after</em></h2><p class="lead">Each row is one parameter, measured the same way each time. The last column shows which sessions work on it. Select a parameter to see it on the chart.</p></div>
+    <div class="scroll"><table id="progressTable"></table></div>
+    <p class="note">Biological age is a laboratory estimate based on DNA methylation. We track it as one marker among many; it is not a diagnosis, and it is re-tested every six months because it changes slowly. Results differ from person to person.</p>
+  </div></div>
+  </div>
+</section>
+
+<!-- ================= VISIT ================= -->
+<section data-view="visit" hidden>
+  <div class="pagehead"><div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="head"><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Book, call or <em>ask</em>.</h1><p class="lead">A Discovery visit is the simplest way to start. Common questions are answered on the next tab.</p></div>
+    <div class="subnav"></div>
+  </div></div>
+  <div data-sub="book" data-token="visit" data-label="Book a visit">
   <div class="band deep" id="visit"><div class="wrap">
     <div class="visit">
       <div class="col">
@@ -448,7 +658,7 @@ footer.site a:hover{color:var(--on-deep)}
         <dl class="info">
           <div><dt>Where</dt><dd>Mansarovar, Jaipur, Rajasthan</dd></div>
           <div><dt>Hours</dt><dd>7 am – 9 pm, every day</dd></div>
-          <div><dt>Call / WhatsApp</dt><dd><span class="num" id="phoneText" style="user-select:all">+91 98290 88210</span> &nbsp;<button class="textlink small" type="button" id="copyPhone">Copy</button></dd></div>
+          <div><dt>Call / WhatsApp</dt><dd><span class="num" id="phoneText" style="user-select:all">+1 832 292 7282</span> &nbsp;<button class="textlink small" type="button" id="copyPhone">Copy</button></dd></div>
         </dl>
       </div>
       <form class="book" id="bookForm" novalidate>
@@ -469,144 +679,34 @@ footer.site a:hover{color:var(--on-deep)}
         <div class="ready" id="bkReady" hidden>
           <p><strong>Your request is ready.</strong> This sample site does not send it for you. Send it on WhatsApp, or copy it.</p>
           <pre id="bkMsg"></pre>
-          <div class="cta-row"><a class="btn sm gold" id="bkWa" target="_blank" rel="noopener" href="https://wa.me/919829088210">Open WhatsApp</a><button class="btn sm ghost" type="button" id="bkCopy">Copy message</button></div>
+          <div class="cta-row"><a class="btn sm gold" id="bkWa" target="_blank" rel="noopener" href="https://wa.me/18322927282">Open WhatsApp</a><button class="btn sm ghost" type="button" id="bkCopy">Copy message</button></div>
         </div>
       </form>
     </div>
     <p class="disc">NextGen Human provides wellness, diagnostic and medically supervised services. Information on this site is not medical advice. All therapies follow clinical screening and are offered only where suitable. We do not claim to cure disease or reverse ageing, and individual results vary.</p>
   </div></div>
-</section>
-
-<!-- ================= MEMBERSHIPS ================= -->
-<section data-view="memberships" hidden>
-  <div class="band"><div class="wrap">
-    <div class="head"><p class="label">Memberships</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Invest in your biology at calibrated <em>Jaipur rates</em>.</h1><p class="lead">Each plan is a monthly wallet of credits. Spend them on any session and top up when you need more. Pay monthly, or pay for ten months and get twelve on an annual plan.</p></div>
-    <div class="toggle" role="group" aria-label="Billing period"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="y" aria-pressed="false">Annual</button></div>
-    <div class="grid g4 stack" id="tierCards"></div>
-    <p style="margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 28px"><a class="textlink" href="#credits" data-go="credits">See what a credit buys →</a><a class="textlink" href="#compare" data-go="compare">Compare all four plans →</a><a class="textlink" href="#feel" data-go="feel">Find sessions for how you feel →</a><a class="textlink" href="#progress" data-go="progress">See how progress is tracked →</a></p>
-  </div></div>
-
-  <div class="band sunk" id="credits"><div class="wrap">
-    <div class="head"><p class="label">How credits work</p><h2>One wallet, <em>any session</em></h2><p class="lead">Every session has a credit price. Set how often you would come each month and the calculator shows the plan that fits, and what the same month costs without a membership.</p></div>
-    <div class="pills" id="calcPresets" role="group" aria-label="Load a typical month">
-      <button class="pill" type="button" data-pre="0">Typical Recover month</button><button class="pill" type="button" data-pre="1">Typical Signature month</button><button class="pill" type="button" data-pre="2">Typical Prestige month</button><button class="pill" type="button" data-pre="3">Typical Founders' month</button><button class="pill" type="button" data-pre="x">Clear</button>
-    </div>
-    <p class="fit" id="calcOut" aria-live="polite"></p>
-    <div class="scroll"><table class="cards" id="calcTable"></table></div>
-    <div class="grid g3" style="margin-top:36px">
-      <div class="point"><h3>Credits arrive monthly</h3><p class="muted">You receive your credits on the first of each month. Up to a quarter of unused credits roll into the next month.</p></div>
-      <div class="point"><h3>Top up any time</h3><p class="muted">Extra credits cost ₹650 each, or 10 for ₹6,000. Top-up credits last 60 days.</p></div>
-      <div class="point"><h3>Fair booking</h3><p class="muted">Peak-hour sauna and hyperbaric bookings have a monthly limit by plan. Cancelling within 4 hours uses the credits.</p></div>
-    </div>
-    <p class="note">Outside the wallet: NAD+ drips, dermatology procedures, blood panels, partner-lab tests and psychologist sessions are paid separately at your member discount. Reviews, scans and tests included in a plan do not use credits.</p>
-  </div></div>
-
-  <div class="band" id="feel"><div class="wrap">
-    <div class="head"><p class="label">Sessions by how you feel</p><h2>Start from the <em>feeling</em>, not the machine</h2><p class="lead">Pick what you are dealing with today. We show the sessions members most often choose for it, what each costs on its own, and how many credits it uses.</p></div>
-    <div class="pills" id="feelPills" role="group" aria-label="How you feel"></div>
-    <div class="feel" id="feelPanel"></div>
-    <p class="note">These sessions support relaxation, recovery and general wellbeing. They are not a treatment for anxiety, depression or any other medical condition. If a feeling lasts more than two weeks or gets in the way of daily life, please speak to our doctor or visiting psychologist, or to your own doctor.</p>
-  </div></div>
-
-  <div class="band sunk" id="compare"><div class="wrap">
-    <div class="head"><p class="label">Side by side</p><h2>Compare NextGen Human <em>Memberships</em></h2><p class="lead">Every plan is listed against the same rows, so each one reads straight across. Choose which plans to show, or hide the rows where they are identical.</p></div>
-    <div id="compareBox">
-      <div class="tools">
-        <div class="chips" id="planChips" role="group" aria-label="Plans to compare"></div>
-        <label class="chk"><input type="checkbox" id="diffOnly"> Show differences only</label>
-        <div class="toggle" role="group" aria-label="Billing period"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="y" aria-pressed="false">Annual</button></div>
-      </div>
-      <div class="scroll"><table class="compare" id="compareTable"></table></div>
-      <p class="legend"><span class="cell inc"><i></i><span>Included in the plan</span></span><span class="cell"><i></i><span>Paid with credits, or at the member discount</span></span><span class="cell none"><i></i><span>Paid add-on, or not part of a typical month</span></span></p>
-    </div>
-    <div class="grid g3" style="margin-top:40px">
-      <div class="point"><h3>Couple plan</h3><p class="muted">Two Recover annual memberships for ₹89,999 a year, with slots booked together.</p></div>
-      <div class="point"><h3>Family add-on</h3><p class="muted">Add a spouse, parent or adult child to Signature or Prestige at 40% off the same tier.</p></div>
-      <div class="point"><h3>Student and athlete pass</h3><p class="muted">The Recover wallet of 10 credits for ₹3,999 a month, for bookings between 11 am and 4 pm.</p></div>
+  </div>
+  <div data-sub="faq" data-token="faq" data-label="Questions">
+  <div class="band" id="faq"><div class="wrap">
+    <div class="head"><p class="label">Questions</p><h2>Questions people <em>ask</em></h2></div>
+    <div class="faq">
+      <details open><summary>What happens at a Discovery visit?</summary><p>It takes about 90 minutes. You have a short consultation, an InBody scan, a guided sauna and cold plunge circuit, and a red light session. You leave with your readings and a suggested plan. The ₹2,499 fee is credited in full if you join an annual membership.</p></details>
+      <details><summary>How do recovery credits work?</summary><p>Every plan includes recovery credits each month. One credit is one recovery session of any kind: a contrast circuit, sauna, cold plunge, red light, compression boots, PEMF, cryotherapy or a class. EMS, massage, hyperbaric, IV drips and facials are included as a set number of sessions on the higher plans. A few unused credits roll into the next month, from 2 to 6 depending on your plan, and extra credits cost ₹650 each.</p></details>
+      <details><summary>What is the biological-age test?</summary><p>It is a DNA methylation test on a small blood or cheek-swab sample, run by a partner lab. It estimates how old your body appears compared with your calendar age. Results take about four weeks and your doctor explains them. It is an estimate, not a diagnosis. Every membership includes it, and so do most programmes.</p></details>
+      <details><summary>Do I need a doctor's referral?</summary><p>No. Our own doctor screens you before any test or therapy that needs medical clearance, such as VO2 max testing, IV therapy or hyperbaric oxygen.</p></details>
+      <details><summary>Is the DEXA scan safe?</summary><p>DEXA uses a very low dose of X-ray, far lower than a standard chest X-ray. The room is licensed by the Atomic Energy Regulatory Board and the scan is run by a registered technologist. It is not offered during pregnancy.</p></details>
+      <details><summary>Who can have IV therapy or hyperbaric oxygen?</summary><p>Only guests cleared by our doctor on the day. IV drips are prescribed by a physician and given by a registered nurse. Competitive athletes should know that anti-doping rules limit IV infusions to 100 mL per 12 hours, so we do not include larger drips in athlete plans.</p></details>
+      <details><summary>Can I pause my membership when I travel?</summary><p>Annual members can pause for up to 30 days a year with 7 days' notice. Monthly plans can be paused after the first 3 months.</p></details>
+      <details><summary>Will these treatments reverse ageing or cure a condition?</summary><p>No, and we will not promise that. What we offer is accurate measurement, supervised therapies and a plan you can follow. Results differ from person to person.</p></details>
     </div>
   </div></div>
-</section>
-
-<!-- ================= CLASSES ================= -->
-<section data-view="classes" hidden>
-  <div class="band"><div class="wrap">
-    <div class="head"><p class="label">Classes &amp; Cohorts</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Curated masterclasses &amp; group <em>recovery circuits</em>.</h1><p class="lead">Small groups, led by the same team that runs your programme. Members book a seat with 1 credit; guests pay ₹499 a class.</p></div>
-    <div class="pills" id="classPills" role="group" aria-label="Class type"></div>
-    <div class="grid g3" id="classCards"></div>
-  </div></div>
-</section>
-
-<!-- ================= PROGRAMMES ================= -->
-<section data-view="programmes" hidden>
-  <div class="band"><div class="wrap">
-    <div class="head"><p class="label">Programmes</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Clinical Longevity <em>Programmes</em>.</h1><p class="lead">Fixed-length plans with a start test, a set of sessions and a re-test. Each one is led by a named clinician role.</p></div>
-    <div class="pills" id="progPills" role="group" aria-label="Programme category"></div>
-    <div class="grid g2" id="progCards"></div>
-  </div></div>
-</section>
-
-<!-- ================= DIAGNOSTICS ================= -->
-<section data-view="diagnostics" hidden>
-  <div class="band"><div class="wrap">
-    <div class="head"><p class="label">Diagnostics &amp; Tech</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Clinical-grade diagnostics &amp; <em>restorative technology</em>.</h1><p class="lead">Every session can be booked on its own or paid for with membership credits. The session menu shows both prices.</p></div>
-    <div class="pills" id="techPills" role="group" aria-label="Suite"></div>
-    <div class="grid g3" id="techCards"></div>
-  </div></div>
-  <div class="band sunk"><div class="wrap">
-    <div class="head"><p class="label">Session menu</p><h2>Everything you can <em>book</em></h2></div>
-    <div class="scroll"><table id="menuTable"></table></div>
-  </div></div>
-</section>
-
-<!-- ================= JOURNAL ================= -->
-<section data-view="journal" hidden>
-  <div class="band"><div class="wrap">
-    <div class="head"><p class="label">Journal</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Evidence-based longevity &amp; human performance <em>insights</em>.</h1><p class="lead">Short reads from the care team on what the tests mean and what the research does and does not show. Sample articles.</p></div>
-    <div class="grid g3" id="journalCards"></div>
-  </div></div>
-</section>
-
-<!-- ================= PORTAL ================= -->
-<section data-view="portal" hidden>
-  <div class="band"><div class="wrap">
-    <div class="head"><p class="label">Member Portal · sample view</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Your numbers, <em>visit by visit</em>.</h1><p class="lead">This is what a member sees after four visits. Every parameter is shown against the first visit. The figures are an illustrative example, not a real member or a promised result.</p></div>
-    <div class="kpis" id="kpis"></div>
-    <div class="card" id="chartCard"><div class="meta"><span id="chartTitle"></span><span>Sample member · age 42 · Signature plan</span></div><div id="chart" class="chart"></div></div>
-  </div></div>
-  <div class="band sunk" id="progress"><div class="wrap">
-    <div class="head"><p class="label">Progress table</p><h2>First visit and every visit <em>after</em></h2><p class="lead">Each row is one parameter, measured the same way each time. The last column shows which sessions work on it. Select a parameter to see it on the chart.</p></div>
-    <div class="scroll"><table id="progressTable"></table></div>
-    <p class="note">Biological age is a laboratory estimate based on DNA methylation. We track it as one marker among many; it is not a diagnosis, and it is re-tested every six months because it changes slowly. Results differ from person to person.</p>
-  </div></div>
-  <div class="band"><div class="wrap">
-    <div class="grid g2">
-      <div class="card"><h3>Upcoming</h3><ul class="plist"><li><span>Contrast circuit, 2 credits</span><span>Thu · 7:30 am</span></li><li><span>EMS session with coach, 3 credits</span><span>Sat · 8:00 am</span></li><li><span>Quarterly review with doctor and dietitian</span><span>21 Oct · 6:00 pm</span></li></ul></div>
-      <div class="card"><h3>This month</h3><ul class="plist"><li><span>Credits used</span><span>18 of 32</span></li><li><span>Credits that can roll into next month</span><span>Up to 8</span></li><li><span>Hyperbaric bookings</span><span>0 of 4</span></li></ul></div>
-    </div>
-  </div></div>
-</section>
-
-<!-- ================= TEAM ================= -->
-<section data-view="team" hidden>
-  <div class="band"><div class="wrap">
-    <div class="head"><p class="label">Care team</p><h1 style="font-size:clamp(2.3rem,5.4vw,4rem)">Medical leadership with <em>registered credentials</em>.</h1><p class="lead">Each clinical role is held by a registered professional. Names and registration numbers are published here as each clinician is appointed.</p></div>
-    <div class="grid g3" id="teamCards"></div>
-  </div></div>
-  <div class="band sunk"><div class="wrap">
-    <div class="head"><p class="label">Registrations</p><h2>Licences displayed at the <em>centre</em></h2></div>
-    <div class="grid g4">
-      <div class="point"><h3>Clinical establishment</h3><p class="muted">Registered with the Rajasthan health department.</p></div>
-      <div class="point"><h3>AERB licence</h3><p class="muted">For the DEXA room, with a declared radiation safety officer.</p></div>
-      <div class="point"><h3>Biomedical waste</h3><p class="muted">State pollution control board authorisation and a licensed collector.</p></div>
-      <div class="point"><h3>Fire safety</h3><p class="muted">Fire NOC covering the oxygen and hyperbaric areas.</p></div>
-    </div>
-  </div></div>
+  </div>
 </section>
 </main>
 
 <footer class="site"><div class="wrap foot-grid">
-  <div><b>NextGen Human</b><p style="margin-top:8px;max-width:40ch">Longevity, diagnostics and recovery under medical supervision. Mansarovar, Jaipur. Open 7 am – 9 pm, every day.</p></div>
-  <ul><li><a href="#programmes" data-go="programmes">Programmes</a></li><li><a href="#memberships" data-go="memberships">Memberships</a></li><li><a href="#diagnostics" data-go="diagnostics">Diagnostics &amp; Tech</a></li><li><a href="#classes" data-go="classes">Classes &amp; Cohorts</a></li></ul>
+  <div><b>NextGen Human</b><p style="margin-top:8px;max-width:40ch">Longevity, diagnostics and recovery under medical supervision. Mansarovar, Jaipur. Open 7 am – 9 pm, every day. Call or WhatsApp +1 832 292 7282.</p></div>
+  <ul><li><a href="#centre" data-go="centre">The centre</a></li><li><a href="#programmes" data-go="programmes">Programmes</a></li><li><a href="#memberships" data-go="memberships">Memberships</a></li><li><a href="#diagnostics" data-go="diagnostics">Diagnostics &amp; Tech</a></li><li><a href="#classes" data-go="classes">Classes &amp; Cohorts</a></li></ul>
   <ul><li><a href="#team" data-go="team">Care team</a></li><li><a href="#journal" data-go="journal">Journal</a></li><li><a href="#faq" data-go="faq">Questions</a></li><li><a href="#visit" data-go="visit">Book a Discovery visit</a></li></ul>
 </div></footer>
 
@@ -617,17 +717,25 @@ const inr=n=>'₹'+n.toLocaleString('en-IN');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ---------- routing ---------- */
-const VIEWS=['home','memberships','classes','programmes','diagnostics','journal','portal','team'];
-const ANCHORS={visit:'home',faq:'home',compare:'memberships',feel:'memberships',credits:'memberships',progress:'portal'};
+const ROUTES={home:['home'],centre:['centre','approach'],inside:['centre','inside'],recovery:['centre','recovery'],team:['centre','team'],
+ programmes:['programmes','goals'],plist:['programmes','list'],
+ memberships:['memberships','plans'],credits:['memberships','finder'],feel:['memberships','feel'],compare:['memberships','compare'],
+ diagnostics:['diagnostics','featured'],menu:['diagnostics','menu'],classes:['classes','main'],journal:['journal','main'],
+ portal:['portal','chart'],progress:['portal','progress'],visit:['visit','book'],faq:['visit','faq']};
+const VIEW_NAME={centre:'The centre',programmes:'Programmes',memberships:'Memberships',diagnostics:'Diagnostics &amp; Tech',classes:'Classes &amp; Cohorts',journal:'Journal',portal:'Member Portal',visit:'Visit'};
 function go(token,opts={}){
-  let view=ANCHORS[token]||token; if(!VIEWS.includes(view)){view='home';token='home'}
+  if(!ROUTES[token]) token='home';
+  const [view,sub]=ROUTES[token];
   $$('[data-view]').forEach(s=>s.hidden=s.dataset.view!==view);
-  $$('.navlinks a').forEach(a=>{a.dataset.go===view?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
+  const sec=$('[data-view="'+view+'"]'), subs=$$('[data-sub]',sec);
+  subs.forEach(d=>d.hidden=d.dataset.sub!==sub);
+  const tabs=subs.filter(d=>d.dataset.label), cur=subs.find(d=>d.dataset.sub===sub), sn=$('.subnav',sec), cr=$('.crumbs',sec);
+  if(sn) sn.innerHTML=tabs.length>1?tabs.map(d=>`<a href="#${d.dataset.token}" data-go="${d.dataset.token}"${d===cur?' aria-current="page"':''}>${d.dataset.label}</a>`).join(''):'';
+  if(cr) cr.innerHTML='<a href="#home" data-go="home">Home</a><span>/</span>'+(tabs.length>1&&cur?`<a href="#${tabs[0].dataset.token}" data-go="${tabs[0].dataset.token}">${VIEW_NAME[view]}</a><span>/</span><b>${cur.dataset.label}</b>`:`<b>${VIEW_NAME[view]}</b>`);
+  $$('.navlinks a').forEach(a=>{ROUTES[a.dataset.go][0]===view?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
   $('#siteHeader').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded','false');
   if(!opts.silent){ try{history.replaceState(null,'','#'+token)}catch(e){} }
-  const target=ANCHORS[token]?document.getElementById(token):null;
-  if(opts.initial&&!target) return;
-  requestAnimationFrame(()=>{ if(target){target.scrollIntoView({block:'start'})} else {window.scrollTo(0,0)} });
+  if(!opts.initial) requestAnimationFrame(()=>window.scrollTo(0,0));
 }
 document.addEventListener('click',e=>{
   const a=e.target.closest('[data-go]'); if(!a) return;
@@ -641,74 +749,73 @@ $('#menuBtn').addEventListener('click',()=>{const o=$('#siteHeader').classList.t
 
 /* ---------- memberships ---------- */
 const TIERS=[
- {n:'Recover',m:4999,y:49999,cr:10,tag:'',best:'Young professionals, families and active people who want regular recovery.',
-  f:['10 credits a month, for any session','Enough for 5 contrast circuits, or 10 single recovery sessions','InBody scan every month','RMR metabolic test once a year on the annual plan','10% off paid extras']},
- {n:'Signature',m:12999,y:129999,cr:32,tag:'Popular',best:'Fat Loss and Athlete programme graduates, and anyone who comes every other day.',
-  f:['32 credits a month, for any session','A typical month: 8 contrast circuits, 2 EMS sessions, 1 massage and 6 single sessions','InBody monthly and an RMR test twice a year','Doctor and dietitian review each quarter','15% off paid extras']},
- {n:'Prestige',m:24999,y:249999,cr:70,tag:'',best:'Founders and busy professionals who want medical, recovery and skin care together.',
-  f:['70 credits a month, for any session','A typical month: 4 hyperbaric, 1 Myers drip, 1 facial, 1 massage, 2 EMS, 10 contrast circuits and 12 single sessions','Everything Signature includes outside the wallet','DEXA scan and blood panel once a year','20% off paid extras']},
- {n:"Founders' Circle",m:0,y:399999,cr:100,tag:'40 Members',best:'Leaders and families who want a doctor-led plan for the whole year.',
-  f:['100 credits a month, for any session','A typical month: 6 hyperbaric, 2 Myers drips, 1 facial, 1 massage, 4 EMS, 12 contrast circuits and 18 single sessions','Full annual assessment: DEXA, VO2 max, RMR, ECG, HRV, bloods, sleep study, genetics and biological-age test','4 reviews with the medical director and 4 psychologist sessions','Personal concierge and 6 guest passes']}
+ {n:'Recover',m:5999,y:59999,rc:8,ro:2,sc:4,hb:2,disc:10,inc:{},tag:'',best:'Young professionals, families and active people who want regular recovery.',
+  f:['8 recovery credits a month','One credit is any recovery session: contrast circuit, sauna, cold plunge, red light, compression boots, PEMF, cryotherapy or a class','InBody scan every month','RMR metabolic test and DNA-based biological-age test once a year on the annual plan','10% off everything else']},
+ {n:'Signature',m:12999,y:129999,rc:12,ro:3,sc:8,hb:4,disc:15,inc:{ems:1,mass60:1},tag:'Popular',best:'Fat Loss and Athlete programme graduates, and anyone who comes two or three times a week.',
+  f:['12 recovery credits a month','1 coached EMS session a month','One 60-minute massage a month','InBody monthly, RMR test twice a year, doctor and dietitian review twice a year','DNA-based biological-age test once a year','15% off everything else']},
+ {n:'Prestige',m:24999,y:249999,rc:18,ro:4,sc:10,hb:6,disc:20,inc:{ems:2,mass60:1,hbot:4,ivm:1,facial:1},tag:'',best:'Founders and busy professionals who want medical, recovery and skin care together.',
+  f:['18 recovery credits a month','4 hyperbaric sessions and 1 Myers IV drip a month','2 EMS sessions, 1 massage and 1 medical facial a month','InBody monthly, RMR twice a year, doctor and dietitian review each quarter, DEXA scan and blood panel once a year','DNA-based biological-age test twice a year','20% off everything else and 2 guest passes a year']},
+ {n:"Founders' Circle",m:41667,y:499999,yo:1,rc:30,ro:6,sc:12,hb:8,disc:20,inc:{ems:4,mass60:2,hbot:6,ivm:2,facial:1},tag:'50 Members',best:'Leaders and families who want a doctor-led plan for the whole year.',
+  f:['30 recovery credits a month','6 hyperbaric sessions and 2 Myers IV drips a month','4 EMS sessions, 2 massages and 1 medical facial a month','Full annual assessment: DEXA, VO2 max, RMR, ECG, HRV, bloods, sleep study, genetic profile and DNA-based biological-age test. DEXA, bloods and biological age repeat at six months','4 reviews with the medical director, 4 psychologist sessions and a personal concierge','25% off dermatology procedures and 6 guest passes a year']}
 ];
 let bill='m';
 function renderTiers(){
   $('#tierCards').innerHTML=TIERS.map(t=>{
-    const annualOnly=!t.m, price=bill==='m'&&!annualOnly?t.m:t.y, per=bill==='m'&&!annualOnly?'/ month':'/ year';
-    const sub=annualOnly?'Annual only':(bill==='y'?'Works out to '+inr(Math.round(t.y/12))+' a month':'or '+inr(t.y)+' a year');
+    const annualOnly=!!t.yo, price=bill==='m'?t.m:t.y, per=bill==='m'?'/ month':'/ year';
+    const sub=bill==='y'?'Works out to '+inr(Math.round(t.y/12))+' a month':(annualOnly?'Billed yearly, '+inr(t.y):'or '+inr(t.y)+' a year');
     return `<article class="card ${t.tag==='Popular'?'feature':''}">
       <div><h3>${esc(t.n)}${t.tag?`<span class="tag ${t.tag==='Popular'?'solid':''}">${t.tag}</span>`:''}</h3></div>
       <p class="amt num">${inr(price)}<small>${per}</small></p>
       <p class="meta"><span>${sub}</span></p>
-      <p class="meta"><span><strong>${t.cr} credits</strong> a month</span><span>${inr(Math.round((annualOnly||bill==='y'?t.y/12:t.m)/t.cr))} a credit</span></p>
+      <p class="meta"><span><strong>${t.rc} recovery credits</strong> a month</span></p>
       <p class="muted small">${esc(t.best)}</p>
       <ul class="ticks">${t.f.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
       <div class="foot"><a class="btn sm ${t.tag==='Popular'?'gold':''}" href="#visit" data-go="visit" data-interest="Membership" data-note="${esc(t.n)} membership, ${bill==='m'&&!annualOnly?'monthly':'annual'}">Join Plan →</a></div>
     </article>`}).join('');
 }
 $$('[data-bill]').forEach(b=>b.addEventListener('click',()=>{bill=b.dataset.bill;$$('[data-bill]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.bill===bill));renderTiers();renderCompare();renderCalcOut()}));
-/* compare: every plan against the same rows. cell = [level, text]; 2 included, 1 credits or discount, 0 add-on */
-const I=t=>[2,t],D=t=>[1,t],N=t=>[0,t];
+/* compare: every plan against the same rows. cell = [level, text]; 2 included, 1 member discount, 0 paid add-on */
+const I=t=>[2,t],D=t=>[1,t+' off'],N=t=>[0,t];
 const MATRIX=[
- {g:'The wallet',rows:[
-  {n:'Credits a month',c:[I('10'),I('32'),I('70'),I('100')]},
-  {n:'Price per credit',c:[I('₹500'),I('₹406'),I('₹357'),I('₹333')]},
-  {n:'Unused credits that roll into the next month',c:[I('Up to 2'),I('Up to 8'),I('Up to 17'),I('Up to 25')]},
-  {n:'Top-up credits',c:[I('₹650 each'),I('₹650 each'),I('₹650 each'),I('₹650 each')]}]},
- {g:'A typical month on credits',rows:[
-  {n:'Contrast circuits, 2 credits each',c:[I('3'),I('8'),I('10'),I('12')]},
-  {n:'Single recovery sessions or classes, 1 credit each',c:[I('4'),I('6'),I('12'),I('18')]},
-  {n:'Coached EMS sessions, 3 credits each',c:[N('Not in a typical month'),I('2'),I('2'),I('4')]},
-  {n:'Massage, 60 minutes, 4 credits',c:[N('Not in a typical month'),I('1'),I('1'),I('1')]},
-  {n:'Hyperbaric oxygen, 4 credits each',c:[N('Not in a typical month'),N('Not in a typical month'),I('4'),I('6')]},
-  {n:'IV Myers drip, 6 credits each',c:[N('Not in a typical month'),N('Not in a typical month'),I('1'),I('2')]},
-  {n:'Medical facial, 6 credits',c:[N('Not in a typical month'),N('Not in a typical month'),I('1'),I('1')]}]},
- {g:'Booking limits',rows:[
-  {n:'Hyperbaric bookings a month, at most',c:[I('2'),I('4'),I('6'),I('8')]},
-  {n:'Peak-hour sauna bookings a month, at most',c:[I('4'),I('8'),I('12'),I('16')]}]},
- {g:'Included outside the wallet',rows:[
+ {g:'Recovery',rows:[
+  {n:'Recovery credits a month. One credit is any recovery session',c:[I('8'),I('12'),I('18'),I('30')]},
+  {n:'Sauna or contrast bookings within those credits, at most',c:[I('4 a month'),I('8 a month'),I('10 a month'),I('12 a month')]},
+  {n:'Unused credits that roll into the next month',c:[I('Up to 2'),I('Up to 3'),I('Up to 4'),I('Up to 6')]},
+  {n:'Extra recovery credits',c:[I('₹650 each'),I('₹650 each'),I('₹650 each'),I('₹650 each')]}]},
+ {g:'Sessions included each month',rows:[
+  {n:'Coached EMS sessions',c:[D('10%'),I('1 a month'),I('2 a month'),I('4 a month')]},
+  {n:'Massage, 60 minutes',c:[D('10%'),I('1 a month'),I('1 a month'),I('2 a month')]},
+  {n:'Hyperbaric oxygen, 60 minutes',c:[D('10%'),D('15%'),I('4 a month'),I('6 a month')]},
+  {n:'IV Myers drip, doctor-prescribed',c:[D('10%'),D('15%'),I('1 a month'),I('2 a month')]},
+  {n:'Medical facial',c:[D('10%'),D('15%'),I('1 a month'),I('1 a month')]},
+  {n:'Hyperbaric bookings a month, including paid ones, at most',c:[I('2'),I('4'),I('6'),I('8')]}]},
+ {g:'Diagnostics and reviews',rows:[
   {n:'InBody scan',c:[I('Monthly'),I('Monthly'),I('Monthly'),I('Monthly')]},
   {n:'RMR metabolic test',c:[I('1 a year, annual plan'),I('2 a year'),I('2 a year'),I('2 a year')]},
-  {n:'Doctor and dietitian review',c:[I('At joining'),I('Each quarter'),I('Each quarter'),I('Each quarter, with the medical director')]},
-  {n:'DEXA body composition scan',c:[D('5 credits'),D('5 credits'),I('1 a year'),I('1 a year')]},
-  {n:'Comprehensive blood panel',c:[D('10% off'),D('15% off'),I('1 a year'),I('1 a year')]},
-  {n:'VO2 max test',c:[D('6 credits'),D('6 credits'),D('6 credits'),I('1 a year')]},
-  {n:'ECG and HRV stress assessment',c:[D('10% off'),D('15% off'),D('20% off'),I('1 a year')]},
-  {n:'Sleep study, genetics and biological-age test (partner labs)',c:[N('Paid add-on'),N('Paid add-on'),N('Paid add-on'),I('1 a year')]},
+  {n:'Doctor and dietitian review',c:[I('At joining'),I('Twice a year'),I('Each quarter'),I('Each quarter, with the medical director')]},
+  {n:'DEXA body composition scan',c:[D('10%'),D('15%'),I('1 a year'),I('2 a year')]},
+  {n:'Comprehensive blood panel',c:[D('10%'),D('15%'),I('1 a year'),I('2 a year')]},
+  {n:'VO2 max test',c:[D('10%'),D('15%'),D('20%'),I('1 a year')]},
+  {n:'ECG and HRV stress assessment',c:[D('10%'),D('15%'),D('20%'),I('1 a year')]},
+  {n:'Biological-age test, DNA methylation (partner lab)',c:[I('1 a year, annual plan'),I('1 a year'),I('2 a year'),I('2 a year')]},
+  {n:'Sleep study and genetic profile (partner labs)',c:[N('Paid add-on'),N('Paid add-on'),N('Paid add-on'),I('1 a year')]},
   {n:'Psychologist sessions',c:[N('Paid add-on'),N('Paid add-on'),N('Paid add-on'),I('4 a year')]}]},
+ {g:'Skin',rows:[
+  {n:'Dermatology procedures and injectables',c:[D('10%'),D('15%'),D('20%'),D('25%')]}]},
  {g:'Membership',rows:[
-  {n:'Discount on paid extras',c:[I('10%'),I('15%'),I('20%'),I('20%')]},
+  {n:'Discount on everything not included',c:[I('10%'),I('15%'),I('20%'),I('20%')]},
   {n:'Support',c:[I('Front desk and app'),I('WhatsApp concierge'),I('Personal concierge'),I('Dedicated concierge')]},
-  {n:'Guest passes',c:[N('None'),N('None'),N('None'),I('6 a year')]},
+  {n:'Guest passes',c:[N('None'),N('None'),I('2 a year'),I('6 a year')]},
   {n:'Pause when travelling',c:[I('30 days a year, annual plan'),I('30 days a year, annual plan'),I('30 days a year, annual plan'),I('30 days a year')]}]}
 ];
 const selPlans=new Set([0,1,2,3]); let diffOnly=false;
-const planPrice=i=>{const t=TIERS[i];return (bill==='m'&&t.m)?inr(t.m)+' a month':inr(t.y)+' a year'};
+const planPrice=i=>{const t=TIERS[i];return bill==='m'?inr(t.m)+' a month'+(t.yo?'<br><span class="muted">billed yearly, '+inr(t.y)+'</span>':''):inr(t.y)+' a year'};
 function renderCompare(){
   const act=document.activeElement, key=act&&act.dataset&&act.dataset.plan!==undefined?'[data-plan="'+act.dataset.plan+'"]':null;
   const cols=[...selPlans].sort();
   $('#planChips').innerHTML=TIERS.map((t,i)=>`<label class="chk"><input type="checkbox" data-plan="${i}" ${selPlans.has(i)?'checked':''}> ${esc(t.n)}</label>`).join('');
   const cell=c=>`<td><span class="cell ${c[0]===2?'inc':c[0]===0?'none':''}"><i aria-hidden="true"></i><span>${esc(c[1])}</span></span></td>`;
-  let body=`<tr><th scope="row">Price</th>${cols.map(i=>`<td class="price">${planPrice(i)}${bill==='y'&&TIERS[i].m?'<br><span class="muted">'+inr(Math.round(TIERS[i].y/12))+' a month equivalent</span>':''}</td>`).join('')}</tr>`;
+  let body=`<tr><th scope="row">Price</th>${cols.map(i=>`<td class="price">${planPrice(i)}${bill==='y'?'<br><span class="muted">'+inr(Math.round(TIERS[i].y/12))+' a month equivalent</span>':''}</td>`).join('')}</tr>`;
   let hidden=0;
   MATRIX.forEach(g=>{
     const rows=g.rows.filter(r=>{const same=new Set(cols.map(i=>r.c[i][1])).size===1; if(diffOnly&&same){hidden++;return false} return true});
@@ -717,7 +824,7 @@ function renderCompare(){
     body+=rows.map(r=>`<tr><th scope="row">${esc(r.n)}</th>${cols.map(i=>cell(r.c[i])).join('')}</tr>`).join('');
   });
   if(hidden) body+=`<tr><td colspan="${cols.length+1}" class="muted small">${hidden} row${hidden>1?'s':''} hidden because the selected plans are the same there.</td></tr>`;
-  $('#compareTable').innerHTML=`<thead><tr><th>Compare</th>${cols.map(i=>`<th><b>${esc(TIERS[i].n)}</b>${TIERS[i].tag||'&nbsp;'}</th>`).join('')}</tr></thead><tbody>${body}</tbody>`;
+  $('#compareTable').innerHTML=`<thead><tr><th>Service</th>${cols.map(i=>`<th><b>${esc(TIERS[i].n)}</b>${TIERS[i].tag||'&nbsp;'}</th>`).join('')}</tr></thead><tbody>${body}</tbody>`;
   if(key){const el=$('#compareBox '+key); if(el) el.focus()}
 }
 $('#compareBox').addEventListener('change',e=>{
@@ -727,37 +834,43 @@ $('#compareBox').addEventListener('change',e=>{
   renderCompare();
 });
 
-/* ---------- credit menu + calculator ---------- */
+/* ---------- plan finder: recovery sessions use 1 credit each; other sessions are included counts ---------- */
 const CM=[
- {k:'boots',n:'Compression boots',t:'30 min',c:1,p:799},{k:'red',n:'Red light',t:'15 min',c:1,p:999},{k:'pemf',n:'PEMF mat',t:'20 min',c:1,p:799},
- {k:'plunge',n:'Cold plunge on its own',t:'15 min',c:1,p:799},{k:'cls',n:'Group class',t:'30 to 45 min',c:1,p:499},{k:'cryo',n:'Localised cryotherapy',t:'10 min',c:1,p:1200},
- {k:'contrast',n:'Sauna or contrast circuit',t:'45 min',c:2,p:1999},{k:'physio',n:'Physiotherapy session',t:'45 min',c:2,p:1499},
- {k:'ems',n:'EMS with coach',t:'20 min',c:3,p:1999},{k:'rmr',n:'RMR test',t:'20 min',c:3,p:2499},
- {k:'hbot',n:'Hyperbaric oxygen',t:'60 min',c:4,p:2999},{k:'mass60',n:'Massage, 60 minutes',t:'60 min',c:4,p:3499},
- {k:'dexa',n:'DEXA scan',t:'30 min',c:5,p:3999},{k:'ivh',n:'IV hydration drip',t:'45 min',c:5,p:3999},
- {k:'ivm',n:'IV Myers drip',t:'45 min',c:6,p:5999},{k:'facial',n:'Medical facial',t:'50 min',c:6,p:4999},
- {k:'vo2',n:'VO2 max test',t:'45 min',c:6,p:4999},{k:'mass90',n:'Massage, 90 minutes',t:'90 min',c:6,p:4999}
+ {k:'contrast',n:'Sauna or contrast circuit',t:'45 min',p:1999,rec:1},{k:'red',n:'Red light',t:'15 min',p:999,rec:1},{k:'boots',n:'Compression boots',t:'30 min',p:799,rec:1},
+ {k:'pemf',n:'PEMF mat',t:'20 min',p:799,rec:1},{k:'plunge',n:'Cold plunge on its own',t:'15 min',p:799,rec:1},{k:'cryo',n:'Localised cryotherapy',t:'10 min',p:1200,rec:1},{k:'cls',n:'Group class',t:'30 to 45 min',p:499,rec:1},
+ {k:'ems',n:'EMS with coach',t:'20 min',p:1999,w:'Included from Signature'},{k:'mass60',n:'Massage, 60 minutes',t:'60 min',p:3499,w:'Included from Signature'},
+ {k:'hbot',n:'Hyperbaric oxygen',t:'60 min',p:2999,w:'Included from Prestige'},{k:'ivm',n:'IV Myers drip',t:'45 min',p:5999,w:'Included from Prestige'},{k:'facial',n:'Medical facial',t:'50 min',p:4999,w:'Included from Prestige'}
 ];
-const HB_CAP=[2,4,6,8], TOPUP=650;
-const PRESETS=[{contrast:3,boots:2,red:2},{contrast:8,ems:2,mass60:1,boots:3,red:3},
- {hbot:4,ivm:1,facial:1,mass60:1,ems:2,contrast:10,boots:4,red:4,cls:4},{hbot:6,ivm:2,facial:1,mass60:1,ems:4,contrast:12,boots:6,red:6,cls:6}];
+const TOPUP=650;
+const PRESETS=[{contrast:4,boots:2,red:2},{contrast:8,boots:2,red:2,ems:1,mass60:1},
+ {contrast:10,boots:4,red:4,ems:2,mass60:1,hbot:4,ivm:1,facial:1},{contrast:12,boots:6,red:6,cls:6,ems:4,mass60:2,hbot:6,ivm:2,facial:1}];
 let qty={...PRESETS[1]};
 function renderCalcTable(){
-  $('#calcTable').innerHTML=`<thead><tr><th>Session</th><th>Time</th><th>Credits</th><th>On its own</th><th>How many a month</th></tr></thead><tbody>${
-   CM.map(x=>`<tr><td><strong>${esc(x.n)}</strong></td><td class="price" data-l="Time">${x.t}</td><td class="price" data-l="Credits">${x.c}</td><td class="price" data-l="On its own">${inr(x.p)}</td><td data-l="A month"><span class="qty"><button type="button" data-q="${x.k}" data-d="-1" aria-label="One less: ${esc(x.n)}">−</button><output id="q-${x.k}">0</output><button type="button" data-q="${x.k}" data-d="1" aria-label="One more: ${esc(x.n)}">+</button></span></td></tr>`).join('')}</tbody>`;
+  $('#calcTable').innerHTML=`<thead><tr><th>Session</th><th>Time</th><th>With a membership</th><th>On its own</th><th>How many a month</th></tr></thead><tbody>${
+   CM.map(x=>`<tr><td><strong>${esc(x.n)}</strong></td><td class="price" data-l="Time">${x.t}</td><td data-l="Members">${x.rec?'1 recovery credit':x.w}</td><td class="price" data-l="On its own">${inr(x.p)}</td><td data-l="A month"><span class="qty"><button type="button" data-q="${x.k}" data-d="-1" aria-label="One less: ${esc(x.n)}">−</button><output id="q-${x.k}">0</output><button type="button" data-q="${x.k}" data-d="1" aria-label="One more: ${esc(x.n)}">+</button></span></td></tr>`).join('')}</tbody>`;
 }
 function renderCalcOut(){
-  let total=0,single=0; CM.forEach(x=>{const q=qty[x.k]||0; $('#q-'+x.k).textContent=q; total+=q*x.c; single+=q*x.p});
-  const hb=qty.hbot||0, out=$('#calcOut');
-  if(!total){out.innerHTML='Add sessions with the + buttons, or load a typical month above.';return}
+  let rec=0,other=0,single=0; CM.forEach(x=>{const q=qty[x.k]||0; $('#q-'+x.k).textContent=q; single+=q*x.p; if(x.rec) rec+=q; else other+=q});
+  const out=$('#calcOut');
+  if(!rec&&!other){out.innerHTML='Add sessions with the + buttons, or load a typical month above.';return}
   let best=null;
-  TIERS.forEach((t,i)=>{ if(hb>HB_CAP[i]) return; const base=t.m||Math.round(t.y/12), extra=Math.max(0,total-t.cr), cost=base+extra*TOPUP; if(!best||cost<best.cost) best={i,cost,extra}; });
-  let h=`<strong>${total} credit${total>1?'s':''}</strong> a month. The same sessions cost ${inr(single)} at single prices. `;
-  if(!best){out.innerHTML=h+'More than 8 hyperbaric bookings a month is above the limit on every plan.';return}
-  const t=TIERS[best.i];
+  TIERS.forEach((t,i)=>{
+    if((qty.contrast||0)>t.sc||(qty.hbot||0)>t.hb) return;
+    const base=t.m, extraRec=Math.max(0,rec-t.rc);
+    let extras=0; CM.filter(x=>!x.rec).forEach(x=>{extras+=Math.max(0,(qty[x.k]||0)-(t.inc[x.k]||0))*x.p*(1-t.disc/100)});
+    extras=Math.round(extras); const cost=base+extraRec*TOPUP+extras;
+    if(!best||cost<best.cost) best={i,cost,base,extraRec,extras};
+  });
+  let h=`Your month: <strong>${rec} recovery session${rec===1?'':'s'}</strong>${other?` and ${other} other session${other===1?'':'s'}`:''}. At single prices that costs ${inr(single)}. `;
+  if(!best){out.innerHTML=h+'This is above the monthly sauna or hyperbaric booking limit on every plan.';return}
   if(single<=best.cost){out.innerHTML=h+'For a month this light, paying per session costs less than any plan.';return}
-  h+=`Best fit: <strong>${esc(t.n)}</strong>${best.extra?` plus ${best.extra} top-up credit${best.extra>1?'s':''}`:''}, ${inr(best.cost)} a month${t.m?'':' (billed yearly)'}. That is ${inr(single-best.cost)} less than paying per session.`;
-  if(!best.extra&&t.cr>total) h+=` ${t.cr-total} credit${t.cr-total>1?'s':''} would be left; up to ${Math.floor(t.cr/4)} roll into the next month.`;
+  const t=TIERS[best.i];
+  h+=`Best fit: <strong>${esc(t.n)}</strong>, ${inr(best.base)} a month${t.yo?' (billed yearly)':''}`;
+  if(best.extraRec) h+=`, plus ${best.extraRec} extra recovery credit${best.extraRec>1?'s':''} (${inr(best.extraRec*TOPUP)})`;
+  if(best.extras) h+=`, plus sessions beyond the plan at ${t.disc}% off (${inr(best.extras)})`;
+  h+=(best.extraRec||best.extras)?`. Total ${inr(best.cost)} a month. `:'. ';
+  h+=`That is ${inr(single-best.cost)} less than paying per session.`;
+  if(!best.extraRec&&t.rc>rec) h+=` ${t.rc-rec} recovery credit${t.rc-rec>1?'s':''} would be left; up to ${t.ro} roll into the next month.`;
   out.innerHTML=h;
 }
 $('#calcTable').addEventListener('click',e=>{const b=e.target.closest('[data-q]'); if(!b) return; const k=b.dataset.q; qty[k]=Math.max(0,Math.min(31,(qty[k]||0)+(+b.dataset.d))); renderCalcOut()});
@@ -765,20 +878,20 @@ $('#calcPresets').addEventListener('click',e=>{const b=e.target.closest('[data-p
 
 /* ---------- sessions by feeling ---------- */
 const SESS={
- contrast:['Guided contrast circuit','45 min','₹1,999','2 credits',45,2],
- boots:['Compression boots','30 min','₹799','1 credit',30,1],
- pemf:['PEMF mat','20 min','₹799','1 credit',20,1],
- wind:['Red light and compression wind-down class','30 min','₹499','1 credit',30,1],
- massage:['Signature massage','60 or 90 min','₹3,499 or ₹4,999','4 or 6 credits',60,4],
- ems:['Coached EMS session','20 min','₹1,999','3 credits',20,3],
- cryo:['Localised cryotherapy','10 min','₹1,200','1 credit',10,1],
- breath:['Mobility and breathwork class','45 min','₹499','1 credit',45,1],
- zone2:['Zone 2 ride','40 min','₹499','1 credit',40,1],
- sound:['Sound and Stillness class','45 min','₹499','1 credit',45,1],
- doctor:['Doctor review with HRV and blood tests','30 min','By appointment','No credits. Included each quarter from Signature',30,0],
- psych:['Session with visiting psychologist','50 min','By appointment',"No credits. Paid extra; 4 a year in Founders' Circle",50,0],
- physio:['Physiotherapy session','45 min','₹1,499','2 credits',45,2],
- sleepstudy:['Home sleep study','1 night','Partner lab',"No credits. Paid extra; yearly in Founders' Circle",0,0]
+ contrast:['Guided contrast circuit','45 min','₹1,999','1 recovery credit',45],
+ boots:['Compression boots','30 min','₹799','1 recovery credit',30],
+ pemf:['PEMF mat','20 min','₹799','1 recovery credit',20],
+ wind:['Red light and compression wind-down class','30 min','₹499','1 recovery credit',30],
+ massage:['Signature massage','60 min','₹3,499','Included from Signature, 1 a month',60],
+ ems:['Coached EMS session','20 min','₹1,999','Included from Signature, 1 a month',20],
+ cryo:['Localised cryotherapy','10 min','₹1,200','1 recovery credit',10],
+ breath:['Mobility and breathwork class','45 min','₹499','1 recovery credit',45],
+ zone2:['Zone 2 ride','40 min','₹499','1 recovery credit',40],
+ sound:['Sound and Stillness class','45 min','₹499','1 recovery credit',45],
+ doctor:['Doctor review with HRV and blood tests','30 min','By appointment','Included twice a year from Signature',30],
+ psych:['Session with visiting psychologist','50 min','By appointment',"Paid extra. 4 a year in Founders' Circle",50],
+ physio:['Physiotherapy session','45 min','₹1,499','Member discount, 10 to 20%',45],
+ sleepstudy:['Home sleep study','1 night','Partner lab',"Paid extra. Yearly in Founders' Circle",0]
 };
 const FEEL=[
  {n:'Angry or irritable',h:'angry or irritable',line:'Anger shows up in the body as heat, a fast pulse and tight muscles. These sessions give that energy somewhere to go, then slow you down.',
@@ -795,34 +908,34 @@ const FEEL=[
 let fi=0;
 function renderFeel(){
   $('#feelPills').innerHTML=FEEL.map((f,i)=>`<button class="pill" type="button" data-fi="${i}" aria-pressed="${i===fi}">${f.n}</button>`).join('');
-  const f=FEEL[fi], mins=f.first.reduce((a,k)=>a+SESS[k][4],0), crs=f.first.reduce((a,k)=>a+SESS[k][5],0), names=f.first.map(k=>SESS[k][0]);
+  const f=FEEL[fi], mins=f.first.reduce((a,k)=>a+SESS[k][4],0), names=f.first.map(k=>SESS[k][0]);
   $('#feelPanel').innerHTML=`<div class="intro"><div class="col"><h3 class="h3">When ${f.h==='you are sleeping badly'?f.h:'you feel '+f.h}</h3><p class="muted">${esc(f.line)}</p></div>
-    <div class="point"><p class="label">A good first visit</p><p>${esc(names[0])}, then ${esc(names[1].charAt(0).toLowerCase()+names[1].slice(1))}. About ${mins} minutes and ${crs} credits.</p>
+    <div class="point"><p class="label">A good first visit</p><p>${esc(names[0])}, then ${esc(names[1].charAt(0).toLowerCase()+names[1].slice(1))}. About ${mins} minutes.</p>
     <p><a class="btn sm gold" href="#visit" data-go="visit" data-interest="A single session" data-note="${esc(f.n)}: ${esc(names.join(' + '))}">Book this visit</a></p></div></div>
-    <div class="scroll"><table class="cards"><thead><tr><th>Session</th><th>Why people choose it</th><th>Time</th><th>On its own</th><th>Credits</th></tr></thead><tbody>${
-      f.s.map(([k,why])=>{const x=SESS[k];return `<tr><td><strong>${esc(x[0])}</strong></td><td>${esc(why)}</td><td class="price" data-l="Time">${x[1]}</td><td class="price" data-l="On its own">${x[2]}</td><td data-l="Credits">${esc(x[3])}</td></tr>`}).join('')}</tbody></table></div>`;
+    <div class="scroll"><table class="cards"><thead><tr><th>Session</th><th>Why people choose it</th><th>Time</th><th>On its own</th><th>With a membership</th></tr></thead><tbody>${
+      f.s.map(([k,why])=>{const x=SESS[k];return `<tr><td><strong>${esc(x[0])}</strong></td><td>${esc(why)}</td><td class="price" data-l="Time">${x[1]}</td><td class="price" data-l="On its own">${x[2]}</td><td data-l="Members">${esc(x[3])}</td></tr>`}).join('')}</tbody></table></div>`;
 }
 $('#feelPills').addEventListener('click',e=>{const b=e.target.closest('[data-fi]');if(b){fi=+b.dataset.fi;renderFeel()}});
 
 /* ---------- programmes ---------- */
 const CATS={ym:'Young & Marriage',fl:'Fat Loss',ath:'Athlete',cs:'C-Suite'};
 const PROGS=[
- {c:'ym',t:'Bridal Radiance',d:'8 weeks',p:64999,who:'Brides who want clear, rested skin and steady energy before the wedding.',lead:'Consultant dermatologist',i:['Skin analysis with the dermatologist','4 hydradermabrasion facials and 2 peels','8 red light sessions','12 EMS sessions','RMR test and a nutrition plan']},
- {c:'ym',t:'Groom Sharp',d:'6 weeks',p:49999,who:'Grooms working on posture, tone and energy.',lead:'Sports physiotherapist',i:['Baseline DEXA scan','12 coached EMS sessions','6 contrast circuits','Posture and force plate assessment','RMR-based nutrition plan']},
- {c:'ym',t:'Couple Pre-Wedding Intensive',d:'4 weeks · for two',p:89999,who:'Couples who want to prepare together and manage wedding stress.',lead:'Medical director',i:['Shared contrast suite sessions','8 joint EMS sessions','2 couples\' massages','InBody scans and a nutrition plan','Pre-conception screening available through our partner lab']},
- {c:'ym',t:'72-Hour Event Prep',d:'3 days',p:24999,who:'A short reset before a wedding or a big occasion.',lead:'Doctor on site',i:['1 hydrating medical facial','Compression boots and red light','1 contrast circuit','A hydration drip if the doctor finds it suitable']},
- {c:'fl',t:'Reset 90',d:'12 weeks',p:64999,who:'People who want to lose fat while keeping muscle, with proof on a scan.',lead:'Medical director and dietitian',i:['DEXA at the start and at week 12','2 RMR tests','VO2 test to set training zones','24 coached EMS sessions','6 dietitian reviews and a 14-day glucose monitor']},
- {c:'fl',t:'Metabolic Reboot',d:'6 weeks',p:34999,who:'A structured start for people with a desk job and little time.',lead:'Dietitian',i:['Baseline DEXA scan','1 RMR test','12 EMS sessions','14-day glucose monitor','3 dietitian consultations']},
- {c:'fl',t:'24-Week Medical Weight Programme',d:'24 weeks',p:119999,who:'People with a long-standing plateau or raised metabolic risk markers.',lead:'Medical director',i:['3 DEXA scans, at months 1, 3 and 6','48 EMS sessions','A doctor and dietitian review every two weeks','Metabolic, liver and lipid blood panels','Medication is considered only where the doctor finds it indicated']},
- {c:'fl',t:'30-Day Kickstart',d:'4 weeks',p:27999,who:'A first month with no downtime.',lead:'Sports physiotherapist',i:['InBody scan on day 1 and day 30','8 EMS sessions','8 contrast circuits','1 RMR test','1 nutrition consultation']},
- {c:'ath',t:'Performance Audit',d:'1 day',p:12999,who:'Runners, cricketers, cyclists and anyone who trains seriously.',lead:'Sports physiotherapist',i:['VO2 max with breath-by-breath analysis','RMR and fuel-use profile','Force plates and grip strength','DEXA for lean-mass symmetry and bone density','ECG, HRV and 2D gait analysis']},
- {c:'ath',t:'In-Season Recovery Pass',d:'8 weeks',p:34999,who:'Competitors in a tournament or race season.',lead:'Sports physiotherapist',i:['16 contrast circuits','8 hyperbaric oxygen sessions','4 physiotherapy sessions','8 red light sessions','Compression boots after practice']},
- {c:'ath',t:'Endurance Peak',d:'10 weeks',p:54999,who:'Marathoners, cyclists and triathletes building to a race.',lead:'Sports medicine physician',i:['VO2 max at the start and at week 8','Fuel-use curve for race nutrition','10 hyperbaric sessions','10 lower-limb EMS sessions','Gait re-test at race pace']},
- {c:'ath',t:'Power and Sprint',d:'6 weeks',p:39999,who:'Sprint and court-sport athletes who need explosive power.',lead:'Conditioning coach',i:['12 EMS sessions','Weekly force plate tracking','DEXA symmetry check','6 contrast circuits','Red light after training']},
- {c:'cs',t:'Executive Longevity Programme',d:'12 months',p:349999,who:'Founders and directors with heavy workloads and frequent travel.',lead:'Medical director',i:['Annual assessment: DEXA, VO2 max, ECG, sleep study, genetics','12 monthly visits with priority booking','4 quarterly reviews with the medical director','4 sessions with a visiting psychologist','Biological-age test through a partner lab']},
- {c:'cs',t:'Founder Reset',d:'1 month',p:49999,who:'Leaders dealing with poor sleep, fatigue or jet lag.',lead:'Medical director',i:['4 hyperbaric oxygen sessions','2 doctor-prescribed IV drips','HRV stress assessment','Home sleep study','4 private contrast circuits']},
- {c:'cs',t:'Boardroom Audit',d:'1 morning',p:24999,who:'A full health benchmark in a single visit.',lead:'Medical director',i:['DEXA, VO2 max and RMR','12-lead ECG','Comprehensive blood panel','60-minute review with the doctor','Written report within 24 hours']},
- {c:'cs',t:'Quarterly Vitality',d:'90 days',p:89999,who:'Executives who want a tune-up every quarter.',lead:'Medical director',i:['Re-test of InBody, RMR and bloods','6 hyperbaric sessions','3 doctor-prescribed IV drips','12 contrast circuits','1 doctor review']}
+ {c:'ym',t:'Bridal Radiance',d:'8 weeks',p:64999,who:'Brides who want clear, rested skin and steady energy before the wedding.',lead:'Consultant dermatologist',i:['Skin analysis with the dermatologist','4 hydradermabrasion facials and 2 peels','8 red light sessions','12 EMS sessions','RMR test and a nutrition plan','Biological-age test (DNA methylation) at the start']},
+ {c:'ym',t:'Groom Sharp',d:'6 weeks',p:49999,who:'Grooms working on posture, tone and energy.',lead:'Sports physiotherapist',i:['Baseline DEXA scan','12 coached EMS sessions','6 contrast circuits','Posture and force plate assessment','RMR-based nutrition plan','Biological-age test (DNA methylation) at the start']},
+ {c:'ym',t:'Couple Pre-Wedding Intensive',d:'4 weeks · for two',p:89999,who:'Couples who want to prepare together and manage wedding stress.',lead:'Medical director',i:['Shared contrast suite sessions','8 joint EMS sessions','2 couples\' massages','InBody scans and a nutrition plan','Pre-conception screening available through our partner lab','Biological-age test (DNA methylation) for both partners']},
+ {c:'ym',t:'72-Hour Event Prep',d:'3 days',p:24999,who:'A short reset before a wedding or a big occasion.',lead:'Doctor on site',i:['1 hydrating medical facial','Compression boots and red light','1 contrast circuit','A hydration drip if the doctor finds it suitable','Biological-age test can be added for ₹14,999']},
+ {c:'fl',t:'Reset 90',d:'12 weeks',p:64999,who:'People who want to lose fat while keeping muscle, with proof on a scan.',lead:'Medical director and dietitian',i:['DEXA at the start and at week 12','2 RMR tests','VO2 test to set training zones','24 coached EMS sessions','6 dietitian reviews and a 14-day glucose monitor','Biological-age test (DNA methylation) at the start']},
+ {c:'fl',t:'Metabolic Reboot',d:'6 weeks',p:34999,who:'A structured start for people with a desk job and little time.',lead:'Dietitian',i:['Baseline DEXA scan','1 RMR test','12 EMS sessions','14-day glucose monitor','3 dietitian consultations','Biological-age test can be added for ₹14,999']},
+ {c:'fl',t:'24-Week Medical Weight Programme',d:'24 weeks',p:119999,who:'People with a long-standing plateau or raised metabolic risk markers.',lead:'Medical director',i:['3 DEXA scans, at months 1, 3 and 6','48 EMS sessions','A doctor and dietitian review every two weeks','Metabolic, liver and lipid blood panels','Medication is considered only where the doctor finds it indicated','Biological-age test (DNA methylation) at the start and the end']},
+ {c:'fl',t:'30-Day Kickstart',d:'4 weeks',p:27999,who:'A first month with no downtime.',lead:'Sports physiotherapist',i:['InBody scan on day 1 and day 30','8 EMS sessions','8 contrast circuits','1 RMR test','1 nutrition consultation','Biological-age test can be added for ₹14,999']},
+ {c:'ath',t:'Performance Audit',d:'1 day',p:12999,who:'Runners, cricketers, cyclists and anyone who trains seriously.',lead:'Sports physiotherapist',i:['VO2 max with breath-by-breath analysis','RMR and fuel-use profile','Force plates and grip strength','DEXA for lean-mass symmetry and bone density','ECG, HRV and 2D gait analysis','Biological-age test can be added for ₹14,999']},
+ {c:'ath',t:'In-Season Recovery Pass',d:'8 weeks',p:34999,who:'Competitors in a tournament or race season.',lead:'Sports physiotherapist',i:['16 contrast circuits','8 hyperbaric oxygen sessions','4 physiotherapy sessions','8 red light sessions','Compression boots after practice','Biological-age test can be added for ₹14,999']},
+ {c:'ath',t:'Endurance Peak',d:'10 weeks',p:54999,who:'Marathoners, cyclists and triathletes building to a race.',lead:'Sports medicine physician',i:['VO2 max at the start and at week 8','Fuel-use curve for race nutrition','10 hyperbaric sessions','10 lower-limb EMS sessions','Gait re-test at race pace','Biological-age test (DNA methylation) at the start']},
+ {c:'ath',t:'Power and Sprint',d:'6 weeks',p:39999,who:'Sprint and court-sport athletes who need explosive power.',lead:'Conditioning coach',i:['12 EMS sessions','Weekly force plate tracking','DEXA symmetry check','6 contrast circuits','Red light after training','Biological-age test can be added for ₹14,999']},
+ {c:'cs',t:'Executive Longevity Programme',d:'12 months',p:349999,who:'Founders and directors with heavy workloads and frequent travel.',lead:'Medical director',i:['Annual assessment: DEXA, VO2 max, ECG, sleep study, genetics','12 monthly visits with priority booking','4 quarterly reviews with the medical director','4 sessions with a visiting psychologist','Biological-age test (DNA methylation) twice a year']},
+ {c:'cs',t:'Founder Reset',d:'1 month',p:49999,who:'Leaders dealing with poor sleep, fatigue or jet lag.',lead:'Medical director',i:['4 hyperbaric oxygen sessions','2 doctor-prescribed IV drips','HRV stress assessment','Home sleep study','4 private contrast circuits','Biological-age test (DNA methylation) at the start']},
+ {c:'cs',t:'Boardroom Audit',d:'1 morning',p:24999,who:'A full health benchmark in a single visit.',lead:'Medical director',i:['DEXA, VO2 max and RMR','12-lead ECG','Comprehensive blood panel','60-minute review with the doctor','Written report within 24 hours','Biological-age test can be added for ₹14,999']},
+ {c:'cs',t:'Quarterly Vitality',d:'90 days',p:89999,who:'Executives who want a tune-up every quarter.',lead:'Medical director',i:['Re-test of InBody, RMR and bloods','6 hyperbaric sessions','3 doctor-prescribed IV drips','12 contrast circuits','1 doctor review','Biological-age test (DNA methylation) at the start']}
 ];
 let progCat='ym';
 function setProg(c){progCat=c;renderProgs()}
@@ -840,18 +953,18 @@ $('#progPills').addEventListener('click',e=>{const b=e.target.closest('[data-pc]
 /* ---------- diagnostics & tech ---------- */
 const SUITES={all:'All Suites',diag:'Diagnostics',rec:'Recovery',med:'Medical & IV',bio:'Biomechanics'};
 const TECH=[
- {s:'diag',t:'DEXA body composition',img:'dexa',p:'₹3,999',c:'5 credits',d:'30 min',x:'Muscle, fat and bone density, region by region. A low-dose scan run by a registered technologist.'},
- {s:'diag',t:'VO2 max test',img:'vo2',p:'₹4,999',c:'6 credits',d:'45 min',x:'Breath-by-breath analysis on a bike or treadmill. You get your result in ml/kg/min and your training zones.'},
- {s:'rec',t:'Contrast circuit',img:'contrast',p:'₹1,999',c:'2 credits',d:'45 min',x:'Infrared sauna followed by a cold plunge, guided by an attendant from start to finish.'},
- {s:'med',t:'Hyperbaric oxygen',img:'hbot',p:'₹2,999',c:'4 credits',d:'60 min',x:'Mild hyperbaric sessions at 1.3 ATA. The doctor screens you before your first session.'},
- {s:'med',t:'IV nutrient therapy',img:'iv',p:'From ₹3,999',c:'5 or 6 credits',d:'45 min',x:'Hydration and micronutrient drips, prescribed by a physician and given by a registered nurse.'},
- {s:'bio',t:'Whole-body EMS training',img:'ems',p:'₹1,999',c:'3 credits',d:'20 min',x:'A coached strength session using electrical muscle stimulation. Screening is required first. Your first trial is ₹999.'}
+ {s:'diag',t:'DEXA body composition',img:'dexa',p:'₹3,999',c:'Yearly from Prestige',d:'30 min',x:'Muscle, fat and bone density, region by region. A low-dose scan run by a registered technologist.'},
+ {s:'diag',t:'VO2 max test',img:'vo2',p:'₹4,999',c:"Yearly in Founders' Circle",d:'45 min',x:'Breath-by-breath analysis on a bike or treadmill. You get your result in ml/kg/min and your training zones.'},
+ {s:'rec',t:'Contrast circuit',img:'contrast',p:'₹1,999',c:'1 recovery credit',d:'45 min',x:'Infrared sauna followed by a cold plunge, guided by an attendant from start to finish.'},
+ {s:'med',t:'Hyperbaric oxygen',img:'hbot',p:'₹2,999',c:'Included from Prestige',d:'60 min',x:'Mild hyperbaric sessions at 1.3 ATA. The doctor screens you before your first session.'},
+ {s:'med',t:'IV nutrient therapy',img:'iv',p:'From ₹3,999',c:'Included from Prestige',d:'45 min',x:'Hydration and micronutrient drips, prescribed by a physician and given by a registered nurse.'},
+ {s:'bio',t:'Whole-body EMS training',img:'ems',p:'₹1,999',c:'Included from Signature',d:'20 min',x:'A coached strength session using electrical muscle stimulation. Screening is required first. Your first trial is ₹999.'}
 ];
 const MENU=[
- ['diag','Discovery visit','90 min','₹2,499','','Care team'],['diag','DEXA body composition','30 min','₹3,999','5','Radiology technologist'],['diag','VO2 max test','45 min','₹4,999','6','Sports physiotherapist, doctor screened'],['diag','RMR metabolic test','20 min','₹2,499','3','Technician and dietitian'],['diag','InBody scan','10 min','With membership','','Technician'],['diag','ECG, HRV and blood biomarkers','30 min','In assessments','','Nurse and doctor'],
- ['rec','Sauna or contrast circuit','45 min','₹1,999','2','Attendant'],['rec','Red light therapy','15 min','₹999','1','Technician'],['rec','Compression boots','30 min','₹799','1','Technician'],['rec','Cold plunge on its own','15 min','₹799','1','Attendant'],['rec','PEMF mat','20 min','₹799','1','Technician'],['rec','Localised cryotherapy','10 min','₹1,200','1','Physiotherapist'],['rec','Massage','60 min','₹3,499','4','Therapist'],['rec','Massage','90 min','₹4,999','6','Therapist'],['rec','Group class','30 to 45 min','₹499','1','Coach'],
- ['med','Hyperbaric oxygen, 1.3 ATA','60 min','₹2,999','4','Nurse, doctor on site'],['med','IV hydration drip','45 min','₹3,999','5','Doctor prescribes, nurse gives'],['med','IV Myers drip','45 min','₹5,999','6','Doctor prescribes, nurse gives'],['med','Medical hydradermabrasion facial','50 min','₹4,999','6','Aesthetician, dermatologist protocol'],['med','Peels, IPL and injectables','Varies','By consultation','','Dermatologist'],
- ['bio','Whole-body EMS training','20 min','₹1,999','3','Certified coach'],['bio','Physiotherapy session','45 min','₹1,499','2','Sports physiotherapist'],['bio','Force plate and grip assessment','30 min','In Athlete plans','','Sports physiotherapist'],['bio','2D gait analysis','30 min','In Athlete plans','','Sports physiotherapist']
+ ['diag','Discovery visit','90 min','₹2,499','','Care team'],['diag','DEXA body composition','30 min','₹3,999','Yearly from Prestige','Radiology technologist'],['diag','VO2 max test','45 min','₹4,999',"Yearly in Founders' Circle",'Sports physiotherapist, doctor screened'],['diag','Biological-age test, DNA methylation','10 min sample, report in about 4 weeks','₹19,999','Included on every plan','Partner lab, explained by your doctor'],['diag','RMR metabolic test','20 min','₹2,499','Included on every plan','Technician and dietitian'],['diag','InBody scan','10 min','Members only','Monthly on every plan','Technician'],['diag','ECG, HRV and blood biomarkers','30 min','In assessments',"Yearly in Founders' Circle",'Nurse and doctor'],
+ ['rec','Sauna or contrast circuit','45 min','₹1,999','1 recovery credit','Attendant'],['rec','Red light therapy','15 min','₹999','1 recovery credit','Technician'],['rec','Compression boots','30 min','₹799','1 recovery credit','Technician'],['rec','Cold plunge on its own','15 min','₹799','1 recovery credit','Attendant'],['rec','PEMF mat','20 min','₹799','1 recovery credit','Technician'],['rec','Localised cryotherapy','10 min','₹1,200','1 recovery credit','Physiotherapist'],['rec','Group class','30 to 45 min','₹499','1 recovery credit','Coach'],['rec','Massage','60 min','₹3,499','Included from Signature','Therapist'],['rec','Massage','90 min','₹4,999','Member discount','Therapist'],
+ ['med','Hyperbaric oxygen, 1.3 ATA','60 min','₹2,999','Included from Prestige','Nurse, doctor on site'],['med','IV hydration drip','45 min','₹3,999','Member discount','Doctor prescribes, nurse gives'],['med','IV Myers drip','45 min','₹5,999','Included from Prestige','Doctor prescribes, nurse gives'],['med','Medical hydradermabrasion facial','50 min','₹4,999','Included from Prestige','Aesthetician, dermatologist protocol'],['med','Peels, IPL and injectables','Varies','By consultation','Member discount','Dermatologist'],
+ ['bio','Whole-body EMS training','20 min','₹1,999','Included from Signature','Certified coach'],['bio','Physiotherapy session','45 min','₹1,499','Member discount','Sports physiotherapist'],['bio','Force plate and grip assessment','30 min','In Athlete plans','','Sports physiotherapist'],['bio','2D gait analysis','30 min','In Athlete plans','','Sports physiotherapist']
 ];
 let suite='all';
 function renderTech(){
@@ -860,8 +973,8 @@ function renderTech(){
   $('#techCards').innerHTML=list.map(t=>`<article class="card tech"><div class="frame"><img loading="lazy" src="img/${t.img}.jpg" width="1200" height="675" alt="${esc(t.t)}"></div>
     <div class="body"><p class="meta"><span>${esc(SUITES[t.s])}</span><span>${t.d}</span><span>${t.c}</span></p><h3>${esc(t.t)}</h3><p class="muted small">${esc(t.x)}</p>
     <div class="foot"><span class="amt num" style="font-size:1.6rem">${t.p}</span><a class="btn sm" href="#visit" data-go="visit" data-interest="A single session" data-note="${esc(t.t)}">Book</a></div></div></article>`).join('');
-  $('#menuTable').innerHTML=`<thead><tr><th>Session</th><th>Suite</th><th>Time</th><th>Price</th><th>Credits</th><th>Performed by</th></tr></thead><tbody>${
-    MENU.filter(m=>suite==='all'||m[0]===suite).map(m=>`<tr><td><strong>${esc(m[1])}</strong></td><td>${esc(SUITES[m[0]])}</td><td class="price">${m[2]}</td><td class="price">${m[3]}</td><td class="price">${m[4]||'<span class="muted">Not on credits</span>'}</td><td>${esc(m[5])}</td></tr>`).join('')}</tbody>`;
+  $('#menuTable').innerHTML=`<thead><tr><th>Session</th><th>Suite</th><th>Time</th><th>Price</th><th>With a membership</th><th>Performed by</th></tr></thead><tbody>${
+    MENU.filter(m=>suite==='all'||m[0]===suite).map(m=>`<tr><td><strong>${esc(m[1])}</strong></td><td>${esc(SUITES[m[0]])}</td><td class="price">${m[2]}</td><td class="price">${m[3]}</td><td>${esc(m[4])}</td><td>${esc(m[5])}</td></tr>`).join('')}</tbody>`;
 }
 $('#techPills').addEventListener('click',e=>{const b=e.target.closest('[data-su]');if(b){suite=b.dataset.su;renderTech()}});
 
@@ -880,7 +993,7 @@ let ctype='all';
 function renderClasses(){
   $('#classPills').innerHTML=Object.entries(CTYPES).map(([k,v])=>`<button class="pill" type="button" data-ct="${k}" aria-pressed="${k===ctype}">${v}</button>`).join('');
   $('#classCards').innerHTML=CLASSES.filter(c=>ctype==='all'||c.k===ctype).map(c=>`<article class="card">
-    <p class="meta"><span>${CTYPES[c.k]}</span><span>${c.d}</span><span>${c.n} seats</span><span>1 credit</span></p>
+    <p class="meta"><span>${CTYPES[c.k]}</span><span>${c.d}</span><span>${c.n} seats</span><span>1 recovery credit</span></p>
     <h3>${esc(c.t)}</h3><p class="muted small">${esc(c.x)}</p>
     <ul class="plist small"><li><span>${esc(c.w)}</span><span>${esc(c.h)}</span></li><li><span>Led by</span><span>${esc(c.by)}</span></li></ul>
     <div class="foot"><span class="meta"><span>Sample timetable</span></span><a class="btn sm" href="#visit" data-go="visit" data-interest="A class or cohort" data-note="${esc(c.t)}, ${esc(c.w)} at ${esc(c.h)}">Request a seat</a></div></article>`).join('');
@@ -955,7 +1068,7 @@ function renderProgress(){
    PARAMS.map((m,i)=>{const c=change(m);return `<tr><th scope="row"><button class="textlink" type="button" data-mi="${i}" data-scroll="1">${esc(m.k)}</button> <span class="muted small">${esc(m.u)}</span><small>${esc(m.how)}</small></th>${
      m.v.map((v,j)=>`<td class="price">${v==null?'<span class="muted">Not due</span>':(m.show?m.show[j]:v.toFixed(m.dp))}</td>`).join('')}<td><span class="chg">${c.txt}</span>${c.ok?'<span class="tag">Improved</span>':''}</td><td>${esc(m.by)}</td></tr>`}).join('')}</tbody>`;
 }
-function pickMetric(e){const b=e.target.closest('[data-mi]');if(!b)return;mi=+b.dataset.mi;drawChart();if(b.dataset.scroll)$('#chartCard').scrollIntoView({block:'center'})}
+function pickMetric(e){const b=e.target.closest('[data-mi]');if(!b)return;mi=+b.dataset.mi;drawChart();if(b.dataset.scroll)go('portal')}
 $('#kpis').addEventListener('click',pickMetric);
 $('#progressTable').addEventListener('click',pickMetric);
 
@@ -965,7 +1078,7 @@ function copy(text,btn,fallbackEl){
   const fb=()=>{const r=document.createRange();r.selectNodeContents(fallbackEl);const s=getSelection();s.removeAllRanges();s.addRange(r)};
   try{navigator.clipboard.writeText(text).then(done,fb)}catch(e){fb()}
 }
-$('#copyPhone').addEventListener('click',e=>copy('+919829088210',e.currentTarget,$('#phoneText')));
+$('#copyPhone').addEventListener('click',e=>copy('+18322927282',e.currentTarget,$('#phoneText')));
 $('#bkCopy').addEventListener('click',e=>copy($('#bkMsg').textContent,e.currentTarget,$('#bkMsg')));
 $('#bookForm').addEventListener('submit',e=>{
   e.preventDefault();
@@ -975,7 +1088,7 @@ $('#bookForm').addEventListener('submit',e=>{
   err.hidden=true;
   const date=$('#bkDate').value, note=$('#bkNote').value.trim();
   const msg=['Hello NextGen Human, I would like to book.','Name: '+name,'Mobile: '+phone,'Interested in: '+$('#bkInterest').value,'Preferred time: '+$('#bkSlot').value+(date?' on '+date:''),note?'Note: '+note:''].filter(Boolean).join('\n');
-  $('#bkMsg').textContent=msg; $('#bkWa').href='https://wa.me/919829088210?text='+encodeURIComponent(msg); $('#bkReady').hidden=false;
+  $('#bkMsg').textContent=msg; $('#bkWa').href='https://wa.me/18322927282?text='+encodeURIComponent(msg); $('#bkReady').hidden=false;
 });
 
 /* ---------- boot ---------- */
