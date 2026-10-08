@@ -2,11 +2,11 @@
 
 Sample website for the NextGen Human longevity, diagnostics and recovery centre in Mansarovar, Jaipur.
 
-This is a static site: one `index.html` and an `img/` folder. There is no build step.
+This is a static site: one `index.html`, an `img/` folder and a `video/` folder. There is no build step.
 
 ## Structure
 
-The landing page is short: a hero and a tree of six branches. Everything else sits on sub-pages, each with a breadcrumb and tabs. Pages switch by the link hash.
+The home page is a long scroll: video hero, introduction, six services, the space, programmes with questions, concern tiles, medical leadership, registrations, a video strip, the journal and a closing call to book. The top menu has dropdowns, and every other page sits on a sub-page with a breadcrumb and tabs. Pages switch by the link hash.
 
 | Branch | Pages (link hash) |
 | --- | --- |
@@ -35,5 +35,5 @@ Import this repository in Vercel. Choose the "Other" framework preset, leave the
 - Plan data lives in `TIERS`, `CM` and `MATRIX` in `index.html`.
 - Care team cards show roles only. Add real names and registration numbers once clinicians are appointed.
 - The booking form prepares a WhatsApp message to +1 832 292 7282. It does not send or store anything.
-- Images are stills from the promotional video.
+- Images are stills, and `video/` holds short silent loops cut from the promotional video (WebM and MP4 versions of each). Swap in the Higgsfield clips by replacing the files with the same names.
 - Remove the "Sample site for review" bar at the top of `index.html`.
